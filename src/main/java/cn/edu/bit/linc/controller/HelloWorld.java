@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.edu.bit.linc.dao.IUserOperation;
 import cn.edu.bit.linc.pojo.User;
 import cn.edu.bit.linc.util.DBUtil;
 
@@ -23,8 +24,13 @@ public class HelloWorld {
 	@RequestMapping("/testMybatis")
 	public List<User> testMybatis(){
 		SqlSession session = DBUtil.openSession();
-		User user = session.selectOne("cn.edu.bit.linc.pojo.User.selectUserByUsername", "user01");
-		List<User> users = session.selectList("cn.edu.bit.linc.pojo.User.selectUser");
+//		User user = session.selectOne("cn.edu.bit.linc.dao.IUserOperation.selectUserByUsername", "user01");
+//		List<User> users = session.selectList("cn.edu.bit.linc.dao.IUserOperation.selectUser");
+		
+		IUserOperation userOperation = session.getMapper(IUserOperation.class);
+		User user = userOperation.selectUserByUsername("test");
+		List<User> users = userOperation.selectUser();
+		
 		System.out.println(users.size());
 		System.out.println(user);
 		return users;

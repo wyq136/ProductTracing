@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.edu.bit.linc.pojo.User">
+<mapper namespace="cn.edu.bit.linc.dao.IUserOperation">
     <select id="selectUserByUsername" parameterType="String" resultType="cn.edu.bit.linc.pojo.User">
         select * from `user` where username = #{username}
     </select>
     
-    <select id="selectUser" parameterType="String" resultType="cn.edu.bit.linc.pojo.User">
-        select * from `user`
+    <select id="selectUser" resultType="cn.edu.bit.linc.pojo.User">
+        select * from user
     </select>
 </mapper>
