@@ -4,7 +4,7 @@
 
 <mapper namespace="cn.edu.bit.linc.dao.IUserOperation">
     <select id="selectUserByUsername" parameterType="String" resultType="cn.edu.bit.linc.pojo.User">
-        select * from `user` where username = #{username}
+        select * from user where username = #{username}
     </select>
     
     <select id="selectUser" resultType="cn.edu.bit.linc.pojo.User">
