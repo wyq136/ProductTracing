@@ -1,0 +1,12 @@
+1:A,B,C:Fruit
+2:C,D:Cake
+3:A,Z:Drink
+4:B,C,D:Cake
+5:A,V:Cake
+6:B,D,Z:Drink
+7:B,Z:Fruit
+8:D,Z:Cake
+
+userId:A,B,D,E
+
+userID:1,2,3,4
