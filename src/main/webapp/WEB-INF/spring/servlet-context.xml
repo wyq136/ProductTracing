@@ -13,7 +13,6 @@
     http://www.springframework.org/schema/util
     http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     
-    
 	<context:component-scan base-package="cn.edu.bit.linc.controller" ></context:component-scan>
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -22,6 +21,8 @@
     </bean>
     
     <mvc:annotation-driven />
+    
+    <mvc:resources mapping="/imgUpload/**" location="/resourses/imgUpload/" />
     
     <bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

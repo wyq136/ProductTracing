@@ -19,21 +19,22 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class FileUpload {
 
-	// ´¦ÀíÎÄ¼þÉÏ´«Ò»  
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ï´ï¿½Ò»  
     @RequestMapping(value = "fileUpload", method = RequestMethod.POST)  
     public ModelAndView fileUpload(  
             @RequestParam("fileUpload") CommonsMultipartFile file) {  
-        // »ñÈ¡ÎÄ¼þÀàÐÍ  
+        // ï¿½ï¿½È¡ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½  
         System.out.println(file.getContentType());  
-        // »ñÈ¡ÎÄ¼þ´óÐ¡  
+        // ï¿½ï¿½È¡ï¿½Ä¼ï¿½ï¿½ï¿½Ð¡  
         System.out.println(file.getSize());  
-        // »ñÈ¡ÎÄ¼þÃû³Æ  
+        // ï¿½ï¿½È¡ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½  
         System.out.println(file.getOriginalFilename());  
   
-        // ÅÐ¶ÏÎÄ¼þÊÇ·ñ´æÔÚ  
+        // ï¿½Ð¶ï¿½ï¿½Ä¼ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½  
         if (!file.isEmpty()) {  
             String path = null;
 			path = "D:/" + file.getOriginalFilename();
+			//String path=getSession().getServletContext().getRealPath("upload/img/" + file.getOriginalFilename());
 			
             File localFile = new File(path);  
             try {  
@@ -47,26 +48,29 @@ public class FileUpload {
         return new ModelAndView("success"); 
     }
     
-    // ´¦ÀíÎÄ¼þÉÏ´«¶þ  
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ï´ï¿½ï¿½ï¿½  
     @RequestMapping(value = "fileUpload2", method = RequestMethod.POST)  
     public String fileUpload2(HttpServletRequest request)  
             throws IllegalStateException, IOException {  
-        // ÉèÖÃÉÏÏÂ·½ÎÄ  
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½  
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(  
                 request.getSession().getServletContext());  
+        
+        System.out.println(request.getParameter("text"));
   
-        // ¼ì²éformÊÇ·ñÓÐenctype="multipart/form-data"  
+        // ï¿½ï¿½ï¿½formï¿½Ç·ï¿½ï¿½ï¿½enctype="multipart/form-data"  
         if (multipartResolver.isMultipart(request)) {  
             MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;  
   
             Iterator<String> iter = multiRequest.getFileNames();  
             while (iter.hasNext()) {  
   
-                // ÓÉCommonsMultipartFile¼Ì³Ð¶øÀ´,ÓµÓÐÉÏÃæµÄ·½·¨.  
+                // ï¿½ï¿½CommonsMultipartFileï¿½Ì³Ð¶ï¿½ï¿½ï¿½,Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½.  
                 MultipartFile file = multiRequest.getFile(iter.next());  
                 if (file != null) {  
-                    String fileName = "demoUpload_" + file.getOriginalFilename();  
-                    String path = "D:/" + fileName;  
+                    String fileName = file.getOriginalFilename();  
+                    String path = request.getSession().getServletContext().getRealPath("/resourses/imgUpload/") + fileName;  
+                    System.out.println(path);
   
                     File localFile = new File(path);  
                     file.transferTo(localFile);  

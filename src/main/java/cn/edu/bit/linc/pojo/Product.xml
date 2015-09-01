@@ -6,4 +6,13 @@
     <select id="selectProducts" resultType="cn.edu.bit.linc.pojo.Product">
         select * from product
     </select>
+    
+    <select id="selectProductById" parameterType="String" resultType="cn.edu.bit.linc.pojo.Product">
+        select * from product where id = #{id}
+    </select>
+    
+    <insert id="insertProduct" parameterType="cn.edu.bit.linc.pojo.Product">
+        insert into product (product_name, catalog_id, description, picture, shop) values (#{product_name}, #{catalog_id}, #{description}, #{picture}, #{shop})
+    </insert>
+    
 </mapper>

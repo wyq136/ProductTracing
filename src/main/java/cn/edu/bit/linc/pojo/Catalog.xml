@@ -6,4 +6,13 @@
     <select id="selectCatalogs" resultType="cn.edu.bit.linc.pojo.Catalog">
         select * from catalog
     </select>
+    
+    <select id="selectCatalogById" parameterType="String" resultType="cn.edu.bit.linc.pojo.Catalog">
+        select * from catalog where id = #{id}
+    </select>
+    
+    <select id="selectCatalogByName" parameterType="String" resultType="cn.edu.bit.linc.pojo.Catalog">
+        select * from catalog where catalog_name = #{name}
+    </select>
+    
 </mapper>
