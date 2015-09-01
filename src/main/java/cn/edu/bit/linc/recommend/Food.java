@@ -44,7 +44,7 @@ public class Food {
     }
 
     public void saveProduct() throws IOException {
-        f = new File("Data/food");
+        f = new File("D:\\workspace\\ProductTracing\\Data/food");
         BufferedReader reader = new BufferedReader(new FileReader(f));
         String line = "";
         while((line = reader.readLine()) != null){
@@ -63,6 +63,7 @@ public class Food {
             }
             numOfFood++;
         }
+        reader.close();
     }
 
     public void saveReqToDB(String user,String time,String req){
@@ -167,6 +168,57 @@ public class Food {
         allType.add("Drink");
         allType.add("Cake");
     }
+    
+    public static Food food;
+    
+    static{
+    	food = new Food();
+    	food.config();
+    	try {
+			food.saveProduct();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    public static ArrayList<String> getRecommend(String userID, String requireString) throws IOException{
+    	//Food food = new Food();
+
+        //Config Redis;
+        //food.config();
+
+        //Add product to Redis;
+        //food.saveProduct();
+    	food.mostResult.clear();
+        food.rareResult.clear();
+        food.typeResult.clear();
+
+        //Save requirement to Redis;
+        //String requireString = "A:B:V";
+        food.saveReqToDB(userID,"09:50",requireString);
+
+        //Count num of product
+        HashMap<String,Integer> productCount = new HashMap<String, Integer>();
+        productCount = food.countProduct();
+        food.product = productCount;
+
+        if(food.addMost(productCount) != requireString.split(":").length){
+            if(food.numOfFood < food.needFood) food.addRare();
+        }
+        if(food.numOfFood < food.needFood){
+            food.addType();
+        }
+
+        System.out.println("most:"+food.mostResult);
+        System.out.println("rare:"+food.rareResult);
+        System.out.println("type:"+food.typeResult);
+
+        food.recommendResult.addAll(food.mostResult);
+        food.recommendResult.addAll(food.rareResult);
+        food.recommendResult.addAll(food.typeResult);
+        System.out.println( food.recommendResult);
+        return food.recommendResult;
+    }
 
     public static void main(String[] args) throws IOException {
         Food food = new Food();
@@ -178,7 +230,7 @@ public class Food {
         food.saveProduct();
 
         //Save requirement to Redis;
-        String requireString = "A:B:V";
+        String requireString = "»ðÍÈ:ÇÉ¿ËÁ¦";
         food.saveReqToDB(food.userID,"09:50",requireString);
 
         //Count num of product

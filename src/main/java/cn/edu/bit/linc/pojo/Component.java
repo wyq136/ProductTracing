@@ -39,4 +39,10 @@ public class Component {
 		this.picture = picture;
 	}
 	
+	@Override
+	public String toString() {
+		return "Component [id=" + id + ", product_id=" + product_id + ", component_name=" + component_name
+				+ ", description=" + description + ", picture=" + picture + "]";
+	}
+	
 }

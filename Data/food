@@ -1,12 +1,3 @@
-1:A,B,C:Fruit
-2:C,D:Cake
-3:A,Z:Drink
-4:B,C,D:Cake
-5:A,V:Cake
-6:B,D,Z:Drink
-7:B,Z:Fruit
-8:D,Z:Cake
-
-userId:A,B,D,E
-
-userID:1,2,3,4
+1:主料1,主料2:甜品
+4:火腿,面粉:甜品
+5:巧克力:甜品

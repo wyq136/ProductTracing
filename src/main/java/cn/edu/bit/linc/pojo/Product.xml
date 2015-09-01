@@ -6,4 +6,13 @@
     <select id="selectProducts" resultType="cn.edu.bit.linc.pojo.Product">
         select * from product
     </select>
+    
+    <select id="getProductInfos" resultType="cn.edu.bit.linc.pojo.ProductInfo">
+        SELECT product.id as product_id, component.component_name, catalog.catalog_name FROM product, catalog, component 
+	WHERE product.catalog_id = catalog.id AND product.id = component.product_id;
+    </select>
+    
+    <select id="getProductByID" resultType="cn.edu.bit.linc.pojo.Product">
+        SELECT * FROM product WHERE product.id = #{id};
+    </select>
 </mapper>
