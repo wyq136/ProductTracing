@@ -12,4 +12,9 @@ public interface IProduct {
 	public List<ProductInfo> getProductInfos();
 	
 	public Product getProductByID(int id);
+	
+	public List<Product> selectProductById(String id);
+	
+	public int insertProduct(Product p);
+	
 }
