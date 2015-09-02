@@ -27,7 +27,6 @@ import cn.edu.bit.linc.dao.IProduct;
 import cn.edu.bit.linc.pojo.Catalog;
 import cn.edu.bit.linc.pojo.Component;
 import cn.edu.bit.linc.pojo.Product;
-import cn.edu.bit.linc.recommend.Food;
 import cn.edu.bit.linc.util.DBUtil;
 
 @SessionAttributes
