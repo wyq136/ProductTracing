@@ -18,6 +18,7 @@ public class makeFood {
     Jedis jedis;
     int numOfFood = 0;
     int recommendNum = 10;
+    JedisPool jedisPool = null;
     ArrayList<String> requestList = new ArrayList<String>();
     ArrayList<String> mostResult = new ArrayList<String>();
     ArrayList<String> rareResult = new ArrayList<String>();
@@ -40,7 +41,7 @@ public class makeFood {
 
         config.setTestOnBorrow(false);
 
-        JedisPool jedisPool = new JedisPool(config, "127.0.0.1", 6379);
+        jedisPool = new JedisPool(config, "127.0.0.1", 6379);
         this.jedis = jedisPool.getResource();
 
     }
@@ -239,13 +240,14 @@ public class makeFood {
             addType(userDislikeString);
         }
 
-        System.out.println("most:"+mostResult);
-        System.out.println("rare:"+rareResult);
-        System.out.println("type:"+typeResult);
+//        System.out.println("most:"+mostResult);
+//        System.out.println("rare:"+rareResult);
+//        System.out.println("type:" + typeResult);
 
         recommendResult.addAll(mostResult);
         recommendResult.addAll(rareResult);
         recommendResult.addAll(typeResult);
+        jedisPool.returnResource(jedis);
     }
 
 }

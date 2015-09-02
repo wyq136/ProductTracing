@@ -71,7 +71,7 @@ public class makeRec {
     public static void main(String[] args){
         makeRec mr = new makeRec();
         mr.initData();
-        ArrayList<String > finalRecommend = mr.recommendList("claire", "component_3:component_4:component_5:component_9", "component_3");
+        ArrayList<String > finalRecommend = mr.recommendList("claire", "component_3:component_4:component_2:component_9", "component_3");
         System.out.print(finalRecommend);
 
     }
