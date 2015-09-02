@@ -174,13 +174,16 @@ public class makeFood {
 //            //there's component to be true(left)
 //            if(entry.getValue()){
 //                String componentLeft = (String) entry.getKey();
-        for(int i = 0;i < requestList.size();i++){
+            for(int i = 0;i < requestList.size();i++){
                 String componentLeft = requestList.get(i);
+
                 Set<String> smembers = jedis.smembers(componentLeft);
 
                 //If the left component is in local
-                if(smembers != null && smembers.equals(userDislikeString)) {
+                if(smembers != null) {
                     for (String str : smembers) {
+                        String comp = jedis.hget(str,"component");
+                        if(comp == null || comp.indexOf(userDislikeString) != -1)   continue;
                         rareResult.add(str);
                         numOfFood++;
                         componentMap.put(componentLeft, false);
