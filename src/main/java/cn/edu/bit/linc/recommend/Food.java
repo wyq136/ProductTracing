@@ -10,6 +10,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+import org.apache.tomcat.jni.Time;
+
 /**
  * Created by admin on 2015/8/17.
  */
@@ -192,10 +194,13 @@ public class Food {
     	food.mostResult.clear();
         food.rareResult.clear();
         food.typeResult.clear();
+        food.recommendResult.clear();
 
         //Save requirement to Redis;
         //String requireString = "A:B:V";
-        food.saveReqToDB(userID,"09:50",requireString);
+        Date date = new Date();
+        String time = date.getHours() + ":" + date.getMinutes();
+        food.saveReqToDB(userID, time,requireString);
 
         //Count num of product
         HashMap<String,Integer> productCount = new HashMap<String, Integer>();
