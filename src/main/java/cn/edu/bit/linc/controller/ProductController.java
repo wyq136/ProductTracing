@@ -27,6 +27,8 @@ import cn.edu.bit.linc.dao.IProduct;
 import cn.edu.bit.linc.pojo.Catalog;
 import cn.edu.bit.linc.pojo.Component;
 import cn.edu.bit.linc.pojo.Product;
+import cn.edu.bit.linc.pojo.RequestComponent;
+import cn.edu.bit.linc.recommend.Food;
 import cn.edu.bit.linc.util.DBUtil;
 
 @SessionAttributes
@@ -185,8 +187,9 @@ public class ProductController {
 	
 	@ResponseBody
 	@RequestMapping(value="/recommend")
-	public List<Product> getRecommend(@RequestBody Component[] components, HttpSession session){
+	public List<Product> getRecommend(@RequestBody RequestComponent requestComponent, HttpSession session){
 		System.out.println("session id: " + session.getId());
+		Component[] components = requestComponent.getLike();
 		System.out.println(components.length);
 		System.out.println(components[0]);
 		
@@ -223,7 +226,6 @@ public class ProductController {
 		}
 		
 		return products;
-		
 		
 	}
 	

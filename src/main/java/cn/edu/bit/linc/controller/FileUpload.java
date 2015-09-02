@@ -19,18 +19,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class FileUpload {
 
-	// �����ļ��ϴ�һ  
     @RequestMapping(value = "fileUpload", method = RequestMethod.POST)  
     public ModelAndView fileUpload(  
             @RequestParam("fileUpload") CommonsMultipartFile file) {  
-        // ��ȡ�ļ�����  
+
         System.out.println(file.getContentType());  
-        // ��ȡ�ļ���С  
         System.out.println(file.getSize());  
-        // ��ȡ�ļ�����  
         System.out.println(file.getOriginalFilename());  
   
-        // �ж��ļ��Ƿ����  
         if (!file.isEmpty()) {  
             String path = null;
 			path = "D:/" + file.getOriginalFilename();
@@ -48,24 +44,21 @@ public class FileUpload {
         return new ModelAndView("success"); 
     }
     
-    // �����ļ��ϴ���  
     @RequestMapping(value = "fileUpload2", method = RequestMethod.POST)  
     public String fileUpload2(HttpServletRequest request)  
             throws IllegalStateException, IOException {  
-        // �������·���  
+
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(  
                 request.getSession().getServletContext());  
         
         System.out.println(request.getParameter("text"));
   
-        // ���form�Ƿ���enctype="multipart/form-data"  
         if (multipartResolver.isMultipart(request)) {  
             MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;  
   
             Iterator<String> iter = multiRequest.getFileNames();  
             while (iter.hasNext()) {  
   
-                // ��CommonsMultipartFile�̳ж���,ӵ������ķ���.  
                 MultipartFile file = multiRequest.getFile(iter.next());  
                 if (file != null) {  
                     String fileName = file.getOriginalFilename();  

@@ -39,7 +39,12 @@
 		$('#recommend').click(function(){
 			console.log("test recommend");
 			console.log(components);
-			$.postJSON("recommend", components, function(data){
+			var postdata = {
+					"like": components,
+					"dislike":[]
+				};
+			console.log(postdata);
+			$.postJSON("recommend", postdata, function(data){
 				console.log(data);
 				for(var i=0; i<data.length; i++){
 					//console.log(data[i].username + " " + data[i].password);
