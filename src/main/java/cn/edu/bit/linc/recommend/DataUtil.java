@@ -23,21 +23,20 @@ public class DataUtil {
 		List<ProductInfo> products = iproduct.getProductInfos();
 		session.close();
 		
-		// 构建结果集
 		Map<Integer, List<String>> res = new HashMap<Integer, List<String>>();
 		for(ProductInfo p : products){
 			if(!res.containsKey(p.getProduct_id())){
 				List<String> list = new ArrayList<String>();
-				list.add(p.getCatalog_name());			//value 第一个元素为 catalog
-				list.add(p.getComponent_name());
+				list.add("catalog_" + p.getCatalog_id());			
+				list.add("component_" + p.getComponent_id());
 				res.put(p.getProduct_id(), list);
 			}
 			else{
-				res.get(p.getProduct_id()).add(p.getComponent_name());
+				res.get(p.getProduct_id()).add("component_" + p.getComponent_id());
 			}
 		}
 		
-		File file = new File("Data/food");
+		File file = new File("Data/localFood");
 		BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 		for(Map.Entry<Integer, List<String>> entry : res.entrySet()){
 			String line = "";

@@ -23,8 +23,8 @@ public class makeRec {
         remoteFood.config();
 
         try {
-            String localFoodString = "Data/localFood";
-            String remoteFoodString = "Data/remoteFood";
+            String localFoodString = "D:\\workspace\\ProductTracing\\Data/localFood";
+            String remoteFoodString = "D:\\workspace\\ProductTracing\\Data/remoteFood";
             localFood.saveProduct(localFoodString,0);
             remoteFood.saveProduct(remoteFoodString, 1);
         } catch (IOException e) {
@@ -35,10 +35,10 @@ public class makeRec {
 
 
 
-    public ArrayList<String> recommendList(String userId) {
-        String userLikeString = "芝士:奥利奥饼干:苹果片:红豆";
-
-        String userDislikeString = "巧克力";
+    public ArrayList<String> recommendList(String userId, String userLikeString, String userDislikeString) {
+//        String userLikeString = "芝士:奥利奥饼干:苹果片:红豆";
+//
+//        String userDislikeString = "巧克力";
 
         int recommendNum = 10;
 
@@ -69,7 +69,7 @@ public class makeRec {
     public static void main(String[] args){
         makeRec mr = new makeRec();
 
-        ArrayList<String > finalRecommend = mr.recommendList("claire");
+        ArrayList<String > finalRecommend = mr.recommendList("claire", "芝士:奥利奥饼干:苹果片:红豆", "巧克力");
         System.out.print(finalRecommend);
 
     }

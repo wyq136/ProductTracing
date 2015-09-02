@@ -28,7 +28,7 @@ import cn.edu.bit.linc.pojo.Catalog;
 import cn.edu.bit.linc.pojo.Component;
 import cn.edu.bit.linc.pojo.Product;
 import cn.edu.bit.linc.pojo.RequestComponent;
-import cn.edu.bit.linc.recommend.Food;
+import cn.edu.bit.linc.recommend.makeRec;
 import cn.edu.bit.linc.util.DBUtil;
 
 @SessionAttributes
@@ -190,25 +190,34 @@ public class ProductController {
 	public List<Product> getRecommend(@RequestBody RequestComponent requestComponent, HttpSession session){
 		System.out.println("session id: " + session.getId());
 		Component[] components = requestComponent.getLike();
+		Component[] dislikeComponents = requestComponent.getDislike();
 		System.out.println(components.length);
 		System.out.println(components[0]);
+		System.out.println(dislikeComponents.length);
 		
-		//构建请求字符
-		String reqString = "";
+		//like
+		String userLikeString = "";
 		for(int i=0; i<components.length-1; i++){
-			reqString += components[i].getComponent_name() + ":";
+			userLikeString += "component_" + components[i].getId() + ":";
 		}
-		reqString += components[components.length-1];
+		if(components.length > 0)
+			userLikeString += "component_" + components[components.length-1].getId();
+		System.out.println(userLikeString);
 		
-		//获取推荐的 product id
+		//dislike
+		String userDislikeString = "";
+		for(int i=0; i<dislikeComponents.length-1; i++){
+			userDislikeString += "component_" + dislikeComponents[i].getId() + ":";
+		}
+		if(dislikeComponents.length > 0)
+			userDislikeString += "component_" + dislikeComponents[dislikeComponents.length-1].getId();
+		System.out.println(userDislikeString);
+		
+		//get recommend
 		ArrayList<String> result = null;
-		try {
-			result = Food.getRecommend(session.getId(), reqString);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		makeRec mr = new makeRec();
+		result = mr.recommendList(session.getId(), userLikeString, userDislikeString);
 		
-		//构建推荐结果
 		List<Product> products = new ArrayList<Product>();
 		SqlSession sqlsession = DBUtil.openSession();
 		IProduct iproduct = sqlsession.getMapper(IProduct.class);

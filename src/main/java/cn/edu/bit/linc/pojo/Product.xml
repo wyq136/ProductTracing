@@ -8,7 +8,7 @@
     </select>
     
     <select id="getProductInfos" resultType="cn.edu.bit.linc.pojo.ProductInfo">
-        SELECT product.id as product_id, component.component_name, catalog.catalog_name FROM product, catalog, component 
+        SELECT product.id as product_id, component.id as component_id, catalog.id as catalog_id FROM product, catalog, component 
 	WHERE product.catalog_id = catalog.id AND product.id = component.product_id;
     </select>
     

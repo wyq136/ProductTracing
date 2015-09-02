@@ -28,9 +28,9 @@ public class makeFood {
     HashMap<String,Integer> product = new HashMap<String, Integer>();
 
     public void initType() {
-        allType.add("水果");
-        allType.add("饮料");
-        allType.add("甜点");
+        allType.add("catalog_1");
+        allType.add("catalog_2");
+        allType.add("catalog_3");
     }
 
     public void config() {
