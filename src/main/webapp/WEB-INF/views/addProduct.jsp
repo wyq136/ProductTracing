@@ -47,7 +47,9 @@
 
       <div class="jumbotron">
       	<div class="container">
+      		
         	<form class="form-horizontal" action="addProduct" method="post" enctype="multipart/form-data">
+				  <div class="col-sm-offset-2 col-sm-10"><p>${message}</p></div>
 				  <div class="form-group">
 				    <label for="inputEmail" class="col-sm-2 control-label">名称</label>
 				    <div class="col-sm-8">
@@ -58,10 +60,13 @@
 				  <div class="form-group">
 				    <label for="selectCatalog" class="col-sm-2 control-label">类别</label>
 				    <div class="col-sm-8">
-				      <select class="form-control" id="catalog" name="catalog">
+				      <select class="form-control" id="catalog_id" name="catalog_id">
 				      	<option value="1">甜品</option>
-				      	<option value="2">水果</option>
-				      	<option value="3">饮料</option>
+				      	<option value="2">饮料</option>
+				      	<option value="3">水果</option>
+				      	<!--<c:forEach var="Catalog" begin="0" items="${catalogList}">
+							<option value="${Catalog.id}">${Catalog.catalog_name}</option>
+						</c:forEach>-->
 				      </select>
 				    </div>
 				  </div>
@@ -74,7 +79,7 @@
 				  </div>
 				  
 				  <div class="form-group">
-				    <label for="inputEmail" class="col-sm-2 control-label">店铺链接</label>
+				    <label for="text" class="col-sm-2 control-label">店铺链接</label>
 				    <div class="col-sm-8">
 				      <input type="text" class="form-control" id="shop" name="shop">
 				    </div>
@@ -87,8 +92,34 @@
 				  </div>
 				  
 				  <div class="form-group">
-				    <div class="col-sm-offset-2 col-sm-10">
-				      <button type="submit" class="btn btn-lg btn-success">Sign in</button>
+				  	<div class="col-sm-offset-1 col-sm-10">
+				  		<hr style="filter:progid:DXImageTransform.Microsoft.Shadow(color:#FF0000,direction:145,strength:15);background-color:#FF0000;height:1px" />
+				  	</div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label for="text" class="col-sm-2 control-label">组成</label>
+				    <div class="col-sm-3" id="componentNameDiv">
+				      <input type="text" class="form-control" id="component_name" name="component_name">
+				      <button type="button" class="btn btn-link" id="addComponentBtn" onclick="addComponent()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+				      <button type="button" class="btn btn-link" id="deleteComponentBtn" onclick="deleteComponent()"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
+				    </div>
+				    <label for="text" class="col-sm-1 control-label">描述</label>
+				    <div class="col-sm-4" id="componentDescriptionDiv">
+				      <input type="text" class="form-control" id="component_description" name="component_description">
+				      <button type="button" class="btn btn-link" id="addComponentDescriptionMark" ></button>
+				    </div>
+				  </div>
+				  
+				  <div class="form-group">
+				  	<div class="col-sm-offset-1 col-sm-10">
+				  		<hr style="filter:progid:DXImageTransform.Microsoft.Shadow(color:#FF0000,direction:145,strength:15);background-color:#FF0000;height:1px" />
+				  	</div>
+				  </div>
+				  
+				  <div class="form-group">
+				    <div class="col-sm-offset-2 col-sm-10" id="componentDiv">
+				      <button type="submit" class="btn btn-lg btn-success" >添加</button>
 				    </div>
 				  </div>
 			</form>
@@ -100,8 +131,26 @@
       </footer>
 	</div>
     </div> <!-- /container -->
+    
+    <script>
+    	function addComponent() {
+    		//alert("123");
+    		$("#addComponentBtn").before("<input type=\"text\" class=\"form-control\" id=\"component_name\" name=\"component_name\">");
+    		$("#addComponentDescriptionMark").before("<input type=\"text\" class=\"form-control\" id=\"component_description\" name=\"component_description\">");
+    	}
+    	
+    	function deleteComponent() {
+    		 $("#componentNameDiv input:last()").remove();
+    		 $("#componentDescriptionDiv input:last()").remove();
+    	}
+
+    </script>
 
 
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>

@@ -7,16 +7,23 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ibm.db2.jcc.a.c;
 import com.ibm.db2.jcc.am.po;
 
 import cn.edu.bit.linc.dao.ICatalog;
@@ -30,21 +37,30 @@ import cn.edu.bit.linc.util.DBUtil;
 @Controller
 public class ProductController {
 
-	@RequestMapping("/add")
-	public String add(){
+	@RequestMapping("/index")
+	public String index(){
+		return "index";
+	}
+	
+	@RequestMapping("/")
+	public String add(Model model){
 		//System.out.println("hello!");
+		SqlSession session = DBUtil.openSession();
+		ICatalog icatalog = session.getMapper(ICatalog.class);
+		List<Catalog> catalogs = icatalog.selectCatalogs();
+		
+		model.addAttribute("catalogList", catalogs);
+		
 		return "addProduct";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/catalog", method=RequestMethod.GET)
+	@RequestMapping(value="/catalog")
 	public List<Catalog> getCatalogs(HttpServletRequest request){
 
 		SqlSession session = DBUtil.openSession();
 		ICatalog icatalog = session.getMapper(ICatalog.class);
 		List<Catalog> catalogs = null;
-		
-		System.out.println(request.getCharacterEncoding());
 		
 		String id = request.getParameter("id");
 		String name = request.getParameter("name");
@@ -70,13 +86,8 @@ public class ProductController {
 		List<Product> products = null;
 		
 		String id = request.getParameter("id");
-		String name = request.getParameter("name");
 		if(id != null) {
 			products = iproduct.selectProductById(id);
-		}
-		else if(name != null) {
-			//System.out.println("ProductController.getCatalogs() " + name);
-			//catalogs = icatalog.selectCatalogByName(name);
 		}
 		else {
 			products = iproduct.selectProducts();
@@ -118,23 +129,38 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/addProduct", method=RequestMethod.POST)
-	public String addProductPost(HttpServletRequest request) throws IllegalStateException, IOException{
+	public String addProductPost(HttpServletRequest request, HttpServletResponse response, Model model) throws IllegalStateException, IOException{
 		SqlSession session = DBUtil.openSession();
 		IProduct iproduct = session.getMapper(IProduct.class);
+		IComponent iComponent = session.getMapper(IComponent.class);
+		
 		Product product = new Product();
 		
 		String name = request.getParameter("product_name");
-		String catalog_id = request.getParameter("catalog");
+		String catalog_id = request.getParameter("catalog_id");
 		String description = request.getParameter("description");
 		String shop = request.getParameter("shop");
+		String[] component_name = request.getParameterValues("component_name");
+		String[] component_description = request.getParameterValues("component_description");
 		
+		System.out.println(component_name[0] + " " + component_name[1]);
+		System.out.println(component_description[0] + " " + component_description[1]);
+		
+		if(name.equals(""))
+			name = null;
 		product.setProduct_name(name);
 		try {
+			if(catalog_id.equals(""))
+				catalog_id = null;
 			product.setCatalog_id(Integer.parseInt(catalog_id));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		if(description.equals(""))
+			description = null;
 		product.setDescription(description);
+		if(shop.equals(""))
+			shop = null;
 		product.setShop(shop);
 		
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(  
@@ -163,19 +189,68 @@ public class ProductController {
 		
 		System.out.println(product.toString());
 		
-		int ret = iproduct.insertProduct(product);
+		int ret = 0;
 		
-		session.commit();
+		try {
+			ret = iproduct.insertProduct(product);
+		} catch(Exception e) {
+			ret = 0;
+			e.printStackTrace();
+		}
+		
+		System.out.println(product.toString());
+		
+		if(ret == 1 && product.getId() != 0) {
+			if(component_name != null && component_description != null) {
+				for(int i = 0; i < component_name.length; ++i) {
+					try {
+						
+						Component component = new Component();
+						component.setComponent_name(component_name[i]);
+						component.setDescription(component_description[i]);
+						component.setProduct_id(product.getId());
+						
+						System.out.println(component.toString());
+						
+						ret = iComponent.insertComponent(component);
+						if(0 == ret)
+							break;
+						
+					} catch (Exception e) {
+						ret = 0;
+						e.printStackTrace();
+					}
+				}
+			}
+			else ret = 0;
+		}
+		
+		if(ret != 0) {
+			session.commit();
+			model.addAttribute("message", "添加成功： " + product.getId());
+		}
+		else
+			model.addAttribute("message", "添加失败");
+		
 		session.close();
+		
 		return "addProduct";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/component", method=RequestMethod.GET)
-	public List<Component> getComponents(){
+	@RequestMapping(value="/component")
+	public List<Component> getComponents(HttpServletRequest request){
 		SqlSession session = DBUtil.openSession();
 		IComponent icomponent = session.getMapper(IComponent.class);
-		List<Component> components = icomponent.selectComponents();
+		List<Component> components = null;
+		
+		String product_id = request.getParameter("product_id");
+		if(product_id != null) {
+			components = icomponent.selectComponentByProductId(product_id);
+		}
+		else {
+			components = icomponent.selectComponents();
+		}
 		session.close();
 		return components;
 	}
