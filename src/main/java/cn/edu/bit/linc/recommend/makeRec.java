@@ -1,10 +1,14 @@
 package cn.edu.bit.linc.recommend;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created by admin on 2015/9/2.
@@ -13,8 +17,8 @@ public class makeRec {
     String ipAdress = "127.0.0.1";
     Jedis jedis;
 
-    public  makeFood localFood;
-    public  makeFood remoteFood;
+    public makeFood localFood;
+    public makeFood remoteFood;
 
     public makeRec(){
 
@@ -71,8 +75,11 @@ public class makeRec {
     public static void main(String[] args){
         makeRec mr = new makeRec();
         mr.initData();
-        ArrayList<String > finalRecommend = mr.recommendList("claire", "component_3:component_4:component_2:component_9", "component_3");
+
+        ArrayList<String > finalRecommend = mr.recommendList("claire", "component_3:component_4:component_5:component_6", "component_7");
         System.out.print(finalRecommend);
+
+        System.out.print("component_3:component_4".indexOf(""));
 
     }
 

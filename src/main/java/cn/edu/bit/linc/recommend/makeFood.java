@@ -18,7 +18,6 @@ public class makeFood {
     Jedis jedis;
     int numOfFood = 0;
     int recommendNum = 10;
-    JedisPool jedisPool = null;
     ArrayList<String> requestList = new ArrayList<String>();
     ArrayList<String> mostResult = new ArrayList<String>();
     ArrayList<String> rareResult = new ArrayList<String>();
@@ -41,7 +40,7 @@ public class makeFood {
 
         config.setTestOnBorrow(false);
 
-        jedisPool = new JedisPool(config, "127.0.0.1", 6379);
+        JedisPool jedisPool = new JedisPool(config, "127.0.0.1", 6379);
         this.jedis = jedisPool.getResource();
 
     }
@@ -175,30 +174,29 @@ public class makeFood {
 //            //there's component to be true(left)
 //            if(entry.getValue()){
 //                String componentLeft = (String) entry.getKey();
-            for(int i = 0;i < requestList.size();i++){
-                String componentLeft = requestList.get(i);
+        for(int i = 0;i < requestList.size();i++){
+            String componentLeft = requestList.get(i);
+            Set<String> smembers = jedis.smembers(componentLeft);
 
-                Set<String> smembers = jedis.smembers(componentLeft);
-
-                //If the left component is in local
-                if(smembers != null) {
-                    for (String str : smembers) {
-                        String comp = jedis.hget(str,"component");
-                        if(comp == null || comp.indexOf(userDislikeString) != -1)   continue;
-                        rareResult.add(str);
-                        numOfFood++;
-                        componentMap.put(componentLeft, false);
-                        requestList.remove(componentLeft);
-                        String type = jedis.hget(str, "type");
-                        try{
-                            allType.remove(type);
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-
+            //If the left component is in local
+            if(smembers != null) {
+                for (String str : smembers) {
+                    String comp = jedis.hget(str,"component");
+                    if(!"".equals(userDislikeString) && comp.indexOf(userDislikeString) != -1)   continue;
+                    rareResult.add(str);
+                    numOfFood++;
+                    componentMap.put(componentLeft, false);
+                    requestList.remove(componentLeft);
+                    String type = jedis.hget(str, "type");
+                    try{
+                        allType.remove(type);
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
+
                 }
             }
+        }
     }
 
     public void addType(String userDislikeString){
@@ -247,7 +245,6 @@ public class makeFood {
         recommendResult.addAll(mostResult);
         recommendResult.addAll(rareResult);
         recommendResult.addAll(typeResult);
-        jedisPool.returnResource(jedis);
     }
 
 }
