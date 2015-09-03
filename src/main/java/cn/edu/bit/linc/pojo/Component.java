@@ -6,7 +6,7 @@ public class Component {
 	private int product_id;
 	private String component_name;
 	private String description;
-	//private String picture;
+	private String picture;
 	
 	public int getId() {
 		return id;
@@ -38,11 +38,6 @@ public class Component {
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}*/
-	
-	@Override
-	public String toString() {
-		return "Component [id =" + id + "product_id=" + product_id + ", component_name=" + component_name + ", description=" + description + "]";
-	}
 	
 	@Override
 	public String toString() {
