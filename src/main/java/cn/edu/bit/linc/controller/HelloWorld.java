@@ -17,7 +17,7 @@ public class HelloWorld {
 	@RequestMapping("/hello")
 	public String sayHello(){
 		System.out.println("hello!");
-		return "success";
+		return "test";
 	}
 	
 	@ResponseBody

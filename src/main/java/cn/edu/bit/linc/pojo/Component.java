@@ -44,4 +44,10 @@ public class Component {
 		return "Component [id =" + id + "product_id=" + product_id + ", component_name=" + component_name + ", description=" + description + "]";
 	}
 	
+	@Override
+	public String toString() {
+		return "Component [id=" + id + ", product_id=" + product_id + ", component_name=" + component_name
+				+ ", description=" + description + ", picture=" + picture + "]";
+	}
+	
 }

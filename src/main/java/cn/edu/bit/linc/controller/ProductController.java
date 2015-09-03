@@ -2,29 +2,33 @@ package cn.edu.bit.linc.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ibm.db2.jcc.a.c;
 import com.ibm.db2.jcc.am.po;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cn.edu.bit.linc.dao.ICatalog;
 import cn.edu.bit.linc.dao.IComponent;
@@ -32,8 +36,11 @@ import cn.edu.bit.linc.dao.IProduct;
 import cn.edu.bit.linc.pojo.Catalog;
 import cn.edu.bit.linc.pojo.Component;
 import cn.edu.bit.linc.pojo.Product;
+import cn.edu.bit.linc.pojo.RequestComponent;
+import cn.edu.bit.linc.recommend.makeRec;
 import cn.edu.bit.linc.util.DBUtil;
 
+@SessionAttributes
 @Controller
 public class ProductController {
 
@@ -253,6 +260,59 @@ public class ProductController {
 		}
 		session.close();
 		return components;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/recommend")
+	public List<Product> getRecommend(@RequestBody RequestComponent requestComponent, HttpSession session){
+		System.out.println("session id: " + session.getId());
+		Component[] components = requestComponent.getLike();
+		Component[] dislikeComponents = requestComponent.getDislike();
+		System.out.println(components.length);
+		System.out.println(components[0]);
+		System.out.println(dislikeComponents.length);
+		
+		//like
+		String userLikeString = "";
+		for(int i=0; i<components.length-1; i++){
+			userLikeString += "component_" + components[i].getId() + ":";
+		}
+		if(components.length > 0)
+			userLikeString += "component_" + components[components.length-1].getId();
+		System.out.println(userLikeString);
+		
+		//dislike
+		String userDislikeString = "";
+		for(int i=0; i<dislikeComponents.length-1; i++){
+			userDislikeString += "component_" + dislikeComponents[i].getId() + ":";
+		}
+		if(dislikeComponents.length > 0)
+			userDislikeString += "component_" + dislikeComponents[dislikeComponents.length-1].getId();
+		System.out.println(userDislikeString);
+		
+		//get recommend
+		ArrayList<String> result = null;
+		makeRec mr = new makeRec();
+		result = mr.recommendList(session.getId(), userLikeString, userDislikeString);
+		
+		List<Product> products = new ArrayList<Product>();
+		SqlSession sqlsession = DBUtil.openSession();
+		IProduct iproduct = sqlsession.getMapper(IProduct.class);
+		for(String p : result){
+			int id = -1;
+			try{
+				id = Integer.parseInt(p);
+			}
+			catch(NumberFormatException e){
+				//e.printStackTrace();
+				break;
+			}
+			if(id != -1)
+				products.add(iproduct.getProductByID(id));
+		}
+		
+		return products;
+		
 	}
 	
 }
