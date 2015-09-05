@@ -24,7 +24,7 @@
     
     <mvc:resources mapping="/imgUpload/**" location="/resourses/imgUpload/" />
     <mvc:resources mapping="/js/**" location="/resourses/js/" />
-    <mvc:resources mapping="/css/**" location="/resourses/csss/" />
+    <mvc:resources mapping="/css/**" location="/resourses/css/" />
     <mvc:resources mapping="/fonts/**" location="/resourses/fonts/" />
     
     <bean id="multipartResolver"
