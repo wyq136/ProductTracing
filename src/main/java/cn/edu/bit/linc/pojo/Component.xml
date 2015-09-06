@@ -4,7 +4,7 @@
 
 <mapper namespace="cn.edu.bit.linc.dao.IComponent">
     <select id="selectComponents" resultType="cn.edu.bit.linc.pojo.Component">
-        select * from component
+        SELECT * from component GROUP BY component_name;
     </select>
     
     <select id="selectComponentByProductId" parameterType="String" resultType="cn.edu.bit.linc.pojo.Component">
