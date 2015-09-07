@@ -262,7 +262,7 @@ public class ProductController {
 		session.close();
 		int[] res = RandomUtil.RandomArray(components.size());
 		List<Component> random = new ArrayList<Component>();
-		for(int i=0; i<20; i++){
+		for(int i=0; i<components.size(); i++){
 			random.add(components.get(res[i]));
 		}
 		return random;
