@@ -126,7 +126,7 @@ public class makeFood {
      * Add products which have most votes
      * @param productCount
      */
-    public void addMost(HashMap<String,Integer> productCount){
+    public void addMost(HashMap<String,Integer> productCount,String userDislikeString){
         this.numOfFood = 0;
         int max = 0;
 
@@ -141,24 +141,30 @@ public class makeFood {
             int val = entry.getValue();
             if(val == max) {
                 String key = entry.getKey();
-                mostResult.add(key);
-                this.numOfFood ++;
 
                 String component = jedis.hget(key,"component");
-                String[] c = component.split(",");
-                for(String str:c){
-                    if(componentMap.get(str) != null && componentMap.get(str)){
-                        componentMap.put(str,false);
-                        requestList.remove(str);
+                if(!"".equals(userDislikeString) && component.indexOf(userDislikeString) != -1)   continue;
+                else{
+                    mostResult.add(key);
+                    this.numOfFood ++;
+                    String[] c = component.split(",");
+                    for(String str:c){
+                        if(componentMap.get(str) != null && componentMap.get(str)){
+                            componentMap.put(str,false);
+                            requestList.remove(str);
+                        }
+                    }
+
+
+                    String type = jedis.hget(key,"type");
+                    try {
+                        allType.remove(type);
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
                 }
 
-                String type = jedis.hget(key,"type");
-                try {
-                    allType.remove(type);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+
 //                String type = jedis.hget(key,"type");
 //                typeMap.put(type,false);
             }
@@ -230,7 +236,7 @@ public class makeFood {
         jedis.select(dataSource);
         product = countProduct(userId, userDislikeString);
 
-        addMost(product);
+        addMost(product, userDislikeString);
         if(requestList.size() > 0  && numOfFood < recommendNum){
             addRare(userDislikeString);
         }
