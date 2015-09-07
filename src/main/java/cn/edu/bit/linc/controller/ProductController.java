@@ -86,7 +86,7 @@ public class ProductController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/product", method=RequestMethod.GET)
+	@RequestMapping(value="/product")
 	public List<Product> getProducts(HttpServletRequest request){
 		SqlSession session = DBUtil.openSession();
 		IProduct iproduct = session.getMapper(IProduct.class);
@@ -102,6 +102,51 @@ public class ProductController {
 		
 		session.close();
 		return products;
+	}
+	
+	private class PublicWithComponents {
+		Product product;
+		List<Component> components;
+		
+		public Product getProduct() {
+			return product;
+		}
+		public void setProduct(Product product) {
+			this.product = product;
+		}
+		public List<Component> getComponents() {
+			return components;
+		}
+		public void setComponents(List<Component> components) {
+			this.components = components;
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/productWithComponents")
+	public PublicWithComponents getProductWithComponents(HttpServletRequest request){
+		SqlSession session = DBUtil.openSession();
+		IProduct iproduct = session.getMapper(IProduct.class);
+		IComponent iComponent = session.getMapper(IComponent.class);
+		
+		PublicWithComponents pwc = new PublicWithComponents();
+		Product product = null;
+		
+		String id = request.getParameter("id");
+		String guid = request.getParameter("guid");
+		if(id != null) {
+			product = iproduct.selectProductById(id).get(0);
+		}
+		else if(guid != null) {
+			//Todo:
+		}
+		
+		List<Component> components = iComponent.selectComponentByProductId(product.getId());
+		pwc.setProduct(product);
+		pwc.setComponents(components);
+		
+		session.close();
+		return pwc;
 	}
 	
 	@ResponseBody
@@ -253,7 +298,7 @@ public class ProductController {
 		
 		String product_id = request.getParameter("product_id");
 		if(product_id != null) {
-			components = icomponent.selectComponentByProductId(product_id);
+			components = icomponent.selectComponentByProductId(Integer.parseInt(product_id));
 		}
 		else {
 			components = icomponent.selectComponents();
@@ -261,6 +306,8 @@ public class ProductController {
 		session.close();
 		return components;
 	}
+	
+	
 	
 	@ResponseBody
 	@RequestMapping(value="/recommend")
