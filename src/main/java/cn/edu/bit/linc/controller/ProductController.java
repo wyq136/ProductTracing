@@ -39,6 +39,7 @@ import cn.edu.bit.linc.pojo.Product;
 import cn.edu.bit.linc.pojo.RequestComponent;
 import cn.edu.bit.linc.recommend.makeRec;
 import cn.edu.bit.linc.util.DBUtil;
+import cn.edu.bit.linc.util.RandomUtil;
 
 @SessionAttributes
 @Controller
@@ -195,8 +196,8 @@ public class ProductController {
 		String[] component_name = request.getParameterValues("component_name");
 		String[] component_description = request.getParameterValues("component_description");
 		
-		System.out.println(component_name[0] + " " + component_name[1]);
-		System.out.println(component_description[0] + " " + component_description[1]);
+//		System.out.println(component_name[0] + " " + component_name[1]);
+//		System.out.println(component_description[0] + " " + component_description[1]);
 		
 		if(name.equals(""))
 			name = null;
@@ -227,7 +228,7 @@ public class ProductController {
                 MultipartFile file = multiRequest.getFile(iter.next());  
                 if (file != null) {
                     String fileName = System.currentTimeMillis() + file.getOriginalFilename();  
-                    String path = request.getSession().getServletContext().getRealPath("/resourses/imgUpload/") + fileName;  
+                    String path = request.getSession().getServletContext().getRealPath("/resourses/imgUpload/") + "/" + fileName;  
                     System.out.println(path + " " + file.getOriginalFilename());
                     
                     if(file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
@@ -304,7 +305,12 @@ public class ProductController {
 			components = icomponent.selectComponents();
 		}
 		session.close();
-		return components;
+		int[] res = RandomUtil.RandomArray(components.size());
+		List<Component> random = new ArrayList<Component>();
+		for(int i=0; i<components.size(); i++){
+			random.add(components.get(res[i]));
+		}
+		return random;
 	}
 	
 	
@@ -322,19 +328,19 @@ public class ProductController {
 		//like
 		String userLikeString = "";
 		for(int i=0; i<components.length-1; i++){
-			userLikeString += "component_" + components[i].getId() + ":";
+			userLikeString += components[i].getComponent_name() + ":";
 		}
 		if(components.length > 0)
-			userLikeString += "component_" + components[components.length-1].getId();
+			userLikeString += components[components.length-1].getComponent_name();
 		System.out.println(userLikeString);
 		
 		//dislike
 		String userDislikeString = "";
 		for(int i=0; i<dislikeComponents.length-1; i++){
-			userDislikeString += "component_" + dislikeComponents[i].getId() + ":";
+			userDislikeString += dislikeComponents[i].getComponent_name() + ":";
 		}
 		if(dislikeComponents.length > 0)
-			userDislikeString += "component_" + dislikeComponents[dislikeComponents.length-1].getId();
+			userDislikeString += dislikeComponents[dislikeComponents.length-1].getComponent_name();
 		System.out.println(userDislikeString);
 		
 		//get recommend

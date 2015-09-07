@@ -15,7 +15,7 @@
 				console.log(data);
 				//components = data;
 				components = [];
-				for(var i=2; i<data.length; i++){
+				for(var i=2; i<6; i++){
 					//console.log(data[i].username + " " + data[i].password);
 					components.push(data[i]);
 				}

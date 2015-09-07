@@ -4,7 +4,8 @@
 
 <mapper namespace="cn.edu.bit.linc.dao.IComponent">
     <select id="selectComponents" resultType="cn.edu.bit.linc.pojo.Component">
-        select * from component
+        SELECT component.id, component.component_name, component.description, component.picture, component.product_id from component, product 
+	WHERE product.shop = 'local' AND product.id = component.product_id GROUP BY component_name;
     </select>
     
     <select id="selectComponentByProductId" parameterType="Integer" resultType="cn.edu.bit.linc.pojo.Component">

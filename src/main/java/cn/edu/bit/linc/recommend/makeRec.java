@@ -75,12 +75,7 @@ public class makeRec {
     public static void main(String[] args){
         makeRec mr = new makeRec();
         mr.initData();
-
-        ArrayList<String > finalRecommend = mr.recommendList("claire", "component_3:component_4:component_5:component_6", "component_7");
-        System.out.print(finalRecommend);
-
-        System.out.print("component_3:component_4".indexOf(""));
-
+        System.out.println("test");
     }
 
 
