@@ -56,8 +56,8 @@ public class DataUtil {
 	public static void getZhDataFromDB() throws IOException{
 		SqlSession session = DBUtil.openSession();
 		IProduct iproduct = session.getMapper(IProduct.class);
-		List<ProductInfo> products = iproduct.getProductInfos();
-		session.close();
+		// local food data
+		List<ProductInfo> products = iproduct.getLocalProductInfos();
 		
 		Map<Integer, List<String>> res = new HashMap<Integer, List<String>>();
 		for(ProductInfo p : products){
@@ -74,6 +74,39 @@ public class DataUtil {
 		
 		File file = new File("Data/localFood");
 		BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+		for(Map.Entry<Integer, List<String>> entry : res.entrySet()){
+			String line = "";
+			line += entry.getKey() + ":";
+			List<String> val = entry.getValue();
+			for(int i=1; i<val.size()-1; i++){
+				line += val.get(i) + ",";
+			}
+			line += val.get(val.size()-1) + ":";
+			line += val.get(0);
+			bw.write(line);
+			bw.newLine();
+		}
+		bw.close();
+		
+		// remote food data
+		products = iproduct.getRemoteProductInfos();
+		session.close();
+		
+		res = new HashMap<Integer, List<String>>();
+		for(ProductInfo p : products){
+			if(!res.containsKey(p.getProduct_id())){
+				List<String> list = new ArrayList<String>();
+				list.add(p.getCatalog_name());			
+				list.add(p.getComponent_name());
+				res.put(p.getProduct_id(), list);
+			}
+			else{
+				res.get(p.getProduct_id()).add(p.getComponent_name());
+			}
+		}
+		
+		file = new File("Data/remoteFood");
+		bw = new BufferedWriter(new FileWriter(file));
 		for(Map.Entry<Integer, List<String>> entry : res.entrySet()){
 			String line = "";
 			line += entry.getKey() + ":";
