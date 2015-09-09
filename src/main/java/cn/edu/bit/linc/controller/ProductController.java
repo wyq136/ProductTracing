@@ -15,6 +15,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +29,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.ibm.db2.jcc.a.c;
 import com.ibm.db2.jcc.am.po;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cn.edu.bit.linc.dao.ICatalog;
@@ -103,6 +105,21 @@ public class ProductController {
 		
 		session.close();
 		return products;
+	}
+	
+	@RequestMapping(value="/product/{id}", method=RequestMethod.GET)
+	public ModelAndView showProduct(@PathVariable Integer id){
+		ModelAndView mv = new ModelAndView("productInfo");
+		SqlSession session = DBUtil.openSession();
+		IProduct iproduct = session.getMapper(IProduct.class);
+		Product product = iproduct.getProductByID(id);
+		
+		IComponent icomponent = session.getMapper(IComponent.class);
+		List<Component> components = icomponent.selectComponentByProductId(String.valueOf(product.getId()));
+		
+		mv.addObject("product", product);
+		mv.addObject("components", components);
+		return mv;
 	}
 	
 	@ResponseBody
