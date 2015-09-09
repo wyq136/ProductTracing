@@ -9,7 +9,7 @@ public interface IComponent {
 
 	public List<Component> selectComponents();
 	
-	public List<Component> selectComponentByProductId(String product_id);
+	public List<Component> selectComponentByProductId(int product_id);
 	
 	public int insertComponent(Component component);
 }

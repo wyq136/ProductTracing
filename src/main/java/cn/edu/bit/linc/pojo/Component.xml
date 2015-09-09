@@ -8,7 +8,7 @@
 	WHERE product.shop = 'local' AND product.id = component.product_id GROUP BY component_name;
     </select>
     
-    <select id="selectComponentByProductId" parameterType="String" resultType="cn.edu.bit.linc.pojo.Component">
+    <select id="selectComponentByProductId" parameterType="Integer" resultType="cn.edu.bit.linc.pojo.Component">
         select * from component where product_id = #{product_id}
     </select>
     
