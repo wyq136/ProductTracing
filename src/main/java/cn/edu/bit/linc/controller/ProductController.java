@@ -160,7 +160,7 @@ public class ProductController {
 		Product product = iproduct.getProductByID(id);
 		
 		IComponent icomponent = session.getMapper(IComponent.class);
-		List<Component> components = icomponent.selectComponentByProductId(String.valueOf(product.getId()));
+		List<Component> components = icomponent.selectComponentByProductId(product.getId());
 		
 		mv.addObject("product", product);
 		mv.addObject("components", components);
