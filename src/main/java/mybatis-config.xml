@@ -4,7 +4,7 @@
 
 <configuration>
 
-	<properties resource="db.properties" />
+	<properties resource="db1.properties" />
 	
 	<environments default="development">
 		<environment id="development">

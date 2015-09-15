@@ -4,6 +4,16 @@
 
 <mapper namespace="cn.edu.bit.linc.dao.IComponent">
     <select id="selectComponents" resultType="cn.edu.bit.linc.pojo.Component">
-        select * from component
+        SELECT component.id, component.component_name, component.description, component.picture, component.product_id from component, product 
+	WHERE product.shop = 'local' AND product.id = component.product_id GROUP BY component_name;
     </select>
+    
+    <select id="selectComponentByProductId" parameterType="Integer" resultType="cn.edu.bit.linc.pojo.Component">
+        select * from component where product_id = #{product_id}
+    </select>
+    
+    <insert id="insertComponent" parameterType="cn.edu.bit.linc.pojo.Component">
+        insert into component (product_id, component_name, description) values (#{product_id}, #{component_name}, #{description})
+    </insert>
+    
 </mapper>
