@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -343,9 +344,9 @@ public class ProductController {
 		System.out.println("session id: " + session.getId());
 		Component[] components = requestComponent.getLike();
 		Component[] dislikeComponents = requestComponent.getDislike();
-		System.out.println(components.length);
-		System.out.println(components[0]);
-		System.out.println(dislikeComponents.length);
+		//System.out.println(components.length);
+		//System.out.println(components[0]);
+		//System.out.println(dislikeComponents.length);
 		
 		//like
 		String userLikeString = "";
@@ -366,14 +367,15 @@ public class ProductController {
 		System.out.println(userDislikeString);
 		
 		//get recommend
-		ArrayList<String> result = null;
+		LinkedHashMap<String, String> result = null;
 		makeRec mr = new makeRec();
 		result = mr.recommendList(session.getId(), userLikeString, userDislikeString);
 		
 		List<Product> products = new ArrayList<Product>();
 		SqlSession sqlsession = DBUtil.openSession();
 		IProduct iproduct = sqlsession.getMapper(IProduct.class);
-		for(String p : result){
+		for(String p : result.keySet()){
+			System.out.println(p + " : " + result.get(p));
 			int id = -1;
 			try{
 				id = Integer.parseInt(p);
@@ -382,8 +384,11 @@ public class ProductController {
 				//e.printStackTrace();
 				break;
 			}
-			if(id != -1)
-				products.add(iproduct.getProductByID(id));
+			if(id != -1){
+				Product product = iproduct.getProductByID(id);
+				product.setRate(result.get(p));
+				products.add(product);
+			}
 		}
 		System.out.println(products);
 		
