@@ -28,7 +28,7 @@ public class makeFood {
     HashMap<String,Boolean> componentMap = new HashMap<String, Boolean>();      //initialize to be true, if have, change to false
     HashMap<String,Integer> product = new HashMap<String, Integer>();
     ArrayList<String> recommendCount = new ArrayList<String>();
-
+    int[][] score = {{100,100,100},{60,100,100},{60,80,100},{60,75,87}};
     public void initType() {
         allType.add("catalog_1");
         allType.add("catalog_2");
@@ -256,8 +256,7 @@ public class makeFood {
 
         for(int i = 0;i < recommendResult.size();i++){
             int val = product.get(recommendResult.get(i));
-            String num = ((val + 5) / (requestSize + 5)  * 100) + "%";
-
+            String num = score[val][requestSize] + "%";
             recommendCount.add(num);
         }
     }
