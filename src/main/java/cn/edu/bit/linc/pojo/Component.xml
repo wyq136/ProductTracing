@@ -4,8 +4,8 @@
 
 <mapper namespace="cn.edu.bit.linc.dao.IComponent">
     <select id="selectComponents" resultType="cn.edu.bit.linc.pojo.Component">
-        SELECT component.id, component.component_name, component.description, component.picture, component.product_id from component, product 
-	WHERE product.shop = 'local' AND product.id = component.product_id GROUP BY component_name;
+        SELECT max(component.id) as id, component.component_name, max(component.description) as description, max(component.picture) as picture, max(component.product_id) as product_id from component, product 
+	WHERE product.shop = 'local' AND product.id = component.product_id GROUP BY component.component_name
     </select>
     
     <select id="selectComponentByProductId" parameterType="Integer" resultType="cn.edu.bit.linc.pojo.Component">

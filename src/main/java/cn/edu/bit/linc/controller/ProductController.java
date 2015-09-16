@@ -52,6 +52,11 @@ public class ProductController {
 		return "index";
 	}
 	
+	@RequestMapping("/download")
+	public String download(){
+		return "download";
+	}
+	
 	@RequestMapping("/")
 	public String add(Model model){
 		//System.out.println("hello!");
@@ -160,7 +165,7 @@ public class ProductController {
 		Product product = iproduct.getProductByID(id);
 		
 		IComponent icomponent = session.getMapper(IComponent.class);
-		List<Component> components = icomponent.selectComponentByProductId(String.valueOf(product.getId()));
+		List<Component> components = icomponent.selectComponentByProductId(product.getId());
 		
 		mv.addObject("product", product);
 		mv.addObject("components", components);
@@ -297,7 +302,7 @@ public class ProductController {
 		
 		if(ret != 0) {
 			session.commit();
-			model.addAttribute("message", "添加成功： " + product.getId());
+			model.addAttribute("message", "添加成功" + product.getId());
 		}
 		else
 			model.addAttribute("message", "添加失败");
@@ -380,6 +385,7 @@ public class ProductController {
 			if(id != -1)
 				products.add(iproduct.getProductByID(id));
 		}
+		System.out.println(products);
 		
 		return products;
 		
