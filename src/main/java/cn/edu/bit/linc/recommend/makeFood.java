@@ -18,6 +18,7 @@ public class makeFood {
     Jedis jedis;
     int numOfFood = 0;
     int recommendNum = 10;
+    int requestSize = 0;
     ArrayList<String> requestList = new ArrayList<String>();
     ArrayList<String> mostResult = new ArrayList<String>();
     ArrayList<String> rareResult = new ArrayList<String>();
@@ -90,6 +91,7 @@ public class makeFood {
         for(String str:userLike){
             requestList.add(str);
         }
+        requestSize = requestList.size();
     }
 
     /**
@@ -251,12 +253,10 @@ public class makeFood {
         recommendResult.addAll(mostResult);
         recommendResult.addAll(rareResult);
         recommendResult.addAll(typeResult);
-        int requestNum = requestList.size();
 
-        ArrayList<Integer> count = new ArrayList<Integer>();
         for(int i = 0;i < recommendResult.size();i++){
             int val = product.get(recommendResult.get(i));
-            String num = ((val + 5) / (requestNum + 5)) + "%";
+            String num = ((val + 5) / (requestSize + 5)  * 100) + "%";
 
             recommendCount.add(num);
         }
