@@ -256,8 +256,13 @@ public class makeFood {
 
         for(int i = 0;i < recommendResult.size();i++){
             int val = product.get(recommendResult.get(i));
-            String num = score[val][requestSize] + "%";
-            recommendCount.add(num);
+            if(val < 4 ){
+            	String num = score[requestSize-1][val-1] + "%";
+            	recommendCount.add(num);
+            }
+            else{
+            	recommendCount.add("100%");
+            }
         }
     }
 }
