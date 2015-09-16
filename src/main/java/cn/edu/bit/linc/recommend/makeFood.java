@@ -26,6 +26,7 @@ public class makeFood {
     Set<String> allType = new HashSet<String>();
     HashMap<String,Boolean> componentMap = new HashMap<String, Boolean>();      //initialize to be true, if have, change to false
     HashMap<String,Integer> product = new HashMap<String, Integer>();
+    ArrayList<String> recommendCount = new ArrayList<String>();
 
     public void initType() {
         allType.add("catalog_1");
@@ -155,7 +156,6 @@ public class makeFood {
                         }
                     }
 
-
                     String type = jedis.hget(key,"type");
                     try {
                         allType.remove(type);
@@ -251,7 +251,15 @@ public class makeFood {
         recommendResult.addAll(mostResult);
         recommendResult.addAll(rareResult);
         recommendResult.addAll(typeResult);
-    }
+        int requestNum = requestList.size();
 
+        ArrayList<Integer> count = new ArrayList<Integer>();
+        for(int i = 0;i < recommendResult.size();i++){
+            int val = product.get(recommendResult.get(i));
+            String num = ((val + 5) / (requestNum + 5)) + "%";
+
+            recommendCount.add(num);
+        }
+    }
 }
 
