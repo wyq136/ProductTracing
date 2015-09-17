@@ -243,10 +243,13 @@ public class makeFood {
         keyList.addAll(keys);
 
         if(userLikeString.equals("")){
-            for(int i = 0;i < 4;i++){
+            for(int i = 0;i < 6;i++){
                 Random random = new Random();
                 int pid = random.nextInt(keyList.size() - 1);
                 String pName = keyList.get(pid);
+                for(int j = 0;j < recommendResult.size();j++){
+                    if(recommendResult.get(j).equals(pName))    continue;
+                }
                 recommendResult.add(pName);
             }
             return;
