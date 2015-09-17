@@ -11,6 +11,10 @@ public interface IProduct {
 
 	public List<ProductInfo> getProductInfos();
 	
+	public List<ProductInfo> getLocalProductInfos();
+	
+	public List<ProductInfo> getRemoteProductInfos();
+	
 	public Product getProductByID(int id);
 	
 	public List<Product> selectProductById(String id);

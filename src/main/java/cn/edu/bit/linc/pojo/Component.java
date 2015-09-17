@@ -32,12 +32,12 @@ public class Component {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getPicture() {
+	/*public String getPicture() {
 		return picture;
 	}
 	public void setPicture(String picture) {
 		this.picture = picture;
-	}
+	}*/
 	
 	@Override
 	public String toString() {

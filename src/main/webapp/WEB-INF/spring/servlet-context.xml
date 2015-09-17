@@ -23,6 +23,11 @@
     <mvc:annotation-driven />
     
     <mvc:resources mapping="/imgUpload/**" location="/resourses/imgUpload/" />
+    <mvc:resources mapping="/appDownload/**" location="/resourses/appDownload/" />
+    <mvc:resources mapping="/imgs/**" location="/resourses/imgs/" />
+    <mvc:resources mapping="/js/**" location="/resourses/js/" />
+    <mvc:resources mapping="/css/**" location="/resourses/css/" />
+    <mvc:resources mapping="/fonts/**" location="/resourses/fonts/" />
     
     <bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

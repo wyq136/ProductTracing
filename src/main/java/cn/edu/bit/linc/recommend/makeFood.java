@@ -18,6 +18,7 @@ public class makeFood {
     Jedis jedis;
     int numOfFood = 0;
     int recommendNum = 10;
+    int requestSize = 0;
     ArrayList<String> requestList = new ArrayList<String>();
     ArrayList<String> mostResult = new ArrayList<String>();
     ArrayList<String> rareResult = new ArrayList<String>();
@@ -26,7 +27,8 @@ public class makeFood {
     Set<String> allType = new HashSet<String>();
     HashMap<String,Boolean> componentMap = new HashMap<String, Boolean>();      //initialize to be true, if have, change to false
     HashMap<String,Integer> product = new HashMap<String, Integer>();
-
+    ArrayList<String> recommendCount = new ArrayList<String>();
+    int[][] score = {{100,100,100},{60,100,100},{60,80,100},{60,75,87}};
     public void initType() {
         allType.add("catalog_1");
         allType.add("catalog_2");
@@ -89,6 +91,7 @@ public class makeFood {
         for(String str:userLike){
             requestList.add(str);
         }
+        requestSize = requestList.size();
     }
 
     /**
@@ -126,7 +129,7 @@ public class makeFood {
      * Add products which have most votes
      * @param productCount
      */
-    public void addMost(HashMap<String,Integer> productCount){
+    public void addMost(HashMap<String,Integer> productCount,String userDislikeString){
         this.numOfFood = 0;
         int max = 0;
 
@@ -141,24 +144,29 @@ public class makeFood {
             int val = entry.getValue();
             if(val == max) {
                 String key = entry.getKey();
-                mostResult.add(key);
-                this.numOfFood ++;
 
                 String component = jedis.hget(key,"component");
-                String[] c = component.split(",");
-                for(String str:c){
-                    if(componentMap.get(str) != null && componentMap.get(str)){
-                        componentMap.put(str,false);
-                        requestList.remove(str);
+                if(!"".equals(userDislikeString) && component.indexOf(userDislikeString) != -1)   continue;
+                else{
+                    mostResult.add(key);
+                    this.numOfFood ++;
+                    String[] c = component.split(",");
+                    for(String str:c){
+                        if(componentMap.get(str) != null && componentMap.get(str)){
+                            componentMap.put(str,false);
+                            requestList.remove(str);
+                        }
+                    }
+
+                    String type = jedis.hget(key,"type");
+                    try {
+                        allType.remove(type);
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
                 }
 
-                String type = jedis.hget(key,"type");
-                try {
-                    allType.remove(type);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+
 //                String type = jedis.hget(key,"type");
 //                typeMap.put(type,false);
             }
@@ -228,9 +236,23 @@ public class makeFood {
     public void makeFinalRecommend(String userId, String userLikeString ,String userDislikeString, int dataSource){
 
         jedis.select(dataSource);
-        product = countProduct(userId, userDislikeString);
 
-        addMost(product);
+        product = countProduct(userId, userDislikeString);
+        Set keys = product.keySet();
+        List<String> keyList = new ArrayList<String>();
+        keyList.addAll(keys);
+
+        if(userLikeString.equals("")){
+            for(int i = 0;i < 4;i++){
+                Random random = new Random();
+                int pid = 1 + random.nextInt(4);
+                String pName = keyList.get(pid);
+                recommendResult.add(pName);
+            }
+            return;
+        }
+
+        addMost(product, userDislikeString);
         if(requestList.size() > 0  && numOfFood < recommendNum){
             addRare(userDislikeString);
         }
@@ -245,7 +267,17 @@ public class makeFood {
         recommendResult.addAll(mostResult);
         recommendResult.addAll(rareResult);
         recommendResult.addAll(typeResult);
-    }
 
+        for(int i = 0;i < recommendResult.size();i++){
+            int val = product.get(recommendResult.get(i));
+            if(val < 4 ){
+            	String num = score[requestSize-1][val-1] + "%";
+            	recommendCount.add(num);
+            }
+            else{
+            	recommendCount.add("100%");
+            }
+        }
+    }
 }
 

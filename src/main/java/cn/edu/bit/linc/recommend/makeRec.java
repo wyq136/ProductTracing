@@ -41,18 +41,25 @@ public class makeRec {
         }
     }
 
-    public ArrayList<String> recommendList(String userId, String userLikeString, String userDislikeString) {
+    public LinkedHashMap<String,String> recommendList(String userId, String userLikeString, String userDislikeString) {
 //        String userLikeString = "芝士:奥利奥饼干:苹果片:红豆";
 //
 //        String userDislikeString = "巧克力";
 
-        int recommendNum = 10;
+        int recommendNum = 7;
+
+        LinkedHashMap<String,String > finalRecommend = new LinkedHashMap<String,String>();
 
         Date date = new Date();
         String time = date.getHours() + ":" + date.getMinutes();
         localFood.saveReqToDB(userId, time, userLikeString);
 
         localFood.makeFinalRecommend(userId,userLikeString,userDislikeString,0);
+
+        for(int i = 0;i < localFood.recommendCount.size();i++){
+            finalRecommend.put(localFood.recommendResult.get(i),localFood.recommendCount.get(i));
+        }
+
         if(localFood.numOfFood < recommendNum && localFood.requestList.size() > 0) {
             userLikeString = "";
             for(String str:localFood.requestList){
@@ -61,27 +68,23 @@ public class makeRec {
             userLikeString.substring(0, userLikeString.length() - 2);
 
             remoteFood.saveReqToDB(userId,time,userLikeString);
+
             remoteFood.makeFinalRecommend(userId, userLikeString, userDislikeString,1);
+
+            for(int i = 0;i < remoteFood.recommendCount.size();i++){
+                finalRecommend.put(remoteFood.recommendResult.get(i),remoteFood.recommendCount.get(i));
+            }
         }
+        if(finalRecommend.size() == 0){
 
-        ArrayList<String > finalRecommend = new ArrayList<String>();
-        finalRecommend.addAll(localFood.recommendResult);
-        finalRecommend.addAll(remoteFood.recommendResult);
-
+        }
         return finalRecommend;
     }
-
 
     public static void main(String[] args){
         makeRec mr = new makeRec();
         mr.initData();
-
-        ArrayList<String > finalRecommend = mr.recommendList("claire", "component_3:component_4:component_5:component_6", "component_7");
-        System.out.print(finalRecommend);
-
-
-
+        System.out.println("test");
     }
-
 
 }

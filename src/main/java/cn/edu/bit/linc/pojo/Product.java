@@ -8,6 +8,7 @@ public class Product {
 	private String description;
 	private String picture;
 	private String shop;
+	private String rate;
 	
 	public int getId() {
 		return id;
@@ -47,6 +48,12 @@ public class Product {
 	
 	@Override
 	public String toString() {
-		return "Product [product_name=" + product_name + ", catalog_id=" + catalog_id + ", description=" + description + ", picture=" + picture + ", shop=" + shop + "]";
+		return "Product [id =" + id + "product_name=" + product_name + ", catalog_id=" + catalog_id + ", description=" + description + ", picture=" + picture + ", shop=" + shop + "]";
+	}
+	public String getRate() {
+		return rate;
+	}
+	public void setRate(String rate) {
+		this.rate = rate;
 	}
 }
