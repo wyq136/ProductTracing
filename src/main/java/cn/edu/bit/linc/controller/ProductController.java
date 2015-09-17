@@ -347,6 +347,20 @@ public class ProductController {
 		//System.out.println(components.length);
 		//System.out.println(components[0]);
 		//System.out.println(dislikeComponents.length);
+		if(components.length == 0){
+			List<Product> products = new ArrayList<Product>();
+			SqlSession sqlsession = DBUtil.openSession();
+			IProduct iproduct = sqlsession.getMapper(IProduct.class);
+			products = iproduct.selectProducts();
+			sqlsession.close();
+			
+			List<Product> random = new ArrayList<Product>();
+			int[] ran = RandomUtil.RandomArray(products.size());
+			for(int i=0; i<ran.length && i<3; i++){
+				random.add(products.get(ran[i]));
+			}
+			return random;
+		}
 		
 		//like
 		String userLikeString = "";
@@ -390,7 +404,8 @@ public class ProductController {
 				products.add(product);
 			}
 		}
-		System.out.println(products);
+		sqlsession.close();
+		//System.out.println(products);
 		
 		return products;
 		
