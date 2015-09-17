@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,20 +21,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ibm.db2.jcc.a.c;
 import com.ibm.db2.jcc.am.po;
+
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import cn.edu.bit.linc.dao.IAttribute;
 import cn.edu.bit.linc.dao.ICatalog;
 import cn.edu.bit.linc.dao.IComponent;
 import cn.edu.bit.linc.dao.IProduct;
+import cn.edu.bit.linc.pojo.Attribute;
 import cn.edu.bit.linc.pojo.Catalog;
 import cn.edu.bit.linc.pojo.Component;
 import cn.edu.bit.linc.pojo.Product;
@@ -168,8 +169,15 @@ public class ProductController {
 		IComponent icomponent = session.getMapper(IComponent.class);
 		List<Component> components = icomponent.selectComponentByProductId(product.getId());
 		
+		IAttribute iattribute = session.getMapper(IAttribute.class);
+		for(Component com : components) {
+			List<Attribute> attributes = iattribute.selectAttributeByComponentId(com.getId());
+			com.setAttributes(attributes);
+		}
+		
 		mv.addObject("product", product);
 		mv.addObject("components", components);
+		
 		return mv;
 	}
 	

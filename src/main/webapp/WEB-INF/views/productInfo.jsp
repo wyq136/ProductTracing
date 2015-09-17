@@ -21,6 +21,9 @@
 	<p> 组成成分：
 	<c:forEach var="component" items="${requestScope.components}">
 	    <c:out value="${component.component_name}" />
+	    <c:forEach var="attribute" items="${component.attributes}">
+	    	<p><c:out value="${attribute.attribute_name}" />:&nbsp;&nbsp;<c:out value="${attribute.attribute_value}" /></p>
+	    </c:forEach>
 	</c:forEach>
 	</p>
   </div>
