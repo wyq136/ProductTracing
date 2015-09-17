@@ -245,7 +245,7 @@ public class makeFood {
         if(userLikeString.equals("")){
             for(int i = 0;i < 4;i++){
                 Random random = new Random();
-                int pid = 1 + random.nextInt(4);
+                int pid = random.nextInt(keyList.size() - 1);
                 String pName = keyList.get(pid);
                 recommendResult.add(pName);
             }
