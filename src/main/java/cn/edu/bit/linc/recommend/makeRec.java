@@ -75,9 +75,7 @@ public class makeRec {
                 finalRecommend.put(remoteFood.recommendResult.get(i),remoteFood.recommendCount.get(i));
             }
         }
-        if(finalRecommend.size() == 0){
 
-        }
         return finalRecommend;
     }
 
@@ -85,6 +83,14 @@ public class makeRec {
         makeRec mr = new makeRec();
         mr.initData();
         System.out.println("test");
+        LinkedHashMap<String,String> recommend = new LinkedHashMap<String, String>();
+        recommend = mr.recommendList("claire","","");
+        Set s = recommend.keySet();
+        ArrayList<String> list = new ArrayList<String>();
+        list.addAll(s);
+        for(String str:list){
+            System.out.print(str);
+        }
     }
 
 }
