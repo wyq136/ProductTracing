@@ -18,14 +18,13 @@
 	<h3>${requestScope.product.product_name}</h3>
 	<p>${requestScope.product.description}</p>
 	<!--  <p>${requestScope.components}</p>-->
-	<p> 组成成分：
+	<h4> 组成成分：</h4>
 	<c:forEach var="component" items="${requestScope.components}">
-	    <c:out value="${component.component_name}" />
+	    <strong><c:out value="${component.component_name}" /></strong>
 	    <c:forEach var="attribute" items="${component.attributes}">
-	    	<p><c:out value="${attribute.attribute_name}" />:&nbsp;&nbsp;<c:out value="${attribute.attribute_value}" /></p>
+	    	  <p><c:out value="${attribute.attribute_name}" />:&nbsp;&nbsp;<c:out value="${attribute.attribute_value}" /></p>
 	    </c:forEach>
 	</c:forEach>
-	</p>
   </div>
 </body>
 </html>
