@@ -9,7 +9,15 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <meta name="viewport" content="height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    
+    <style type="text/css">
+		html,body{height:100%; width:100%; overflow:hidden; margin:0; padding:0;}
+			.main{width:100%; height:100%; overflow:hidden; margin:0; padding:0;}
+			.poster{width:100%; height:100%; color:#fff; background-color:rgb(255,240,210); text-align:center;}
+			.weixin-tip{width:80%; height:100%; color:#fff; background-color:#FF0000; text-align:center;"}
+	</style>
 
     <title>demo下载</title>
 
@@ -17,11 +25,11 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="jumbotron-narrow.css" rel="stylesheet">
+    <!--<link href="jumbotron-narrow.css" rel="stylesheet"> -->
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <!--<script src="../../assets/js/ie-emulation-modes-warning.js"></script> -->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -41,28 +49,15 @@
 
   <body>
 
-    <div class="container">
-    <div class="row">
-      <div class="header clearfix">
-        <h3 class="text-muted">下载</h3>
-      </div>
-
-      <div class="jumbotron">
-      	<div class="container">
+      		<div class="poster" ">
+      			<img src="imgs/poster.png" style="height:100%;width:100%;border:0;"/>
+      		</div>
       		<div class="weixin-tip">
-				<p>
-					<img src="imgs/live_weixin.png" alt="微信打开"/>
+      			<p>
+				<img src="imgs/live_weixin.png" alt="微信打开"/>
 				</p>
 			</div>
         	
-		</div>
-      </div>
-
-      <footer class="footer">
-        <p>&copy; Company 2015</p>
-      </footer>
-	</div>
-    </div> <!-- /container -->
     
    
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -70,7 +65,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
     
      <script type="text/javascript">
         $(window).on("load",function(){
