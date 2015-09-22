@@ -68,6 +68,10 @@
       });
       
 	});
+	
+	function aclick(e){
+  	  $('#'+ e)[0].click();
+    }
   </script>
 </head>
 <body>
@@ -95,10 +99,10 @@
 	
 	<div class="panel panel-default">
 		<c:forEach var="component" items="${requestScope.components}">
-		<div class="panel-heading">
+		<div class="panel-heading" onclick="aclick('a${component.id}')">
 			<h4 class="panel-title">
-				<a id = "a${component.id}" data-toggle="collapse" data-parent="#accordion" href="/demo/bootstrap3-plugin-collapse-method.htm#collapse${component.id}">
-					<c:out value="${component.component_name}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a id="a${component.id}" data-toggle="collapse" data-parent="#accordion" href="/demo/bootstrap3-plugin-collapse-method.htm#collapse${component.id}">
+					<c:out value="${component.component_name}" />
 				</a>
 			</h4>
 		</div>
