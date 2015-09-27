@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,20 +21,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ibm.db2.jcc.a.c;
 import com.ibm.db2.jcc.am.po;
+
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import cn.edu.bit.linc.dao.IAttribute;
 import cn.edu.bit.linc.dao.ICatalog;
 import cn.edu.bit.linc.dao.IComponent;
 import cn.edu.bit.linc.dao.IProduct;
+import cn.edu.bit.linc.pojo.Attribute;
 import cn.edu.bit.linc.pojo.Catalog;
 import cn.edu.bit.linc.pojo.Component;
 import cn.edu.bit.linc.pojo.Product;
@@ -50,6 +52,11 @@ public class ProductController {
 	@RequestMapping("/index")
 	public String index(){
 		return "index";
+	}
+	
+	@RequestMapping("/download")
+	public String download(){
+		return "download";
 	}
 	
 	@RequestMapping("/")
@@ -162,8 +169,15 @@ public class ProductController {
 		IComponent icomponent = session.getMapper(IComponent.class);
 		List<Component> components = icomponent.selectComponentByProductId(product.getId());
 		
+		IAttribute iattribute = session.getMapper(IAttribute.class);
+		for(Component com : components) {
+			List<Attribute> attributes = iattribute.selectAttributeByComponentId(com.getId());
+			com.setAttributes(attributes);
+		}
+		
 		mv.addObject("product", product);
 		mv.addObject("components", components);
+		
 		return mv;
 	}
 	
@@ -297,7 +311,7 @@ public class ProductController {
 		
 		if(ret != 0) {
 			session.commit();
-			model.addAttribute("message", "添加成功： " + product.getId());
+			model.addAttribute("message", "添加成功" + product.getId());
 		}
 		else
 			model.addAttribute("message", "添加失败");
@@ -338,9 +352,23 @@ public class ProductController {
 		System.out.println("session id: " + session.getId());
 		Component[] components = requestComponent.getLike();
 		Component[] dislikeComponents = requestComponent.getDislike();
-		System.out.println(components.length);
-		System.out.println(components[0]);
-		System.out.println(dislikeComponents.length);
+		//System.out.println(components.length);
+		//System.out.println(components[0]);
+		//System.out.println(dislikeComponents.length);
+		if(components.length == 0){
+			List<Product> products = new ArrayList<Product>();
+			SqlSession sqlsession = DBUtil.openSession();
+			IProduct iproduct = sqlsession.getMapper(IProduct.class);
+			products = iproduct.selectProducts();
+			sqlsession.close();
+			
+			List<Product> random = new ArrayList<Product>();
+			int[] ran = RandomUtil.RandomArray(products.size());
+			for(int i=0; i<ran.length && i<3; i++){
+				random.add(products.get(ran[i]));
+			}
+			return random;
+		}
 		
 		//like
 		String userLikeString = "";
@@ -361,14 +389,15 @@ public class ProductController {
 		System.out.println(userDislikeString);
 		
 		//get recommend
-		ArrayList<String> result = null;
+		LinkedHashMap<String, String> result = null;
 		makeRec mr = new makeRec();
 		result = mr.recommendList(session.getId(), userLikeString, userDislikeString);
 		
 		List<Product> products = new ArrayList<Product>();
 		SqlSession sqlsession = DBUtil.openSession();
 		IProduct iproduct = sqlsession.getMapper(IProduct.class);
-		for(String p : result){
+		for(String p : result.keySet()){
+			System.out.println(p + " : " + result.get(p));
 			int id = -1;
 			try{
 				id = Integer.parseInt(p);
@@ -377,9 +406,14 @@ public class ProductController {
 				//e.printStackTrace();
 				break;
 			}
-			if(id != -1)
-				products.add(iproduct.getProductByID(id));
+			if(id != -1){
+				Product product = iproduct.getProductByID(id);
+				product.setRate(result.get(p));
+				products.add(product);
+			}
 		}
+		sqlsession.close();
+		//System.out.println(products);
 		
 		return products;
 		

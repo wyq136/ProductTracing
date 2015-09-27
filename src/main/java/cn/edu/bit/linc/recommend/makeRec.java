@@ -41,18 +41,25 @@ public class makeRec {
         }
     }
 
-    public ArrayList<String> recommendList(String userId, String userLikeString, String userDislikeString) {
+    public LinkedHashMap<String,String> recommendList(String userId, String userLikeString, String userDislikeString) {
 //        String userLikeString = "芝士:奥利奥饼干:苹果片:红豆";
 //
 //        String userDislikeString = "巧克力";
 
-        int recommendNum = 10;
+        int recommendNum = 7;
+
+        LinkedHashMap<String,String > finalRecommend = new LinkedHashMap<String,String>();
 
         Date date = new Date();
         String time = date.getHours() + ":" + date.getMinutes();
         localFood.saveReqToDB(userId, time, userLikeString);
 
         localFood.makeFinalRecommend(userId,userLikeString,userDislikeString,0);
+
+        for(int i = 0;i < localFood.recommendCount.size();i++){
+            finalRecommend.put(localFood.recommendResult.get(i),localFood.recommendCount.get(i));
+        }
+
         if(localFood.numOfFood < recommendNum && localFood.requestList.size() > 0) {
             userLikeString = "";
             for(String str:localFood.requestList){
@@ -61,22 +68,29 @@ public class makeRec {
             userLikeString.substring(0, userLikeString.length() - 2);
 
             remoteFood.saveReqToDB(userId,time,userLikeString);
-            remoteFood.makeFinalRecommend(userId, userLikeString, userDislikeString,1);
-        }
 
-        ArrayList<String > finalRecommend = new ArrayList<String>();
-        finalRecommend.addAll(localFood.recommendResult);
-        finalRecommend.addAll(remoteFood.recommendResult);
+            remoteFood.makeFinalRecommend(userId, userLikeString, userDislikeString,1);
+
+            for(int i = 0;i < remoteFood.recommendCount.size();i++){
+                finalRecommend.put(remoteFood.recommendResult.get(i),remoteFood.recommendCount.get(i));
+            }
+        }
 
         return finalRecommend;
     }
-
 
     public static void main(String[] args){
         makeRec mr = new makeRec();
         mr.initData();
         System.out.println("test");
+        LinkedHashMap<String,String> recommend = new LinkedHashMap<String, String>();
+        recommend = mr.recommendList("claire","","");
+        Set s = recommend.keySet();
+        ArrayList<String> list = new ArrayList<String>();
+        list.addAll(s);
+        for(String str:list){
+            System.out.print(str);
+        }
     }
-
 
 }

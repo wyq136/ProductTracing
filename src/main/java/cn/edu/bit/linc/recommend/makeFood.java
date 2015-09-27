@@ -18,6 +18,7 @@ public class makeFood {
     Jedis jedis;
     int numOfFood = 0;
     int recommendNum = 10;
+    int requestSize = 0;
     ArrayList<String> requestList = new ArrayList<String>();
     ArrayList<String> mostResult = new ArrayList<String>();
     ArrayList<String> rareResult = new ArrayList<String>();
@@ -26,7 +27,8 @@ public class makeFood {
     Set<String> allType = new HashSet<String>();
     HashMap<String,Boolean> componentMap = new HashMap<String, Boolean>();      //initialize to be true, if have, change to false
     HashMap<String,Integer> product = new HashMap<String, Integer>();
-
+    ArrayList<String> recommendCount = new ArrayList<String>();
+    int[][] score = {{100,100,100},{60,100,100},{60,80,100},{60,75,87}};
     public void initType() {
         allType.add("catalog_1");
         allType.add("catalog_2");
@@ -89,6 +91,7 @@ public class makeFood {
         for(String str:userLike){
             requestList.add(str);
         }
+        requestSize = requestList.size();
     }
 
     /**
@@ -154,7 +157,6 @@ public class makeFood {
                             requestList.remove(str);
                         }
                     }
-
 
                     String type = jedis.hget(key,"type");
                     try {
@@ -234,6 +236,7 @@ public class makeFood {
     public void makeFinalRecommend(String userId, String userLikeString ,String userDislikeString, int dataSource){
 
         jedis.select(dataSource);
+
         product = countProduct(userId, userDislikeString);
 
         addMost(product, userDislikeString);
@@ -251,7 +254,17 @@ public class makeFood {
         recommendResult.addAll(mostResult);
         recommendResult.addAll(rareResult);
         recommendResult.addAll(typeResult);
-    }
 
+        for(int i = 0;i < recommendResult.size();i++){
+            int val = product.get(recommendResult.get(i));
+            if(val < 4 ){
+            	String num = score[requestSize-1][val-1] + "%";
+            	recommendCount.add(num);
+            }
+            else{
+            	recommendCount.add("100%");
+            }
+        }
+    }
 }
 

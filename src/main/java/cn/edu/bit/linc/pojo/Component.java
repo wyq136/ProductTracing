@@ -1,5 +1,7 @@
 package cn.edu.bit.linc.pojo;
 
+import java.util.List;
+
 public class Component {
 
 	private int id;
@@ -7,12 +9,19 @@ public class Component {
 	private String component_name;
 	private String description;
 	private String picture;
+	private List<Attribute> attributes;
 	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public List<Attribute> getAttributes() {
+		return attributes;
+	}
+	public void setAttributes(List<Attribute> attributes) {
+		this.attributes = attributes;
 	}
 	public int getProduct_id() {
 		return product_id;

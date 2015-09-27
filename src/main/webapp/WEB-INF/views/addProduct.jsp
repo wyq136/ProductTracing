@@ -11,7 +11,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Narrow Jumbotron Template for Bootstrap</title>
+    <title>食品追溯</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -79,7 +79,7 @@
 				  </div>
 				  
 				  <div class="form-group">
-				    <label for="text" class="col-sm-2 control-label">店铺链接</label>
+				    <label for="text" class="col-sm-2 control-label">店铺地址</label>
 				    <div class="col-sm-8">
 				      <input type="text" class="form-control" id="shop" name="shop">
 				    </div>
