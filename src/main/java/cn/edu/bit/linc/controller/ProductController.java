@@ -210,6 +210,7 @@ public class ProductController {
 		session.commit();
 		session.close();
 		return ret;
+		
 	}
 	
 	@RequestMapping(value="/addProduct", method=RequestMethod.POST)
@@ -359,7 +360,7 @@ public class ProductController {
 			List<Product> products = new ArrayList<Product>();
 			SqlSession sqlsession = DBUtil.openSession();
 			IProduct iproduct = sqlsession.getMapper(IProduct.class);
-			products = iproduct.selectProducts();
+			products = iproduct.selectProductsLocal();
 			sqlsession.close();
 			
 			List<Product> random = new ArrayList<Product>();

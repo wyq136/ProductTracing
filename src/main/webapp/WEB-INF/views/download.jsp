@@ -50,7 +50,7 @@
   <body>
 
       		<div class="poster" ">
-      			<img src="imgs/poster.png" style="height:100%;width:100%;border:0;"/>
+      			<img src="imgs/poster.jpg" style="height:100%;width:100%;border:0;"/>
       		</div>
       		<div class="weixin-tip">
       			<p>
