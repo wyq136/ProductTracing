@@ -9,7 +9,7 @@
     </select>
     
     <select id="selectComponentByProductId" parameterType="Integer" resultType="cn.edu.bit.linc.pojo.Component">
-        select * from component where product_id = #{product_id}
+         select component.id as id, component_name, description, picture from component, attribute where product_id = #{product_id} and component.id = component_id group by  component.id, component_name, description, picture
     </select>
     
     <insert id="insertComponent" parameterType="cn.edu.bit.linc.pojo.Component">

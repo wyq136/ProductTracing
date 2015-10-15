@@ -19,6 +19,8 @@ public interface IProduct {
 	
 	public List<Product> selectProductById(String id);
 	
+	public List<Product> selectProductsLocal();
+	
 	public int insertProduct(Product p);
 	
 }

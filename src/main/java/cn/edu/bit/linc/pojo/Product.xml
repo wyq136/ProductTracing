@@ -7,6 +7,10 @@
         select * from product
     </select>
     
+    <select id="selectProductsLocal" resultType="cn.edu.bit.linc.pojo.Product">
+        select * from product where shop='local'
+    </select>
+    
     <select id="getProductInfos" resultType="cn.edu.bit.linc.pojo.ProductInfo">
         SELECT product.id as product_id, component.id as component_id, catalog.id as catalog_id, component_name, catalog_name FROM product, catalog, component 
 	WHERE product.catalog_id = catalog.id AND product.id = component.product_id
