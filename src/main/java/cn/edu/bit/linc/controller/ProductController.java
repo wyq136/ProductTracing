@@ -33,14 +33,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cn.edu.bit.linc.dao.IAttribute;
-import cn.edu.bit.linc.dao.ICatalog;
 import cn.edu.bit.linc.dao.IComponent;
 import cn.edu.bit.linc.dao.IProduct;
+import cn.edu.bit.linc.dao.IUserOperation;
 import cn.edu.bit.linc.pojo.Attribute;
-import cn.edu.bit.linc.pojo.Catalog;
 import cn.edu.bit.linc.pojo.Component;
 import cn.edu.bit.linc.pojo.Product;
 import cn.edu.bit.linc.pojo.RequestComponent;
+import cn.edu.bit.linc.pojo.User;
 import cn.edu.bit.linc.recommend.makeRec;
 import cn.edu.bit.linc.util.DBUtil;
 import cn.edu.bit.linc.util.RandomUtil;
@@ -62,38 +62,16 @@ public class ProductController {
 	@RequestMapping("/")
 	public String add(Model model){
 		//System.out.println("hello!");
-		SqlSession session = DBUtil.openSession();
-		ICatalog icatalog = session.getMapper(ICatalog.class);
-		List<Catalog> catalogs = icatalog.selectCatalogs();
+		//SqlSession session = DBUtil.openSession();
+	//	ICatalog icatalog = session.getMapper(ICatalog.class);
+		//List<Catalog> catalogs = icatalog.selectCatalogs();
 		
-		model.addAttribute("catalogList", catalogs);
+		//model.addAttribute("catalogList", catalogs);
 		
 		return "addProduct";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/catalog")
-	public List<Catalog> getCatalogs(HttpServletRequest request){
-
-		SqlSession session = DBUtil.openSession();
-		ICatalog icatalog = session.getMapper(ICatalog.class);
-		List<Catalog> catalogs = null;
-		
-		String id = request.getParameter("id");
-		String name = request.getParameter("name");
-		if(id != null) {
-			catalogs = icatalog.selectCatalogById(id);
-		}
-		else if(name != null) {
-			System.out.println("ProductController.getCatalogs() " + name);
-			catalogs = icatalog.selectCatalogByName(name);
-		}
-		else {
-			catalogs = icatalog.selectCatalogs();
-		}
-		session.close();
-		return catalogs;
-	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value="/product")
@@ -294,7 +272,6 @@ public class ProductController {
 						component.setComponent_name(component_name[i]);
 						component.setDescription(component_description[i]);
 						component.setProduct_id(product.getId());
-						
 						System.out.println(component.toString());
 						
 						ret = iComponent.insertComponent(component);
@@ -343,6 +320,45 @@ public class ProductController {
 			random.add(components.get(res[i]));
 		}
 		return random;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public String login(HttpServletRequest request){
+		SqlSession session = DBUtil.openSession();
+		IUserOperation iUser = session.getMapper(IUserOperation.class);
+		User res = null;
+		String username = request.getParameter("username");
+		res = iUser.selectUserByUsername(username);
+		System.out.println(res);
+		session.close();
+		if(res != null)
+		return "success";
+		else return "failed";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/rigister")
+	public String rigister(HttpServletRequest request){
+		SqlSession session = DBUtil.openSession();
+		IUserOperation iUser = session.getMapper(IUserOperation.class);
+
+		
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String email = request.getParameter("email");
+		
+		System.out.println("name: " + username + " pass: " +password+ " email:" + email);
+		iUser.addUser(new User(1,username,password,email));
+		session.commit();
+		
+		User res = null;
+		res = iUser.selectUserByUsername(username);
+		System.out.println(res);
+		
+		
+		return "success";
 	}
 	
 	
