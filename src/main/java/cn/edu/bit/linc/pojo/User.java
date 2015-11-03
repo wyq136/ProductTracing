@@ -3,19 +3,10 @@ package cn.edu.bit.linc.pojo;
 public class User {
 
 
-	public User(int userID, String username, String password, String email) {
-		super();
-		this.userID = userID;
-		this.username = username;
-		this.password = password;
-		this.email = email;
-	}
 
 	private int userID;
 	private String username;
 	private String password;
-	
-
 	private String email;
 	
 	public int getUserID() {
