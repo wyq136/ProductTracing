@@ -82,32 +82,14 @@ public class ProductController {
 		
 		String id = request.getParameter("id");
 		if(id != null) {
-			products = iproduct.selectProductById(id);
+			products = iproduct.getProductById(id);
 		}
 		else {
-			products = iproduct.selectProducts();
+			products = iproduct.getProducts();
 		}
 		
 		session.close();
 		return products;
-	}
-	
-	private class PublicWithComponents {
-		Product product;
-		List<Component> components;
-		
-		public Product getProduct() {
-			return product;
-		}
-		public void setProduct(Product product) {
-			this.product = product;
-		}
-		public List<Component> getComponents() {
-			return components;
-		}
-		public void setComponents(List<Component> components) {
-			this.components = components;
-		}
 	}
 	
 	@ResponseBody
@@ -137,21 +119,21 @@ public class ProductController {
 		return pwc;
 	}
 	
-	@RequestMapping(value="/product/{id}", method=RequestMethod.GET)
+@RequestMapping(value="/product/{id}", method=RequestMethod.GET)
 	public ModelAndView showProduct(@PathVariable Integer id){
 		ModelAndView mv = new ModelAndView("productInfo");
 		SqlSession session = DBUtil.openSession();
 		IProduct iproduct = session.getMapper(IProduct.class);
-		Product product = iproduct.getProductByID(id);
-		
 		IComponent icomponent = session.getMapper(IComponent.class);
-		List<Component> components = icomponent.selectComponentByProductId(product.getId());
-		
 		IAttribute iattribute = session.getMapper(IAttribute.class);
-		for(Component com : components) {
-			List<Attribute> attributes = iattribute.selectAttributeByComponentId(com.getId());
-			com.setAttributes(attributes);
-		}
+		
+		Product product = iproduct.getProductByID(id);
+		List<Component> components = icomponent.getComponentByProductId(product.getProductID());
+		//TODO
+		//for(Component com : components) {
+			//List<Attribute> attributes = iattribute.selectAttributeByComponentId(com.getId());
+			//com.setAttributes(attributes);
+		//}
 		
 		mv.addObject("product", product);
 		mv.addObject("components", components);
@@ -308,10 +290,10 @@ public class ProductController {
 		
 		String product_id = request.getParameter("product_id");
 		if(product_id != null) {
-			components = icomponent.selectComponentByProductId(Integer.parseInt(product_id));
+			components = icomponent.getComponentByProductId(Integer.parseInt(product_id));
 		}
 		else {
-			components = icomponent.selectComponents();
+			components = icomponent.getComponents();
 		}
 		session.close();
 		int[] res = RandomUtil.RandomArray(components.size());

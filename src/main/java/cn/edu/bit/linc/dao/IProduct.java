@@ -7,7 +7,7 @@ import cn.edu.bit.linc.pojo.ProductInfo;
 
 public interface IProduct {
 
-	public List<Product> selectProducts();
+	public List<Product> getProducts();
 
 	public List<ProductInfo> getProductInfos();
 	
@@ -17,10 +17,10 @@ public interface IProduct {
 	
 	public Product getProductByID(int id);
 	
-	public List<Product> selectProductById(String id);
+	public List<Product> getProductById(String id);
 	
-	public List<Product> selectProductsLocal();
+	public List<Product> getProductsLocal();
 	
-	public int insertProduct(Product p);
+	public int addProduct(Product p);
 	
 }

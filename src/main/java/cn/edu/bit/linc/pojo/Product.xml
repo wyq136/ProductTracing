@@ -3,11 +3,11 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.edu.bit.linc.dao.IProduct">
-    <select id="selectProducts" resultType="cn.edu.bit.linc.pojo.Product">
+    <select id="getProducts" resultType="cn.edu.bit.linc.pojo.Product">
         select * from product
     </select>
     
-    <select id="selectProductsLocal" resultType="cn.edu.bit.linc.pojo.Product">
+    <select id="getProductsLocal" resultType="cn.edu.bit.linc.pojo.Product">
         select * from product where shop='local'
     </select>
     
@@ -27,15 +27,15 @@
 	</select>
     
     <select id="getProductByID" resultType="cn.edu.bit.linc.pojo.Product">
-        SELECT * FROM product WHERE product.id = #{id}
+        SELECT * FROM product WHERE productid = #{productID}
     </select>
     
-    <select id="selectProductById" parameterType="String" resultType="cn.edu.bit.linc.pojo.Product">
-        select * from product where id = #{id}
+    <select id="getProductById" parameterType="String" resultType="cn.edu.bit.linc.pojo.Product">
+        select * from product where productid = #{productID}
     </select>
     
-    <insert id="insertProduct" useGeneratedKeys="true" keyProperty="id" parameterType="cn.edu.bit.linc.pojo.Product">
-        insert into product (product_name, catalog_id, description, picture, shop) values (#{product_name}, #{catalog_id}, #{description}, #{picture}, #{shop})
+    <insert id="addProduct" useGeneratedKeys="true" keyProperty="productid" parameterType="cn.edu.bit.linc.pojo.Product">
+        insert into product (merchantid, productsku, productname, description, picture) values (#{merchantID}, #{productSKU},#{productName} ,#{description}, #{picture})
     </insert>
     
 </mapper>
