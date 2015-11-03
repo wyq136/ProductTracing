@@ -293,7 +293,7 @@ public class ProductController {
 		session.close();
 		if(res != null)
 		return "success";
-		else return "failed";
+		else return "用户名或密码错误";
 	}
 	
 	
@@ -311,8 +311,8 @@ public class ProductController {
 		System.out.println("name: " + username + " pass: " +password+ " email:" + email);
 		User usr = null;
 		usr = iUser.selectUserByUsername(username);
-		if(usr == null)
-			return "用户名或密码错误";
+		if(usr != null)
+			return "用户名已存在";
 		usr.setUsername(username);
 		usr.setPassword(password);
 		usr.setEmail(email);
