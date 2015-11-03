@@ -92,32 +92,7 @@ public class ProductController {
 		return products;
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/productWithComponents")
-	public PublicWithComponents getProductWithComponents(HttpServletRequest request){
-		SqlSession session = DBUtil.openSession();
-		IProduct iproduct = session.getMapper(IProduct.class);
-		IComponent iComponent = session.getMapper(IComponent.class);
-		
-		PublicWithComponents pwc = new PublicWithComponents();
-		Product product = null;
-		
-		String id = request.getParameter("id");
-		String guid = request.getParameter("guid");
-		if(id != null) {
-			product = iproduct.selectProductById(id).get(0);
-		}
-		else if(guid != null) {
-			//Todo:
-		}
-		
-		List<Component> components = iComponent.selectComponentByProductId(product.getId());
-		pwc.setProduct(product);
-		pwc.setComponents(components);
-		
-		session.close();
-		return pwc;
-	}
+	
 	
 @RequestMapping(value="/product/{id}", method=RequestMethod.GET)
 	public ModelAndView showProduct(@PathVariable Integer id){
@@ -140,7 +115,8 @@ public class ProductController {
 		
 		return mv;
 	}
-	
+//TODO
+/*
 	@ResponseBody
 	@RequestMapping(value="/addProduct", method=RequestMethod.GET)
 	public int addProduct(HttpServletRequest request){
@@ -172,7 +148,7 @@ public class ProductController {
 		return ret;
 		
 	}
-	
+
 	@RequestMapping(value="/addProduct", method=RequestMethod.POST)
 	public String addProductPost(HttpServletRequest request, HttpServletResponse response, Model model) throws IllegalStateException, IOException{
 		SqlSession session = DBUtil.openSession();
@@ -280,6 +256,7 @@ public class ProductController {
 		
 		return "addProduct";
 	}
+	*/
 	
 	@ResponseBody
 	@RequestMapping(value="/component")
@@ -332,12 +309,18 @@ public class ProductController {
 		String email = request.getParameter("email");
 		
 		System.out.println("name: " + username + " pass: " +password+ " email:" + email);
-		iUser.addUser(new User(1,username,password,email));
+		User usr = null;
+		usr = iUser.selectUserByUsername(username);
+		if(usr == null)
+			return "用户名或密码错误";
+		usr.setUsername(username);
+		usr.setPassword(password);
+		usr.setEmail(email);
+		iUser.addUser(usr);
 		session.commit();
+		session.close();
 		
-		User res = null;
-		res = iUser.selectUserByUsername(username);
-		System.out.println(res);
+
 		
 		
 		return "success";
@@ -358,7 +341,7 @@ public class ProductController {
 			List<Product> products = new ArrayList<Product>();
 			SqlSession sqlsession = DBUtil.openSession();
 			IProduct iproduct = sqlsession.getMapper(IProduct.class);
-			products = iproduct.selectProductsLocal();
+			products = iproduct.getProducts();
 			sqlsession.close();
 			
 			List<Product> random = new ArrayList<Product>();
@@ -372,19 +355,19 @@ public class ProductController {
 		//like
 		String userLikeString = "";
 		for(int i=0; i<components.length-1; i++){
-			userLikeString += components[i].getComponent_name() + ":";
+			userLikeString += components[i].getComponentName() + ":";
 		}
 		if(components.length > 0)
-			userLikeString += components[components.length-1].getComponent_name();
+			userLikeString += components[components.length-1].getComponentName();
 		System.out.println(userLikeString);
 		
 		//dislike
 		String userDislikeString = "";
 		for(int i=0; i<dislikeComponents.length-1; i++){
-			userDislikeString += dislikeComponents[i].getComponent_name() + ":";
+			userDislikeString += dislikeComponents[i].getComponentName() + ":";
 		}
 		if(dislikeComponents.length > 0)
-			userDislikeString += dislikeComponents[dislikeComponents.length-1].getComponent_name();
+			userDislikeString += dislikeComponents[dislikeComponents.length-1].getComponentName();
 		System.out.println(userDislikeString);
 		
 		//get recommend
