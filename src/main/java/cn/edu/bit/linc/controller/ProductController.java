@@ -153,7 +153,7 @@ public class ProductController {
 		String description = request.getParameter("description");
 		String shop = request.getParameter("shop");
 		
-		product.setProduct_name(name);
+		product.setProductName(name);
 		try {
 			product.setCatalog_id(Integer.parseInt(catalog_id));
 		} catch(Exception e) {
@@ -193,7 +193,7 @@ public class ProductController {
 		
 		if(name.equals(""))
 			name = null;
-		product.setProduct_name(name);
+		product.setProductName(name);
 		try {
 			if(catalog_id.equals(""))
 				catalog_id = null;
