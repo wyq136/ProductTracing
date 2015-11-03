@@ -10,4 +10,8 @@
     <select id="selectUser" resultType="cn.edu.bit.linc.pojo.User">
         select * from user
     </select>
+    
+    <select id="addUser" parameterType="cn.edu.bit.linc.pojo.User">
+        insert into user(username, password, email) values (#{username}, #{password}, #{email})
+    </select>
 </mapper>

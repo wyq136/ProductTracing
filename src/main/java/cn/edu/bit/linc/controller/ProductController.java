@@ -35,10 +35,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import cn.edu.bit.linc.dao.IAttribute;
 import cn.edu.bit.linc.dao.IComponent;
 import cn.edu.bit.linc.dao.IProduct;
+import cn.edu.bit.linc.dao.IUserOperation;
 import cn.edu.bit.linc.pojo.Attribute;
 import cn.edu.bit.linc.pojo.Component;
 import cn.edu.bit.linc.pojo.Product;
 import cn.edu.bit.linc.pojo.RequestComponent;
+import cn.edu.bit.linc.pojo.User;
 import cn.edu.bit.linc.recommend.makeRec;
 import cn.edu.bit.linc.util.DBUtil;
 import cn.edu.bit.linc.util.RandomUtil;
@@ -60,8 +62,16 @@ public class ProductController {
 	@RequestMapping("/")
 	public String add(Model model){
 		//System.out.println("hello!");
+		//SqlSession session = DBUtil.openSession();
+	//	ICatalog icatalog = session.getMapper(ICatalog.class);
+		//List<Catalog> catalogs = icatalog.selectCatalogs();
+		
+		//model.addAttribute("catalogList", catalogs);
+		
 		return "addProduct";
 	}
+	
+	
 	
 	@ResponseBody
 	@RequestMapping(value="/product")

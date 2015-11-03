@@ -9,4 +9,7 @@ public interface IUserOperation {
 	public User selectUserByUsername(String username);
 	
 	public List<User> selectUser();
+	
+	
+	public void addUser(User user);
 }
