@@ -20,7 +20,6 @@
 	
 	<mappers>
         <mapper resource="cn/edu/bit/linc/pojo/User.xml"/>
-        <mapper resource="cn/edu/bit/linc/pojo/Catalog.xml"/>
         <mapper resource="cn/edu/bit/linc/pojo/Product.xml"/>
         <mapper resource="cn/edu/bit/linc/pojo/Component.xml"/>
         <mapper resource="cn/edu/bit/linc/pojo/Attribute.xml"/>

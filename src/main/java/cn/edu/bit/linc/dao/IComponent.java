@@ -7,9 +7,11 @@ import cn.edu.bit.linc.pojo.Product;
 
 public interface IComponent {
 
-	public List<Component> selectComponents();
+	public List<Component> getComponents();
 	
-	public List<Component> selectComponentByProductId(int product_id);
+	public List<Component> getComponentByProductId(int productID);
 	
-	public int insertComponent(Component component);
+	public List<Component> getComponentByComponentName(String componentName);
+	
+	public int addComponent(Component component);
 }

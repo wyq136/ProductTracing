@@ -33,11 +33,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cn.edu.bit.linc.dao.IAttribute;
-import cn.edu.bit.linc.dao.ICatalog;
 import cn.edu.bit.linc.dao.IComponent;
 import cn.edu.bit.linc.dao.IProduct;
 import cn.edu.bit.linc.pojo.Attribute;
-import cn.edu.bit.linc.pojo.Catalog;
 import cn.edu.bit.linc.pojo.Component;
 import cn.edu.bit.linc.pojo.Product;
 import cn.edu.bit.linc.pojo.RequestComponent;
@@ -62,37 +60,7 @@ public class ProductController {
 	@RequestMapping("/")
 	public String add(Model model){
 		//System.out.println("hello!");
-		SqlSession session = DBUtil.openSession();
-		ICatalog icatalog = session.getMapper(ICatalog.class);
-		List<Catalog> catalogs = icatalog.selectCatalogs();
-		
-		model.addAttribute("catalogList", catalogs);
-		
 		return "addProduct";
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/catalog")
-	public List<Catalog> getCatalogs(HttpServletRequest request){
-
-		SqlSession session = DBUtil.openSession();
-		ICatalog icatalog = session.getMapper(ICatalog.class);
-		List<Catalog> catalogs = null;
-		
-		String id = request.getParameter("id");
-		String name = request.getParameter("name");
-		if(id != null) {
-			catalogs = icatalog.selectCatalogById(id);
-		}
-		else if(name != null) {
-			System.out.println("ProductController.getCatalogs() " + name);
-			catalogs = icatalog.selectCatalogByName(name);
-		}
-		else {
-			catalogs = icatalog.selectCatalogs();
-		}
-		session.close();
-		return catalogs;
 	}
 	
 	@ResponseBody
@@ -104,59 +72,14 @@ public class ProductController {
 		
 		String id = request.getParameter("id");
 		if(id != null) {
-			products = iproduct.selectProductById(id);
+			products = iproduct.getProductById(id);
 		}
 		else {
-			products = iproduct.selectProducts();
+			products = iproduct.getProducts();
 		}
 		
 		session.close();
 		return products;
-	}
-	
-	private class PublicWithComponents {
-		Product product;
-		List<Component> components;
-		
-		public Product getProduct() {
-			return product;
-		}
-		public void setProduct(Product product) {
-			this.product = product;
-		}
-		public List<Component> getComponents() {
-			return components;
-		}
-		public void setComponents(List<Component> components) {
-			this.components = components;
-		}
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="/productWithComponents")
-	public PublicWithComponents getProductWithComponents(HttpServletRequest request){
-		SqlSession session = DBUtil.openSession();
-		IProduct iproduct = session.getMapper(IProduct.class);
-		IComponent iComponent = session.getMapper(IComponent.class);
-		
-		PublicWithComponents pwc = new PublicWithComponents();
-		Product product = null;
-		
-		String id = request.getParameter("id");
-		String guid = request.getParameter("guid");
-		if(id != null) {
-			product = iproduct.selectProductById(id).get(0);
-		}
-		else if(guid != null) {
-			//Todo:
-		}
-		
-		List<Component> components = iComponent.selectComponentByProductId(product.getId());
-		pwc.setProduct(product);
-		pwc.setComponents(components);
-		
-		session.close();
-		return pwc;
 	}
 	
 	@RequestMapping(value="/product/{id}", method=RequestMethod.GET)
@@ -164,16 +87,16 @@ public class ProductController {
 		ModelAndView mv = new ModelAndView("productInfo");
 		SqlSession session = DBUtil.openSession();
 		IProduct iproduct = session.getMapper(IProduct.class);
-		Product product = iproduct.getProductByID(id);
-		
 		IComponent icomponent = session.getMapper(IComponent.class);
-		List<Component> components = icomponent.selectComponentByProductId(product.getId());
-		
 		IAttribute iattribute = session.getMapper(IAttribute.class);
-		for(Component com : components) {
-			List<Attribute> attributes = iattribute.selectAttributeByComponentId(com.getId());
-			com.setAttributes(attributes);
-		}
+		
+		Product product = iproduct.getProductByID(id);
+		List<Component> components = icomponent.getComponentByProductId(product.getProductID());
+		//TODO
+		//for(Component com : components) {
+			//List<Attribute> attributes = iattribute.selectAttributeByComponentId(com.getId());
+			//com.setAttributes(attributes);
+		//}
 		
 		mv.addObject("product", product);
 		mv.addObject("components", components);
@@ -181,6 +104,8 @@ public class ProductController {
 		return mv;
 	}
 	
+	//TODO
+	/*
 	@ResponseBody
 	@RequestMapping(value="/addProduct", method=RequestMethod.GET)
 	public int addProduct(HttpServletRequest request){
@@ -212,7 +137,10 @@ public class ProductController {
 		return ret;
 		
 	}
+	*/
 	
+	//TODO
+	/*
 	@RequestMapping(value="/addProduct", method=RequestMethod.POST)
 	public String addProductPost(HttpServletRequest request, HttpServletResponse response, Model model) throws IllegalStateException, IOException{
 		SqlSession session = DBUtil.openSession();
@@ -321,6 +249,7 @@ public class ProductController {
 		
 		return "addProduct";
 	}
+	*/
 	
 	@ResponseBody
 	@RequestMapping(value="/component")
@@ -331,10 +260,10 @@ public class ProductController {
 		
 		String product_id = request.getParameter("product_id");
 		if(product_id != null) {
-			components = icomponent.selectComponentByProductId(Integer.parseInt(product_id));
+			components = icomponent.getComponentByProductId(Integer.parseInt(product_id));
 		}
 		else {
-			components = icomponent.selectComponents();
+			components = icomponent.getComponents();
 		}
 		session.close();
 		int[] res = RandomUtil.RandomArray(components.size());
@@ -344,8 +273,6 @@ public class ProductController {
 		}
 		return random;
 	}
-	
-	
 	
 	@ResponseBody
 	@RequestMapping(value="/recommend")
@@ -360,7 +287,7 @@ public class ProductController {
 			List<Product> products = new ArrayList<Product>();
 			SqlSession sqlsession = DBUtil.openSession();
 			IProduct iproduct = sqlsession.getMapper(IProduct.class);
-			products = iproduct.selectProductsLocal();
+			products = iproduct.getProducts();
 			sqlsession.close();
 			
 			List<Product> random = new ArrayList<Product>();
@@ -374,19 +301,19 @@ public class ProductController {
 		//like
 		String userLikeString = "";
 		for(int i=0; i<components.length-1; i++){
-			userLikeString += components[i].getComponent_name() + ":";
+			userLikeString += components[i].getComponentName() + ":";
 		}
 		if(components.length > 0)
-			userLikeString += components[components.length-1].getComponent_name();
+			userLikeString += components[components.length-1].getComponentName();
 		System.out.println(userLikeString);
 		
 		//dislike
 		String userDislikeString = "";
 		for(int i=0; i<dislikeComponents.length-1; i++){
-			userDislikeString += dislikeComponents[i].getComponent_name() + ":";
+			userDislikeString += dislikeComponents[i].getComponentName() + ":";
 		}
 		if(dislikeComponents.length > 0)
-			userDislikeString += dislikeComponents[dislikeComponents.length-1].getComponent_name();
+			userDislikeString += dislikeComponents[dislikeComponents.length-1].getComponentName();
 		System.out.println(userDislikeString);
 		
 		//get recommend
