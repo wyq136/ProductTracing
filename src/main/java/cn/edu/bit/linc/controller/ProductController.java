@@ -316,7 +316,7 @@ public class ProductController {
 		session.close();
 		if(res != null)
 		return "success";
-		else return "用户名或密码错误";
+		else return "failed";
 	}
 	
 	
@@ -330,18 +330,16 @@ public class ProductController {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
+		
+		System.out.println("name: " + username + " pass: " +password+ " email:" + email);
+		iUser.addUser(new User(1,username,password,email));
+		session.commit();
+		
 		User res = null;
 		res = iUser.selectUserByUsername(username);
-		if(res != null)
-			return"用户已经存在";
-		System.out.println("name: " + username + " pass: " +password+ " email:" + email);
-		User usr = new User();
-		usr.setEmail(email);
-		usr.setPassword(password);
-		usr.setUsername(username);
-		iUser.addUser(usr);
-		session.commit();
-		session.close();
+		System.out.println(res);
+		
+		
 		return "success";
 	}
 	
