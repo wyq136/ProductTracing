@@ -62,16 +62,8 @@ public class ProductController {
 	@RequestMapping("/")
 	public String add(Model model){
 		//System.out.println("hello!");
-		//SqlSession session = DBUtil.openSession();
-	//	ICatalog icatalog = session.getMapper(ICatalog.class);
-		//List<Catalog> catalogs = icatalog.selectCatalogs();
-		
-		//model.addAttribute("catalogList", catalogs);
-		
 		return "addProduct";
 	}
-	
-	
 	
 	@ResponseBody
 	@RequestMapping(value="/product")
@@ -104,19 +96,22 @@ public class ProductController {
 		
 		Product product = iproduct.getProductByID(id);
 		List<Component> components = icomponent.getComponentByProductId(product.getProductID());
-		//TODO
-		//for(Component com : components) {
-			//List<Attribute> attributes = iattribute.selectAttributeByComponentId(com.getId());
-			//com.setAttributes(attributes);
-		//}
+		
+		for(Component com : components) {
+			List<Attribute> attributes = iattribute.getAttributeByComponentId(com.getComponentID());
+			com.setAttributes(attributes);
+			
+			//System.out.println(attributes);
+		}
 		
 		mv.addObject("product", product);
 		mv.addObject("components", components);
 		
 		return mv;
 	}
-//TODO
-/*
+
+	//TODO
+	/*
 	@ResponseBody
 	@RequestMapping(value="/addProduct", method=RequestMethod.GET)
 	public int addProduct(HttpServletRequest request){
@@ -319,14 +314,9 @@ public class ProductController {
 		iUser.addUser(usr);
 		session.commit();
 		session.close();
-		
-
-		
-		
+	
 		return "success";
 	}
-	
-	
 	
 	@ResponseBody
 	@RequestMapping(value="/recommend")

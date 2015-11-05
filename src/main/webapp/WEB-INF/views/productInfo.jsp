@@ -110,7 +110,7 @@
 			<div class="panel-body">
 				<table class="table">
 	    			<c:forEach var="attribute" items="${component.attributes}">
-	    	  			<tr><td width="100px"><c:out value="${attribute.attribute_name}" />:</td><td><c:out value="${attribute.attribute_value}" /></td></tr>
+	    	  			<tr><td width="100px"><c:out value="${attribute.attributeName}" />:</td><td><c:out value="${attribute.attributeValue}" /></td></tr>
 	    			</c:forEach>
 	    		</table>
 			</div>
