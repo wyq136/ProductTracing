@@ -7,12 +7,16 @@
         SELECT * from component
     </select>
     
-    <select id="getComponentByProductId" parameterType="Integer" resultType="cn.edu.bit.linc.pojo.Component">
-         select component.componentid as componentID, component.componentname as componentName from component, productdetail where productdetail.productid = #{productID} and productdetail.componentid = component.componentid
+    <select id="getComponentByProductID" parameterType="Integer" resultType="cn.edu.bit.linc.pojo.Component">
+        select component.* from component, productdetail where productdetail.productid = #{productID} and productdetail.componentid = component.componentid
     </select>
     
     <select id="getComponentbyComponentName" parameterType="String" resultType="cn.edu.bit.linc.pojo.Component">
         select * from component where componentname = #{componentName}
+    </select>
+    
+    <select id="getComponentByBarcodeID" parameterType="Integer" resultType="cn.edu.bit.linc.pojo.Component">
+        select component.* from component, barcodedetail where barcodedetail.barcodeid = #{barcodeID} and barcodeDetail.componentid = component.componentid
     </select>
     
     <insert id="addComponent" parameterType="cn.edu.bit.linc.pojo.Component">

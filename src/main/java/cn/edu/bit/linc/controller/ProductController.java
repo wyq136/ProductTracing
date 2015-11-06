@@ -95,10 +95,10 @@ public class ProductController {
 		IAttribute iattribute = session.getMapper(IAttribute.class);
 		
 		Product product = iproduct.getProductByID(id);
-		List<Component> components = icomponent.getComponentByProductId(product.getProductID());
+		List<Component> components = icomponent.getComponentByProductID(product.getProductID());
 		
 		for(Component com : components) {
-			List<Attribute> attributes = iattribute.getAttributeByComponentId(com.getComponentID());
+			List<Attribute> attributes = iattribute.getAttributeFromProductByComponentID(com.getComponentID());
 			com.setAttributes(attributes);
 			
 			//System.out.println(attributes);
@@ -262,7 +262,7 @@ public class ProductController {
 		
 		String product_id = request.getParameter("product_id");
 		if(product_id != null) {
-			components = icomponent.getComponentByProductId(Integer.parseInt(product_id));
+			components = icomponent.getComponentByProductID(Integer.parseInt(product_id));
 		}
 		else {
 			components = icomponent.getComponents();

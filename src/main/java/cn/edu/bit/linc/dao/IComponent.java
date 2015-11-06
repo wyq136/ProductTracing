@@ -9,7 +9,9 @@ public interface IComponent {
 
 	public List<Component> getComponents();
 	
-	public List<Component> getComponentByProductId(int productID);
+	public List<Component> getComponentByProductID(int productID);
+	
+	public List<Component> getComponentByBarcodeID(int barcodeID);
 	
 	public List<Component> getComponentByComponentName(String componentName);
 	
