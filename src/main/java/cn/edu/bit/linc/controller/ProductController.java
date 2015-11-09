@@ -312,7 +312,7 @@ public class ProductController {
 		nusr.setUsername(username);
 		nusr.setPassword(password);
 		nusr.setEmail(email);
-		iUser.addUser(usr);
+		iUser.addUser(nusr);
 		session.commit();
 		session.close();
 	
