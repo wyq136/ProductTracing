@@ -308,9 +308,10 @@ public class ProductController {
 		usr = iUser.selectUserByUsername(username);
 		if(usr != null)
 			return "用户名已存在";
-		usr.setUsername(username);
-		usr.setPassword(password);
-		usr.setEmail(email);
+		User nusr =  new User();
+		nusr.setUsername(username);
+		nusr.setPassword(password);
+		nusr.setEmail(email);
 		iUser.addUser(usr);
 		session.commit();
 		session.close();
