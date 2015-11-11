@@ -34,10 +34,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cn.edu.bit.linc.dao.IAttribute;
 import cn.edu.bit.linc.dao.IComponent;
+import cn.edu.bit.linc.dao.IMerchant;
 import cn.edu.bit.linc.dao.IProduct;
 import cn.edu.bit.linc.dao.IUserOperation;
 import cn.edu.bit.linc.pojo.Attribute;
 import cn.edu.bit.linc.pojo.Component;
+import cn.edu.bit.linc.pojo.Merchant;
 import cn.edu.bit.linc.pojo.Product;
 import cn.edu.bit.linc.pojo.RequestComponent;
 import cn.edu.bit.linc.pojo.User;
@@ -288,7 +290,7 @@ public class ProductController {
 		session.close();
 		if(res != null)
 		return "success";
-		else return "”√ªß√˚ªÚ√‹¬Î¥ÌŒÛ";
+		else return "ÁôªÂΩïÂ§±Ë¥•";
 	}
 	
 	
@@ -307,7 +309,7 @@ public class ProductController {
 		User usr = null;
 		usr = iUser.selectUserByUsername(username);
 		if(usr != null)
-			return "”√ªß√˚“—¥Ê‘⁄";
+			return "Áî®Êà∑ÂêçÂ∑≤Â≠òÂú®";
 		User nusr =  new User();
 		nusr.setUsername(username);
 		nusr.setPassword(password);
@@ -391,5 +393,92 @@ public class ProductController {
 		return products;
 		
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/merchant")
+	public List<Merchant> getMerchants(HttpServletRequest request){
+		SqlSession session = DBUtil.openSession();
+		IMerchant imerchant = session.getMapper(IMerchant.class);
+		List<Merchant> merchants = null;
+		
+		String tag = request.getParameter("tag");
+		String priceLow = request.getParameter("priceLow");
+		String priceHigh = request.getParameter("priceHigh");
+		String positionX = request.getParameter("positionX");
+		String positionY = request.getParameter("positionY");
+		
+		if(tag != null && priceLow != null && priceHigh != null) {
+			merchants = imerchant.getMerchantByTagAndPrice("%"+tag+"%", Integer.parseInt(priceLow), Integer.parseInt(priceHigh));
+		}
+		else if(tag != null) {
+			merchants = imerchant.getMerchantByTag("%"+tag+"%");
+			System.out.println(tag);
+		}
+		else if(priceLow != null && priceHigh != null) {
+			merchants = imerchant.getMerchantByPrice(Integer.parseInt(priceLow), Integer.parseInt(priceHigh));
+		}
+		else {
+			merchants = imerchant.getMerchant();
+			//System.out.println("Parameter Error!!!");
+		}
+		
+		if(positionX != null && positionY != null) {
+			Iterator<Merchant> it = merchants.iterator();
+			while(it.hasNext()) {
+				Merchant m = it.next();
+				
+				//delete merchant by position
+				double dis = getDist(Double.parseDouble(positionX), Double.parseDouble(positionY), m.getPositionX(), m.getPositionY());
+				if(dis > 5.0)
+					it.remove();
+			}
+		}
+		
+		session.close();
+		return merchants;
+	}
+	
+	static double EARTH_RADIUS = 6378137;//Ëµ§ÈÅìÂçäÂæÑ(Âçï‰Ωçm)  
+    /** 
+     * ËΩ¨Âåñ‰∏∫ÂºßÂ∫¶(rad) 
+     * */  
+    private static double rad(double d)  
+    {  
+       return d * Math.PI / 180.0;  
+    }  
+    
+	public static double getDist(double lon1, double lat1,double lon2, double lat2) {  
+        double radLat1 = rad(lat1);  
+        double radLat2 = rad(lat2);  
+  
+        double radLon1 = rad(lon1);  
+        double radLon2 = rad(lon2);  
+  
+        if (radLat1 < 0)  
+            radLat1 = Math.PI / 2 + Math.abs(radLat1);// south  
+        if (radLat1 > 0)  
+            radLat1 = Math.PI / 2 - Math.abs(radLat1);// north  
+        if (radLon1 < 0)  
+            radLon1 = Math.PI * 2 - Math.abs(radLon1);// west  
+        if (radLat2 < 0)  
+            radLat2 = Math.PI / 2 + Math.abs(radLat2);// south  
+        if (radLat2 > 0)  
+            radLat2 = Math.PI / 2 - Math.abs(radLat2);// north  
+        if (radLon2 < 0)  
+            radLon2 = Math.PI * 2 - Math.abs(radLon2);// west  
+        double x1 = EARTH_RADIUS * Math.cos(radLon1) * Math.sin(radLat1);  
+        double y1 = EARTH_RADIUS * Math.sin(radLon1) * Math.sin(radLat1);  
+        double z1 = EARTH_RADIUS * Math.cos(radLat1);  
+  
+        double x2 = EARTH_RADIUS * Math.cos(radLon2) * Math.sin(radLat2);  
+        double y2 = EARTH_RADIUS * Math.sin(radLon2) * Math.sin(radLat2);  
+        double z2 = EARTH_RADIUS * Math.cos(radLat2);  
+  
+        double d = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)+ (z1 - z2) * (z1 - z2));  
+        //‰ΩôÂº¶ÂÆöÁêÜÊ±ÇÂ§πËßí  
+        double theta = Math.acos((EARTH_RADIUS * EARTH_RADIUS + EARTH_RADIUS * EARTH_RADIUS - d * d) / (2 * EARTH_RADIUS * EARTH_RADIUS));  
+        double dist = theta * EARTH_RADIUS;  
+        return dist;  
+    }
 	
 }

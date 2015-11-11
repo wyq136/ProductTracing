@@ -10,9 +10,9 @@ public interface IMerchant {
 	
 	public List<Merchant> getMerchantByTag(String tag);
 	
-	public List<Merchant> getMerchantByPrice(double lowprice, double highprice);
+	public List<Merchant> getMerchantByPrice(double priceLow, double priceHigh);
 	
-	public List<Merchant> getMerchantByTagAndPrice(String tag, double price);
+	public List<Merchant> getMerchantByTagAndPrice(String tag, double priceLow, double priceHigh);
 
 	public Merchant getMerchantByMerchantID(int merchantID);
 	
