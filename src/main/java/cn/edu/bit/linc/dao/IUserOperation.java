@@ -10,6 +10,5 @@ public interface IUserOperation {
 	
 	public List<User> selectUser();
 	
-	
 	public void addUser(User user);
 }
