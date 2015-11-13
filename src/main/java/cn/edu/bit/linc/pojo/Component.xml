@@ -19,7 +19,7 @@
         select component.* from component, barcodedetail where barcodedetail.barcodeid = #{barcodeID} and barcodeDetail.componentid = component.componentid
     </select>
     
-    <insert id="addComponent" parameterType="cn.edu.bit.linc.pojo.Component">
+    <insert id="addComponent" useGeneratedKeys="true" keyProperty="componentID" parameterType="cn.edu.bit.linc.pojo.Component">
         insert into component (componentName) values (#{componentName})
     </insert>
     

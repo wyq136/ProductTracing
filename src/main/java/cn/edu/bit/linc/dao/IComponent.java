@@ -13,7 +13,8 @@ public interface IComponent {
 	
 	public List<Component> getComponentByBarcodeID(int barcodeID);
 	
-	public List<Component> getComponentByComponentName(String componentName);
+	public Component getComponentByComponentName(String componentName);
 	
 	public int addComponent(Component component);
+
 }

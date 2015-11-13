@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.bit.linc.dao.ITag">
+    <select id="getTag" resultType="cn.edu.bit.linc.pojo.Tag">
+        SELECT * from tag
+    </select>
+    
+    <select id="getTagByMerchantID" parameterType="Integer" resultType="cn.edu.bit.linc.pojo.Tag">
+         select * from tag where merchantid = #{merchantID}
+    </select>
+    
+    <select id="getTagByTagName" parameterType="String" resultType="cn.edu.bit.linc.pojo.Tag">
+         select * from tag where tagname = #{tagName}
+    </select>
+    
+    <insert id="addTag" parameterType="cn.edu.bit.linc.pojo.Tag">
+        insert into tag (tagname, merchantid) values (#{tagName}, #{merchantID})
+    </insert>
+    
+</mapper>

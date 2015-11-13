@@ -6,13 +6,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.taglibs.standard.tag.common.xml.IfTag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,22 +31,28 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ibm.db2.jcc.a.c;
+import com.ibm.db2.jcc.am.o;
 import com.ibm.db2.jcc.am.po;
 
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import cn.edu.bit.linc.dao.IAttribute;
 import cn.edu.bit.linc.dao.IComponent;
 import cn.edu.bit.linc.dao.IMerchant;
 import cn.edu.bit.linc.dao.IProduct;
+import cn.edu.bit.linc.dao.ITag;
 import cn.edu.bit.linc.dao.IUserOperation;
 import cn.edu.bit.linc.pojo.Attribute;
 import cn.edu.bit.linc.pojo.Component;
 import cn.edu.bit.linc.pojo.Merchant;
 import cn.edu.bit.linc.pojo.Product;
 import cn.edu.bit.linc.pojo.RequestComponent;
+import cn.edu.bit.linc.pojo.Tag;
 import cn.edu.bit.linc.pojo.User;
 import cn.edu.bit.linc.recommend.makeRec;
 import cn.edu.bit.linc.util.DBUtil;
@@ -54,6 +65,17 @@ public class ProductController {
 	@RequestMapping("/index")
 	public String index(){
 		return "index";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/hktest")
+	public List<Tag> test(HttpServletRequest request) {
+		SqlSession session = DBUtil.openSession();
+		ITag itag = session.getMapper(ITag.class);
+		
+		List<Tag> tag = itag.getTagByMerchantID(1);
+		
+		return tag;
 	}
 	
 	@RequestMapping("/download")
@@ -436,6 +458,107 @@ public class ProductController {
 		
 		session.close();
 		return merchants;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/read")
+	public void read(HttpServletRequest request){
+		try {
+			SqlSession session = DBUtil.openSession();
+			IMerchant imerchant = session.getMapper(IMerchant.class);
+			IProduct iproduct = session.getMapper(IProduct.class);
+			ITag itag = session.getMapper(ITag.class);
+			IComponent icomponent = session.getMapper(IComponent.class);
+			
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = dbf.newDocumentBuilder();
+			Document doc = builder.parse("C:\\Users\\HK\\Desktop\\DataSet1.xml"); // 获取到xml文件
+			
+			// 下面开始读取
+			Element root = doc.getDocumentElement(); // 获取根元素
+			NodeList restaurants = root.getElementsByTagName("Restaurant");
+			System.out.println(restaurants.getLength());
+			//Vector<E> students_Vector = new Vector();
+			for (int i = 0; i < restaurants.getLength(); i++) {
+				
+				Element restaurant = (Element) restaurants.item(i);
+				
+				String restName = restaurant.getElementsByTagName("Name").item(0).getFirstChild().getNodeValue();
+				String type = restaurant.getElementsByTagName("Type").item(0).getFirstChild().getNodeValue();
+				String address = restaurant.getElementsByTagName("Location").item(0).getFirstChild().getNodeValue();
+				String positionString = restaurant.getElementsByTagName("Coordinate").item(0).getFirstChild().getNodeValue();
+				String price = restaurant.getElementsByTagName("Price").item(0).getFirstChild().getNodeValue();
+				String rating = restaurant.getElementsByTagName("Rating").item(0).getFirstChild().getNodeValue();
+				System.out.println(" ");
+				/*
+				System.out.println(restName);
+				System.out.println(type);
+				System.out.println(address);
+				System.out.println(positionString);
+				System.out.println(price);
+				System.out.println(rating);
+				*/
+				Merchant merchant = new Merchant();
+				merchant.setAddress(address);
+				merchant.setMerchantName(restName);
+				merchant.setPositionX(Double.parseDouble(positionString.split(",")[0]));
+				merchant.setPositionY(Double.parseDouble(positionString.split(",")[1]));
+				merchant.setPrice(Double.parseDouble(price));
+				merchant.setRating(Double.parseDouble(rating));
+				
+				System.out.println(merchant);
+				int merchantID = imerchant.addMerchant(merchant);
+				merchant.setMerchantID(merchantID);
+				
+				
+				Tag tag = new Tag();
+				tag.setMerchantID(merchant.getMerchantID());
+				tag.setTagName(type);
+				
+				itag.addTag(tag);
+				
+				NodeList dishes = restaurant.getElementsByTagName("Dish");
+				System.out.println(dishes.getLength());
+				
+				for(int j = 0; j < dishes.getLength(); ++j) {
+					Element dish = (Element) dishes.item(j);
+					String dishName = dish.getElementsByTagName("Name").item(0).getFirstChild().getNodeValue();
+					String componentString = dish.getElementsByTagName("Component").item(0).getFirstChild().getNodeValue();
+					
+					Product product = new Product();
+					product.setProductName(dishName);
+					product.setMerchantID(merchant.getMerchantID());
+					
+					int productID = iproduct.addProduct(product);
+					product.setProductID(productID);
+					
+					String[] components = componentString.split(",");
+					for(int k = 0; k < components.length; ++k) {
+						System.out.println(components[k]);
+						
+						Component component = icomponent.getComponentByComponentName(components[k]);
+						if(null == component) {
+							component = new Component();
+							component.setComponentName(components[k]);
+							
+							int componentID = icomponent.addComponent(component);
+							component.setComponentID(componentID);
+						}
+						
+						iproduct.addProductDetail(product.getProductID(), component.getComponentID());
+						
+					}
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void readXMLFile(HttpServletRequest request) throws Exception {
+		
+		//return students_Vector;
 	}
 	
 	static double EARTH_RADIUS = 6378137;//赤道半径(单位m)  

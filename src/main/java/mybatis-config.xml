@@ -21,12 +21,12 @@
 	<mappers>
 	    <mapper resource="cn/edu/bit/linc/pojo/Attribute.xml"/>
 	    <mapper resource="cn/edu/bit/linc/pojo/Barcode.xml"/>
+	    <mapper resource="cn/edu/bit/linc/pojo/Component.xml"/>
 	    <mapper resource="cn/edu/bit/linc/pojo/Merchant.xml"/>
 	    <mapper resource="cn/edu/bit/linc/pojo/Order.xml"/>
         <mapper resource="cn/edu/bit/linc/pojo/Product.xml"/>
-        <mapper resource="cn/edu/bit/linc/pojo/Component.xml"/>
+        <mapper resource="cn/edu/bit/linc/pojo/Tag.xml"/>
         <mapper resource="cn/edu/bit/linc/pojo/User.xml"/>
-        
     </mappers>
 
 </configuration>

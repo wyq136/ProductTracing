@@ -38,4 +38,8 @@
         insert into product (merchantid, productsku, productname, description, picture) values (#{merchantID}, #{productSKU},#{productName} ,#{description}, #{picture})
     </insert>
     
+    <insert id="addProductDetail">
+        insert into productdetail (productid, component) values (#{0}, #{1})
+    </insert>
+    
 </mapper>

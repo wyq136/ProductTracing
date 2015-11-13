@@ -23,4 +23,6 @@ public interface IProduct {
 	
 	public int addProduct(Product p);
 	
+	public void addProductDetail(int productID, int componentID);
+	
 }
