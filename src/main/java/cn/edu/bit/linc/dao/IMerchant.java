@@ -20,4 +20,6 @@ public interface IMerchant {
 	
 	public int addMerchant(Merchant merchant);
 	
+	public void setMerchantPicture(String picture, String merchantName);
+	
 }

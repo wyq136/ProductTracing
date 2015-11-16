@@ -463,7 +463,7 @@ public class ProductController {
 	@ResponseBody
 	@RequestMapping(value="/read")
 	public void read(HttpServletRequest request){
-		//Dont call again
+		//Do not call again
 		/*
 		try {
 			SqlSession session = DBUtil.openSession();
@@ -500,6 +500,9 @@ public class ProductController {
 				merchant.setPositionY(Double.parseDouble(positionString.split(",")[1]));
 				merchant.setPrice(Double.parseDouble(price));
 				merchant.setRating(Double.parseDouble(rating));
+				
+				//String picture = restaurant.getElementsByTagName("Images").item(0).getFirstChild().getNodeValue();
+				//imerchant.setMerchantPicture(picture+".jpg", restName);
 				
 				System.out.println(merchant);
 				int merchantID = imerchant.addMerchant(merchant);
