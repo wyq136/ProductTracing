@@ -463,6 +463,8 @@ public class ProductController {
 	@ResponseBody
 	@RequestMapping(value="/read")
 	public void read(HttpServletRequest request){
+		//Dont call again
+		/*
 		try {
 			SqlSession session = DBUtil.openSession();
 			IMerchant imerchant = session.getMapper(IMerchant.class);
@@ -490,14 +492,7 @@ public class ProductController {
 				String price = restaurant.getElementsByTagName("Price").item(0).getFirstChild().getNodeValue();
 				String rating = restaurant.getElementsByTagName("Rating").item(0).getFirstChild().getNodeValue();
 				System.out.println(" ");
-				/*
-				System.out.println(restName);
-				System.out.println(type);
-				System.out.println(address);
-				System.out.println(positionString);
-				System.out.println(price);
-				System.out.println(rating);
-				*/
+				
 				Merchant merchant = new Merchant();
 				merchant.setAddress(address);
 				merchant.setMerchantName(restName);
@@ -550,15 +545,13 @@ public class ProductController {
 					}
 				}
 			}
+			session.commit();
+			session.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	private void readXMLFile(HttpServletRequest request) throws Exception {
-		
-		//return students_Vector;
+		*/
 	}
 	
 	static double EARTH_RADIUS = 6378137;//赤道半径(单位m)  

@@ -11,7 +11,7 @@
         select component.* from component, productdetail where productdetail.productid = #{productID} and productdetail.componentid = component.componentid
     </select>
     
-    <select id="getComponentbyComponentName" parameterType="String" resultType="cn.edu.bit.linc.pojo.Component">
+    <select id="getComponentByComponentName" parameterType="String" resultType="cn.edu.bit.linc.pojo.Component">
         select * from component where componentname = #{componentName}
     </select>
     

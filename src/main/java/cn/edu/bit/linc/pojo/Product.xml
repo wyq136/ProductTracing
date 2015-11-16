@@ -39,7 +39,7 @@
     </insert>
     
     <insert id="addProductDetail">
-        insert into productdetail (productid, component) values (#{0}, #{1})
+        insert into productdetail (productid, componentid) values (#{0}, #{1})
     </insert>
     
 </mapper>

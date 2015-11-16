@@ -28,7 +28,7 @@
     </select>
     
     <insert id="addMerchant" useGeneratedKeys="true" keyProperty="merchantid" parameterType="cn.edu.bit.linc.pojo.Merchant">
-        insert into merchant (merchantname, address, positionx, positiony, price, rating) values (#{merchantName}, #{address}, #{positionX}, #{positionY}, #{price}, #{rating});
+        insert into merchant (merchantname, address, positionx, positiony, price, rating) values (#{merchantName}, #{address}, #{positionX}, #{positionY}, #{price}, #{rating})
     </insert>
     
 </mapper>
