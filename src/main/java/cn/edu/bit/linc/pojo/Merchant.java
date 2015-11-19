@@ -1,5 +1,7 @@
 package cn.edu.bit.linc.pojo;
 
+import java.util.List;
+
 public class Merchant {
 
 	private int merchantID;
@@ -11,7 +13,14 @@ public class Merchant {
 	private double positionY;
 	private double price;
 	private double rating;
+	private List<Product> products;
 	
+	public List<Product> getProducts() {
+		return products;
+	}
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
 	public int getMerchantID() {
 		return merchantID;
 	}
@@ -73,8 +82,10 @@ public class Merchant {
 				+ merchantName + ", description=" + description + ", picture="
 				+ picture + ", address=" + address + ", positionX=" + positionX
 				+ ", positionY=" + positionY + ", price=" + price + ", rating="
-				+ rating + "]";
+				+ rating + ", products=" + products + "]";
 	}
+	
+	
 	
 	
 }

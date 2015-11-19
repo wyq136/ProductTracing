@@ -24,15 +24,11 @@
 	</select>
     
     <select id="getMerchantByProductID" parameterType="int" resultType="cn.edu.bit.linc.pojo.Merchant">
-        select merchant.* from merchant,product where product.productid = #{productID} and merchant.merchantid = product.merchantid
+        select merchant.* from merchant, product where product.productid = #{productID} and merchant.merchantid = product.merchantid
     </select>
     
-    <update id="setMerchantPicture">
-        update merchant set picture = #{0} where merchantName = #{1}
-    </update>
-    
-    <insert id="addMerchant" useGeneratedKeys="true" keyProperty="merchantid" parameterType="cn.edu.bit.linc.pojo.Merchant">
-        insert into merchant (merchantname, address, positionx, positiony, price, rating) values (#{merchantName}, #{address}, #{positionX}, #{positionY}, #{price}, #{rating})
+    <insert id="addMerchant" useGeneratedKeys="true" keyProperty="merchantID" parameterType="cn.edu.bit.linc.pojo.Merchant">
+        insert into merchant (merchantname, address, positionx, positiony, price, rating, picture, description) values (#{merchantName}, #{address}, #{positionX}, #{positionY}, #{price}, #{rating}, #{picture}, #{description})
     </insert>
     
 </mapper>

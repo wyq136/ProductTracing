@@ -25,14 +25,14 @@ public class DataUtil {
 		
 		Map<Integer, List<String>> res = new HashMap<Integer, List<String>>();
 		for(ProductInfo p : products){
-			if(!res.containsKey(p.getProduct_id())){
-				List<String> list = new ArrayList<String>();
-				list.add("catalog_" + p.getCatalog_id());			
-				list.add("component_" + p.getComponent_id());
-				res.put(p.getProduct_id(), list);
+			System.out.println(p);
+			if(!res.containsKey(p.getProductID())){
+				List<String> list = new ArrayList<String>();		
+				list.add("component_" + p.getComponentID());
+				res.put(p.getProductID(), list);
 			}
 			else{
-				res.get(p.getProduct_id()).add("component_" + p.getComponent_id());
+				res.get(p.getProductID()).add("component_" + p.getComponentID());
 			}
 		}
 		
@@ -49,6 +49,7 @@ public class DataUtil {
 			line += val.get(0);
 			bw.write(line);
 			bw.newLine();
+			System.out.println(line);
 		}
 		bw.close();
 	}
@@ -61,14 +62,14 @@ public class DataUtil {
 		
 		Map<Integer, List<String>> res = new HashMap<Integer, List<String>>();
 		for(ProductInfo p : products){
-			if(!res.containsKey(p.getProduct_id())){
+			if(!res.containsKey(p.getProductID())){
 				List<String> list = new ArrayList<String>();
-				list.add(p.getCatalog_name());			
-				list.add(p.getComponent_name());
-				res.put(p.getProduct_id(), list);
+				//list.add(p.getCatalog_name());
+				list.add(p.getComponentName());
+				res.put(p.getProductID(), list);
 			}
 			else{
-				res.get(p.getProduct_id()).add(p.getComponent_name());
+				res.get(p.getProductID()).add(p.getComponentName());
 			}
 		}
 		
@@ -94,14 +95,14 @@ public class DataUtil {
 		
 		res = new HashMap<Integer, List<String>>();
 		for(ProductInfo p : products){
-			if(!res.containsKey(p.getProduct_id())){
+			if(!res.containsKey(p.getProductID())){
 				List<String> list = new ArrayList<String>();
-				list.add(p.getCatalog_name());			
-				list.add(p.getComponent_name());
-				res.put(p.getProduct_id(), list);
+				//list.add(p.getCatalog_name());			
+				list.add(p.getComponentName());
+				res.put(p.getProductID(), list);
 			}
 			else{
-				res.get(p.getProduct_id()).add(p.getComponent_name());
+				res.get(p.getProductID()).add(p.getComponentName());
 			}
 		}
 		
@@ -124,8 +125,8 @@ public class DataUtil {
 	
 	public static void main(String[] args) {
 		try {
-			//DataUtil.getDataFromDB();
-			DataUtil.getZhDataFromDB();
+			DataUtil.getDataFromDB();
+			//DataUtil.getZhDataFromDB();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -19,6 +19,8 @@ public interface IProduct {
 	
 	public List<Product> getProductById(String id);
 	
+	public List<Product> getProductByMerchantID(int merchantID);
+	
 	public List<Product> getProductsLocal();
 	
 	public int addProduct(Product p);
