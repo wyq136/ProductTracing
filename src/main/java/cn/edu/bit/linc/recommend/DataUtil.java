@@ -25,7 +25,6 @@ public class DataUtil {
 		
 		Map<Integer, List<String>> res = new HashMap<Integer, List<String>>();
 		for(ProductInfo p : products){
-			System.out.println(p);
 			if(!res.containsKey(p.getProductID())){
 				List<String> list = new ArrayList<String>();		
 				list.add("component_" + p.getComponentID());
@@ -42,14 +41,12 @@ public class DataUtil {
 			String line = "";
 			line += entry.getKey() + ":";
 			List<String> val = entry.getValue();
-			for(int i=1; i<val.size()-1; i++){
+			for(int i=0; i<val.size()-1; i++){
 				line += val.get(i) + ",";
 			}
-			line += val.get(val.size()-1) + ":";
-			line += val.get(0);
+			line += val.get(val.size()-1);
 			bw.write(line);
 			bw.newLine();
-			System.out.println(line);
 		}
 		bw.close();
 	}
@@ -58,7 +55,7 @@ public class DataUtil {
 		SqlSession session = DBUtil.openSession();
 		IProduct iproduct = session.getMapper(IProduct.class);
 		// local food data
-		List<ProductInfo> products = iproduct.getLocalProductInfos();
+		List<ProductInfo> products = iproduct.getProductInfos();
 		
 		Map<Integer, List<String>> res = new HashMap<Integer, List<String>>();
 		for(ProductInfo p : products){
@@ -79,16 +76,15 @@ public class DataUtil {
 			String line = "";
 			line += entry.getKey() + ":";
 			List<String> val = entry.getValue();
-			for(int i=1; i<val.size()-1; i++){
+			for(int i=0; i<val.size()-1; i++){
 				line += val.get(i) + ",";
 			}
-			line += val.get(val.size()-1) + ":";
-			line += val.get(0);
+			line += val.get(val.size()-1);
 			bw.write(line);
 			bw.newLine();
 		}
 		bw.close();
-		
+		/*
 		// remote food data
 		products = iproduct.getRemoteProductInfos();
 		session.close();
@@ -121,12 +117,13 @@ public class DataUtil {
 			bw.newLine();
 		}
 		bw.close();
+		*/
 	}
 	
 	public static void main(String[] args) {
 		try {
-			DataUtil.getDataFromDB();
-			//DataUtil.getZhDataFromDB();
+			//DataUtil.getDataFromDB();
+			DataUtil.getZhDataFromDB();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

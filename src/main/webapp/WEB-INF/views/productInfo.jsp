@@ -77,7 +77,7 @@
 <body>
   <div class="container">
   <p></p>
-	<img src="/ProductTracing/imgUpload/${requestScope.product.picture}" width="100%"  style="max-width:500px"/>
+	<!-- <img src="/ProductTracing/imgUpload/${requestScope.product.picture}" width="100%"  style="max-width:500px"/> -->
 	<h3>${requestScope.product.productName}</h3>
 	<p>${requestScope.product.description}</p>
 	<!--  <p>${requestScope.components}</p>-->

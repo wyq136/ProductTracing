@@ -65,6 +65,7 @@ public class makeRec {
             for(String str:localFood.requestList){
                 userLikeString += str + ":";
             }
+            
             userLikeString.substring(0, userLikeString.length() - 2);
 
             remoteFood.saveReqToDB(userId,time,userLikeString);
@@ -84,7 +85,7 @@ public class makeRec {
         mr.initData();
         System.out.println("test");
         LinkedHashMap<String,String> recommend = new LinkedHashMap<String, String>();
-        recommend = mr.recommendList("claire","","");
+        recommend = mr.recommendList("claire","米饭","");
         Set s = recommend.keySet();
         ArrayList<String> list = new ArrayList<String>();
         list.addAll(s);

@@ -3,6 +3,8 @@ package cn.edu.bit.linc.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -146,7 +148,6 @@ public class ProductController {
 		for(Component com : components) {
 			List<Attribute> attributes = iattribute.getAttributeFromProductByComponentID(com.getComponentID());
 			com.setAttributes(attributes);
-			
 			//System.out.println(attributes);
 		}
 		
@@ -334,7 +335,7 @@ public class ProductController {
 		session.close();
 		if(res != null)
 		return "success";
-		else return "登录失败";
+		else return "login fail";
 	}
 	
 	
@@ -353,7 +354,7 @@ public class ProductController {
 		User usr = null;
 		usr = iUser.selectUserByUsername(username);
 		if(usr != null)
-			return "用户名已存在";
+			return "exist username";
 		User nusr =  new User();
 		nusr.setUsername(username);
 		nusr.setPassword(password);
@@ -368,6 +369,7 @@ public class ProductController {
 	public class ProductAndMerchant {
 		
 		private Product product;
+		private List<Component> components;
 		private Merchant merchant;
 		
 		public Product getProduct() {
@@ -375,6 +377,12 @@ public class ProductController {
 		}
 		public void setProduct(Product product) {
 			this.product = product;
+		}
+		public List<Component> getComponents() {
+			return components;
+		}
+		public void setComponents(List<Component> components) {
+			this.components = components;
 		}
 		public Merchant getMerchant() {
 			return merchant;
@@ -385,8 +393,8 @@ public class ProductController {
 		
 		@Override
 		public String toString() {
-			return "ProductAndMerchant [product=" + product + ", merchant="
-					+ merchant + "]";
+			return "ProductAndMerchant [product=" + product + ", components="
+					+ components + ", merchant=" + merchant + "]";
 		}
 		
 	}
@@ -404,7 +412,8 @@ public class ProductController {
 		List<Product> products = new ArrayList<Product>();
 		SqlSession sqlsession = DBUtil.openSession();
 		IProduct iproduct = sqlsession.getMapper(IProduct.class);
-		IMerchant imerchant = sqlsession.getMapper(IMerchant.class); 
+		IMerchant imerchant = sqlsession.getMapper(IMerchant.class);
+		IComponent icomponent = sqlsession.getMapper(IComponent.class);
 		List<ProductAndMerchant> resList = new ArrayList();
 		
 		if(components.length == 0){
@@ -419,9 +428,11 @@ public class ProductController {
 			}
 			
 			for(Product p : random) {
+				List<Component> componentList = icomponent.getComponentByProductID(p.getProductID());
 				Merchant m = imerchant.getMerchantByProductID(p.getProductID());
 				ProductAndMerchant pam = new ProductAndMerchant();
 				pam.setProduct(p);
+				pam.setComponents(componentList);
 				pam.setMerchant(m);
 				resList.add(pam);
 			}
@@ -470,9 +481,11 @@ public class ProductController {
 		}
 		
 		for(Product p : products) {
+			List<Component> componentList = icomponent.getComponentByProductID(p.getProductID());
 			Merchant m = imerchant.getMerchantByProductID(p.getProductID());
 			ProductAndMerchant pam = new ProductAndMerchant();
 			pam.setProduct(p);
+			pam.setComponents(componentList);
 			pam.setMerchant(m);
 			resList.add(pam);
 		}
@@ -514,6 +527,9 @@ public class ProductController {
 		}
 		
 		if(positionX != null && !positionX.equals("") && positionY != null && !positionY.equals("")) {
+			positionX = "116.317322";
+			positionY = "39.968011";
+			System.out.println(positionX + " " + positionY);
 			Iterator<Merchant> it = merchants.iterator();
 			while(it.hasNext()) {
 				Merchant m = it.next();
@@ -525,8 +541,12 @@ public class ProductController {
 				
 				m.setPositionX(dis);
 			}
+			
+			Collections.sort(merchants);
+			
+			/*
 			List<Merchant> resList = new ArrayList();
-			for(int i = 0; i < 3 && i < merchants.size(); ++i) {
+			for(int i = 0; i < merchants.size(); ++i) {
 				Merchant minMerchant = merchants.get(0);
 				double min = merchants.get(0).getPositionX();
 				
@@ -540,7 +560,7 @@ public class ProductController {
 				minMerchant.setPositionY(-1.0);
 				resList.add(minMerchant);
 			}
-			 merchants = resList;
+			 merchants = resList;*/
 		}
 		
 		for(Merchant merchant : merchants) {
@@ -611,10 +631,12 @@ public class ProductController {
 				for(int j = 0; j < dishes.getLength(); ++j) {
 					Element dish = (Element) dishes.item(j);
 					String dishName = dish.getElementsByTagName("Name").item(0).getFirstChild().getNodeValue();
+					String dishPicture = dish.getElementsByTagName("Images").item(0).getFirstChild().getNodeValue();
 					String componentString = dish.getElementsByTagName("Component").item(0).getFirstChild().getNodeValue();
 					
 					Product product = new Product();
 					product.setProductName(dishName);
+					product.setPicture(dishPicture);
 					product.setMerchantID(merchant.getMerchantID());
 					
 					iproduct.addProduct(product);
@@ -629,8 +651,7 @@ public class ProductController {
 							component = new Component();
 							component.setComponentName(components[k]);
 							
-							int componentID = icomponent.addComponent(component);
-							component.setComponentID(componentID);
+							icomponent.addComponent(component);
 						}
 						
 						iproduct.addProductDetail(product.getProductID(), component.getComponentID());

@@ -22,21 +22,15 @@ public class makeFood {
     ArrayList<String> requestList = new ArrayList<String>();
     ArrayList<String> mostResult = new ArrayList<String>();
     ArrayList<String> rareResult = new ArrayList<String>();
-    ArrayList<String> typeResult = new ArrayList<String>();
+    //ArrayList<String> typeResult = new ArrayList<String>();
     ArrayList<String> recommendResult = new ArrayList<String>();
-    Set<String> allType = new HashSet<String>();
+    //Set<String> allType = new HashSet<String>();
     HashMap<String,Boolean> componentMap = new HashMap<String, Boolean>();      //initialize to be true, if have, change to false
     HashMap<String,Integer> product = new HashMap<String, Integer>();
     ArrayList<String> recommendCount = new ArrayList<String>();
     int[][] score = {{100,100,100},{60,100,100},{60,80,100},{60,75,87}};
-    public void initType() {
-        allType.add("catalog_1");
-        allType.add("catalog_2");
-        allType.add("catalog_3");
-    }
 
     public void config() {
-        initType();
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxIdle(5);
 
@@ -65,10 +59,8 @@ public class makeFood {
 
             String pid = content[0];
             String component = content[1];
-            String type = content[2];
 
             jedis.hset(pid, "component", component);
-            jedis.hset(pid, "type", type);
 
             String components[] = component.split(",");
             for(String str:components){
@@ -121,6 +113,8 @@ public class makeFood {
         for(String s : sdislike){
             if(hm.get(s) != null)   hm.remove(s);
         }
+        
+        System.out.println(hm.size());
 
         return hm;
     }
@@ -158,12 +152,6 @@ public class makeFood {
                         }
                     }
 
-                    String type = jedis.hget(key,"type");
-                    try {
-                        allType.remove(type);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
                 }
 
 
@@ -195,12 +183,6 @@ public class makeFood {
                     numOfFood++;
                     componentMap.put(componentLeft, false);
                     requestList.remove(componentLeft);
-                    String type = jedis.hget(str, "type");
-                    try{
-                        allType.remove(type);
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
 
                 }
             }
@@ -214,21 +196,10 @@ public class makeFood {
         for(Map.Entry<String,Integer> entry : this.product.entrySet()){
             String key = entry.getKey();
             int val = entry.getValue();
-            String type = jedis.hget(key, "type");
-            if(val > max && allType.contains(type)){
-                max = val;
-                res = key;
-                resType = type;
-            }
         }
         if(res != null){
-            typeResult.add(res);
+            
             numOfFood++;
-            try{
-                allType.remove(resType);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
         }
 
     }
@@ -243,9 +214,6 @@ public class makeFood {
         if(requestList.size() > 0  && numOfFood < recommendNum){
             addRare(userDislikeString);
         }
-        if(numOfFood < recommendNum){
-            addType(userDislikeString);
-        }
 
 //        System.out.println("most:"+mostResult);
 //        System.out.println("rare:"+rareResult);
@@ -253,7 +221,6 @@ public class makeFood {
 
         recommendResult.addAll(mostResult);
         recommendResult.addAll(rareResult);
-        recommendResult.addAll(typeResult);
 
         for(int i = 0;i < recommendResult.size();i++){
             int val = product.get(recommendResult.get(i));

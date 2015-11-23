@@ -2,7 +2,7 @@ package cn.edu.bit.linc.pojo;
 
 import java.util.List;
 
-public class Merchant {
+public class Merchant implements Comparable{
 
 	private int merchantID;
 	private String merchantName;
@@ -85,7 +85,17 @@ public class Merchant {
 				+ rating + ", products=" + products + "]";
 	}
 	
-	
-	
+	public int compareTo(Object o)
+	{
+
+	       Merchant m = (Merchant)o;
+
+	       Double x = m.getPositionX();
+	      // note: enum-type's comparation depend on types' list order of enum method
+	      // so, if compared property is enum-type ,then its comparationfollow ObjEnum.objType order
+
+
+	      return ((Double)this.getPositionX()).compareTo(x);
+	}
 	
 }
