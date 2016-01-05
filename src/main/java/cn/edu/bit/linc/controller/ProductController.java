@@ -54,6 +54,7 @@ import cn.edu.bit.linc.pojo.Attribute;
 import cn.edu.bit.linc.pojo.Component;
 import cn.edu.bit.linc.pojo.Merchant;
 import cn.edu.bit.linc.pojo.Product;
+import cn.edu.bit.linc.pojo.ProductDetail;
 import cn.edu.bit.linc.pojo.RequestComponent;
 import cn.edu.bit.linc.pojo.Tag;
 import cn.edu.bit.linc.pojo.User;
@@ -133,8 +134,8 @@ public class ProductController {
 	
 	
 	
-	@RequestMapping(value="/product/{id}", method=RequestMethod.GET)
-	public ModelAndView showProduct(@PathVariable Integer id){
+	@RequestMapping(value="/productDetail/{id}", method=RequestMethod.GET)
+	public ModelAndView showProductDetail(@PathVariable Integer id){
 		ModelAndView mv = new ModelAndView("productInfo");
 		SqlSession session = DBUtil.openSession();
 		IProduct iproduct = session.getMapper(IProduct.class);
@@ -146,15 +147,62 @@ public class ProductController {
 		List<Component> components = icomponent.getComponentByProductID(product.getProductID());
 		
 		for(Component com : components) {
-			List<Attribute> attributes = iattribute.getAttributeFromProductByComponentID(com.getComponentID());
+			List<Attribute> attributes = iattribute.getAttributeFromProductByProductIDAndComponentID(product.getProductID(), com.getComponentID());
 			com.setAttributes(attributes);
-			//System.out.println(attributes);
+			System.out.println(attributes);
 		}
 		
 		mv.addObject("product", product);
 		mv.addObject("components", components);
+		mv.addObject("detail", true);
 		
 		return mv;
+	}
+	
+	@RequestMapping(value="/product/{id}", method=RequestMethod.GET)
+	public ModelAndView showProduct(@PathVariable Integer id){
+		ModelAndView mv = new ModelAndView("productInfo");
+		SqlSession session = DBUtil.openSession();
+		IProduct iproduct = session.getMapper(IProduct.class);
+		IComponent icomponent = session.getMapper(IComponent.class);
+		IAttribute iattribute = session.getMapper(IAttribute.class);
+		
+		Product product = iproduct.getProductByID(id);
+		System.out.println(product);
+		List<Component> components = icomponent.getComponentByProductID(product.getProductID());
+
+		mv.addObject("product", product);
+		mv.addObject("components", components);
+		mv.addObject("detail", false);
+		
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/lightProduct")
+	public List<ProductAndMerchant> getLightProducts(HttpServletRequest request){
+		
+		SqlSession session = DBUtil.openSession();
+		IProduct iproduct = session.getMapper(IProduct.class);
+		IMerchant imerchant = session.getMapper(IMerchant.class);
+		IComponent icomponent = session.getMapper(IComponent.class);
+		List<ProductAndMerchant> resList = new ArrayList();
+		List<Product> products = new ArrayList<Product>();
+
+		products = iproduct.getLightProducts();
+		
+		for(Product p : products) {
+			List<Component> componentList = icomponent.getComponentByProductID(p.getProductID());
+			Merchant m = imerchant.getMerchantByProductID(p.getProductID());
+			ProductAndMerchant pam = new ProductAndMerchant();
+			pam.setProduct(p);
+			pam.setComponents(componentList);
+			pam.setMerchant(m);
+			resList.add(pam);
+		}
+		
+		session.close();
+		return resList;
 	}
 
 	//TODO
@@ -574,10 +622,65 @@ public class ProductController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/randomAttribute")
+	public List<ProductDetail> setRandomAttribute(HttpServletRequest request){
+		SqlSession session = DBUtil.openSession();
+		IComponent icomponent = session.getMapper(IComponent.class);
+		IAttribute iattribute = session.getMapper(IAttribute.class);
+		
+		String[] dateString = {"2015-12-14", "2015-12-14"};
+		String[] mallString = {"北京清河镇农副产品交易市场中心", "农光里农贸市场", "海中菜市场", "三源里菜市场", "将台市场", "天利宏菜市场", "金瀛农贸市场", "北京西南郊肉类水产品市场", "万柳易家社区菜市场", "方庄菜市场"};
+		String[] sourceStrings = {"北京意大利农场", "北京赞谷农场", "北京虎鳄农场", "北京101农场", "北京绿色港湾农场", "北京市南口农场", "北京布拉格农场", "北京川府农场", "北京海水农场", "北京后院农场"};
+		
+		List<ProductDetail> productDetails = icomponent.getProductDetail();
+		
+		Iterator it = productDetails.iterator();
+		
+		while(it.hasNext()) {
+			ProductDetail pd = (ProductDetail)it.next();
+			if(pd.getProductID() < 362)
+				continue;
+			
+			int index = RandomUtil.RandomNum(1);
+			
+			Attribute attribute1 = new Attribute();
+			attribute1.setReferenceTable("PRODUCTDETAIL");
+			attribute1.setReferenceID(pd.getProductDetailID());
+			attribute1.setAttributeName("生产日期");
+			attribute1.setAttributeValue("2015-7-26");
+			iattribute.addAttribute(attribute1);
+			
+			Attribute attribute2 = new Attribute();
+			attribute2.setReferenceTable("PRODUCTDETAIL");
+			attribute2.setReferenceID(pd.getProductDetailID());
+			attribute2.setAttributeName("批次");
+			attribute2.setAttributeValue("2015-7-26");
+			iattribute.addAttribute(attribute2);
+			
+			Attribute attribute3 = new Attribute();
+			attribute3.setReferenceTable("PRODUCTDETAIL");
+			attribute3.setReferenceID(pd.getProductDetailID());
+			attribute3.setAttributeName("采购地");
+			attribute3.setAttributeValue(mallString[RandomUtil.RandomNum(9)]);
+			iattribute.addAttribute(attribute3);
+			
+			Attribute attribute4 = new Attribute();
+			attribute4.setReferenceTable("PRODUCTDETAIL");
+			attribute4.setReferenceID(pd.getProductDetailID());
+			attribute4.setAttributeName("产地");
+			attribute4.setAttributeValue(sourceStrings[RandomUtil.RandomNum(9)]);
+			iattribute.addAttribute(attribute4);
+			
+		}
+		session.commit();
+		session.close();
+		return productDetails;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/read")
 	public void read(HttpServletRequest request){
 		//Do not call again
-		
 		try {
 			SqlSession session = DBUtil.openSession();
 			IMerchant imerchant = session.getMapper(IMerchant.class);
@@ -636,7 +739,7 @@ public class ProductController {
 					
 					Product product = new Product();
 					product.setProductName(dishName);
-					product.setPicture(dishPicture);
+					product.setPicture(dishPicture+".jpg");
 					product.setMerchantID(merchant.getMerchantID());
 					
 					iproduct.addProduct(product);
@@ -668,7 +771,7 @@ public class ProductController {
 		
 	}
 	
-	private static final  double EARTH_RADIUS = 6378137;//赤道半径(单位m)
+	private static final double EARTH_RADIUS = 6378137;//赤道半径(单位m)
     /** 
      * 转化为弧度(rad) 
      * */  

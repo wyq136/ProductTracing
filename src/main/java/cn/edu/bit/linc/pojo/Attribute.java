@@ -4,7 +4,7 @@ public class Attribute {
 
 	private int attributeID;
 	private int referenceID;
-	private String refenenceTable;
+	private String referenceTable;
 	private String attributeName;
 	private String attributeValue;
 	
@@ -20,11 +20,11 @@ public class Attribute {
 	public void setReferenceID(int referenceID) {
 		this.referenceID = referenceID;
 	}
-	public String getRefenenceTable() {
-		return refenenceTable;
+	public String getReferenceTable() {
+		return referenceTable;
 	}
-	public void setRefenenceTable(String refenenceTable) {
-		this.refenenceTable = refenenceTable;
+	public void setReferenceTable(String referenceTable) {
+		this.referenceTable = referenceTable;
 	}
 	public String getAttributeName() {
 		return attributeName;
@@ -42,7 +42,7 @@ public class Attribute {
 	@Override
 	public String toString() {
 		return "Attribute [attributeID=" + attributeID + ", referenceID="
-				+ referenceID + ", refenenceTable=" + refenenceTable
+				+ referenceID + ", referenceTable=" + referenceTable
 				+ ", attributeName=" + attributeName + ", attributeValue="
 				+ attributeValue + "]";
 	}

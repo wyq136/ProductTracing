@@ -8,6 +8,8 @@ import cn.edu.bit.linc.pojo.ProductInfo;
 public interface IProduct {
 
 	public List<Product> getProducts();
+	
+	public List<Product> getLightProducts();
 
 	public List<ProductInfo> getProductInfos();
 	

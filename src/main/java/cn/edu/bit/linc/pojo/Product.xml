@@ -7,6 +7,10 @@
         select * from product
     </select>
     
+    <select id="getLightProducts" resultType="cn.edu.bit.linc.pojo.Product">
+        select product.* from product, merchant, tag where product.merchantid = merchant.merchantid and tagname='超市' and tag.merchantid = merchant.merchantid
+    </select>
+    
     <select id="getProductsLocal" resultType="cn.edu.bit.linc.pojo.Product">
         select * from product where shop='local'
     </select>
