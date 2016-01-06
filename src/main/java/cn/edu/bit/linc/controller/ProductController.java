@@ -110,7 +110,6 @@ public class ProductController {
 	@RequestMapping("/")
 	public String add(Model model){
 		//System.out.println("hello!");
-		//return "addProduct";
 		return "index2";
 	}
 	
@@ -338,10 +337,10 @@ public class ProductController {
 		
 		if(ret != 0) {
 			session.commit();
-			model.addAttribute("message", "娣诲姞鎴愬姛" + product.getId());
+			model.addAttribute("message", "添加成功" + product.getId());
 		}
 		else
-			model.addAttribute("message", "娣诲姞澶辫触");
+			model.addAttribute("message", "添加失败");
 		
 		session.close();
 		
@@ -630,8 +629,8 @@ public class ProductController {
 		IAttribute iattribute = session.getMapper(IAttribute.class);
 		
 		String[] dateString = {"2015-12-14", "2015-12-14"};
-		String[] mallString = {"鍖椾含娓呮渤闀囧啘鍓骇鍝佷氦鏄撳競鍦轰腑蹇�", "鍐滃厜閲屽啘璐稿競鍦�", "娴蜂腑鑿滃競鍦�", "涓夋簮閲岃彍甯傚満", "灏嗗彴甯傚満", "澶╁埄瀹忚彍甯傚満", "閲戠�涘啘璐稿競鍦�", "鍖椾含瑗垮崡閮婅倝绫绘按浜у搧甯傚満", "涓囨煶鏄撳绀惧尯鑿滃競鍦�", "鏂瑰簞鑿滃競鍦�"};
-		String[] sourceStrings = {"鍖椾含鎰忓ぇ鍒╁啘鍦�", "鍖椾含璧炶胺鍐滃満", "鍖椾含铏庨硠鍐滃満", "鍖椾含101鍐滃満", "鍖椾含缁胯壊娓咕鍐滃満", "鍖椾含甯傚崡鍙ｅ啘鍦�", "鍖椾含甯冩媺鏍煎啘鍦�", "鍖椾含宸濆簻鍐滃満", "鍖椾含娴锋按鍐滃満", "鍖椾含鍚庨櫌鍐滃満"};
+		String[] mallString = {"北京清河镇农副产品交易市场中心", "农光里农贸市场", "海中菜市场", "三源里菜市场", "将台市场", "天利宏菜市场", "金瀛农贸市场", "北京西南郊肉类水产品市场", "万柳易家社区菜市场", "方庄菜市场"};
+		String[] sourceStrings = {"北京意大利农场", "北京赞谷农场", "北京虎鳄农场", "北京101农场", "北京绿色港湾农场", "北京市南口农场", "北京布拉格农场", "北京川府农场", "北京海水农场", "北京后院农场"};
 		
 		List<ProductDetail> productDetails = icomponent.getProductDetail();
 		
@@ -647,28 +646,28 @@ public class ProductController {
 			Attribute attribute1 = new Attribute();
 			attribute1.setReferenceTable("PRODUCTDETAIL");
 			attribute1.setReferenceID(pd.getProductDetailID());
-			attribute1.setAttributeName("鐢熶骇鏃ユ湡");
+			attribute1.setAttributeName("生产日期");
 			attribute1.setAttributeValue("2015-7-26");
 			iattribute.addAttribute(attribute1);
 			
 			Attribute attribute2 = new Attribute();
 			attribute2.setReferenceTable("PRODUCTDETAIL");
 			attribute2.setReferenceID(pd.getProductDetailID());
-			attribute2.setAttributeName("鎵规");
+			attribute2.setAttributeName("批次");
 			attribute2.setAttributeValue("2015-7-26");
 			iattribute.addAttribute(attribute2);
 			
 			Attribute attribute3 = new Attribute();
 			attribute3.setReferenceTable("PRODUCTDETAIL");
 			attribute3.setReferenceID(pd.getProductDetailID());
-			attribute3.setAttributeName("閲囪喘鍦�");
+			attribute3.setAttributeName("采购地");
 			attribute3.setAttributeValue(mallString[RandomUtil.RandomNum(9)]);
 			iattribute.addAttribute(attribute3);
 			
 			Attribute attribute4 = new Attribute();
 			attribute4.setReferenceTable("PRODUCTDETAIL");
 			attribute4.setReferenceID(pd.getProductDetailID());
-			attribute4.setAttributeName("浜у湴");
+			attribute4.setAttributeName("产地");
 			attribute4.setAttributeValue(sourceStrings[RandomUtil.RandomNum(9)]);
 			iattribute.addAttribute(attribute4);
 			
@@ -691,10 +690,10 @@ public class ProductController {
 			
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = dbf.newDocumentBuilder();
-			Document doc = builder.parse("C:\\Users\\HK\\Desktop\\DataSet1.xml"); // 鑾峰彇鍒皒ml鏂囦欢
+			Document doc = builder.parse("C:\\Users\\HK\\Desktop\\DataSet1.xml"); // 获取到xml文件
 			
-			// 涓嬮潰寮�濮嬭鍙�
-			Element root = doc.getDocumentElement(); // 鑾峰彇鏍瑰厓绱�
+			// 下面开始读取
+			Element root = doc.getDocumentElement(); // 获取根元素
 			NodeList restaurants = root.getElementsByTagName("Restaurant");
 			System.out.println(restaurants.getLength());
 			//Vector<E> students_Vector = new Vector();
@@ -772,21 +771,21 @@ public class ProductController {
 		
 	}
 	
-	private static final double EARTH_RADIUS = 6378137;//璧ら亾鍗婂緞(鍗曚綅m)
+	private static final double EARTH_RADIUS = 6378137;//赤道半径(单位m)
     /** 
-     * 杞寲涓哄姬搴�(rad) 
+     * 转化为弧度(rad) 
      * */  
 	private static double rad(double d)
 	{
 	   return d * Math.PI / 180.0;
 	}
 	/**
-	 * 鍩轰簬googleMap涓殑绠楁硶寰楀埌涓ょ粡绾害涔嬮棿鐨勮窛绂�,璁＄畻绮惧害涓庤胺姝屽湴鍥剧殑璺濈绮惧害宸笉澶氾紝鐩稿樊鑼冨洿鍦�0.2绫充互涓�
-	 * @param lon1 绗竴鐐圭殑绮惧害
-	 * @param lat1 绗竴鐐圭殑绾害
-	 * @param lon2 绗簩鐐圭殑绮惧害
-	 * @param lat3 绗簩鐐圭殑绾害
-	 * @return 杩斿洖鐨勮窛绂伙紝鍗曚綅km
+	 * 基于googleMap中的算法得到两经纬度之间的距离,计算精度与谷歌地图的距离精度差不多，相差范围在0.2米以下
+	 * @param lon1 第一点的精度
+	 * @param lat1 第一点的纬度
+	 * @param lon2 第二点的精度
+	 * @param lat3 第二点的纬度
+	 * @return 返回的距离，单位km
 	 * */
 	public static double getDistance(double lng_a,double lat_a,double lng_b, double lat_b)
 	{
