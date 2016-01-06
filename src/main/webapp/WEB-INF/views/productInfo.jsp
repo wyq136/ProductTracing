@@ -97,7 +97,7 @@
 	
 	<h4> 组成成分：</h4>
 	
-	<c:if test="${detail==false}"}>
+	<c:if test="${detail==false}">
 		<div class="panel panel-default">
 		<c:forEach var="component" items="${requestScope.components}">
 		<div class="panel-heading" onclick="aclick('a${component.componentID}')">
