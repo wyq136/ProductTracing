@@ -66,29 +66,8 @@ return ""
 
   currentPage.change_category = function(str){
  	category = str;
- 	if(str == "泰国菜")
- 		str = "Thailand";
- 	else if(str == "韩国菜")
- 		str = "Korea";
- 	else if(str =="中东料理" )
- 		str = "Middle East";
- 	else if(str == "俄罗斯菜" )
- 		str = "Russia";
- 	else if(str == "法国菜")
- 		str = "France";
- 	else if(str == "川菜")
- 		str = "Sichuan";
- 	else if(str == "湘菜")
- 		str = "Hunan";
- 	else if(str == "粤菜")
- 		str = "Guangzhou";
- 	else if(str == "东北菜")
- 		str = "Dongbei";
- 	else if(str == "江浙菜")
- 		str = "Jiangzhe";
- 	else if(str == "轻工")
- 		str = "light industry";
- 	setCookie('tag',category, 7);
+ 
+ 	setCookie("tag", str, 7);
  	$("#selected_catgory").text("Catgory: " + str)
  };
 $(function() {
@@ -135,7 +114,7 @@ $(function() {
             $("#catgory").bind("click", function() {
             	$("#select_form").empty();
 
-          	$("<div class='section_room'><select id='country' onChange='currentPage.change_category(this.value)'' class='frm-field required'><option value='泰国菜'>Thailand</option><option value='韩国菜'>Korea</option><option value='中东料理'>Middle East</option><option value='俄罗斯菜'>Russia</option><option value='法国菜'>France</option><option value='川菜'>Sichuan</option><option value='湘菜'>Hunan</option><option value='粤菜'>Guangzhou</option><option value='东北菜'>Dongbei</option><option value='江浙菜'>Jiangzhe</option><option value='轻工'>light industry</option></select></div>").appendTo($("#select_form")); 
+          	$("<div class='section_room'><select id='country' onChange='currentPage.change_category(this.value)'' class='frm-field required'><option value='Thailand'>Thailand</option><option value='Korea'>Korea</option><option value='Middle East'>Middle East</option><option value='Russia'>Russia</option><option value='France'>France</option><option value='Sichuan'>Sichuan</option><option value='Hunan'>Hunan</option><option value='Guangzhou'>Guangzhou</option><option value='Dongbei'>Dongbei</option><option value='Jiangzhe'>Jiangzhe</option><option value='light industry'>light industry</option></select></div>").appendTo($("#select_form")); 
 
         	if(isCategory == false){
         	 	$("#catgory").css({

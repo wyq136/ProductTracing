@@ -31,6 +31,7 @@ currentPage.SendPost  = function(postData)  {
            url:curUrl,
            //提交的数据
            data:postData,
+            contentType:'application/x-www-form-urlencoded; charset=UTF-8',
            //返回数据的格式
            datatype: 'json',//"xml", "html", "script", "json", "jsonp", "text".
      
@@ -132,10 +133,37 @@ currentPage.SendPost  = function(postData)  {
 }
 
 $(function() {
+    var tag = ReadCookie('tag');
+        if(tag == "Thailand")
+        tag = "Thailand泰国菜";
+    else if(tag == "Korea")
+        tag = "韩国菜";
+    else if(tag =="Middle East" )
+        tag = "中东料理";
+    else if(tag == "Russia" )
+        tag = "俄罗斯菜";
+    else if(tag == "France")
+        tag = "法国菜";
+    else if(tag == "Sichuan")
+        tag = "川菜";
+    else if(tag == "Hunan")
+        tag = "湘菜";
+    else if(tag == "Guangzhou")
+        tag = "粤菜";
+    else if(tag == "Dongbei")
+        tag = "东北菜";
+    else if(tag == "Jiangzhe")
+        tag = "江浙菜";
+    else if(tag == "light industry")
+        tag = "轻工";
+
+
+
 		var postData = {};
 		postData['priceLow'] = ReadCookie('priceLow');
 		postData['priceHigh'] = ReadCookie('priceHigh');
-		postData['tag'] = ReadCookie('tag');
+		postData['tag'] = tag;
+        alert("tag:" + postData['tag']);
 		currentPage.SendPost(postData);
 	
 });
