@@ -31,7 +31,7 @@ currentPage.SendPost  = function(postData)  {
            url:curUrl,
            //提交的数据
            data:postData,
-            contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+          contentType:'application/x-www-form-urlencoded; charset=UTF-8',
            //返回数据的格式
            datatype: 'json',//"xml", "html", "script", "json", "jsonp", "text".
      
@@ -92,10 +92,10 @@ currentPage.SendPost  = function(postData)  {
           
                 for(var i=0; i<data.length; i++){
                 
-                    $("<li class='im-g'><a href=''><img src='" + url + "imgUpload/" + data[i]['picture'] + "'class='img-responsive' alt=''></a></li>").appendTo($("#Merchants"));
+                  
    
                 //  alert("共推荐产品:" + recommendProduct.length);
-                 var recp = "<p>推荐菜： ";
+                 var recp = "<p>recommend: ";
             
                     for(var j = 0; j < data[i]['products'].length; j++)
                         if(j != 0)
@@ -103,13 +103,15 @@ currentPage.SendPost  = function(postData)  {
                         else 
                             recp += "<a href=" + url + "product/" +  data[i]['products'][j]['productID'] + ">" +    data[i]['products'][j]['productName'] + "</a>" ;
                        recp += "</p>";
-                       recp +=  "<p>评分: " +  data[i]['rating'] + "</p>";
-                        recp +="<p>人均价格: " +  data[i]['price'] + "</p>";
-                 //       recp += "<p>距离: " +  data[i]['positionX'].toFixed(2) + "km</p>";
+                       recp +=  "<p>rate: " +  data[i]['rating'] + "</p>";
+                        recp +="<p>price: " +  data[i]['price'] + "</p>";
+                      recp += "<p>distance: " +  data[i]['positionX'].toFixed(2) + "km</p>";
+                       recp +="<p>address: " +  data[i]['address'] + "</p>";
+                      
 
 
 
-                    $( "<div class='order-top' ><li class='data'><h4>" +  data[i]['merchantName'] +"</h4>" + recp + "</li><div class='clearfix'></div></div>").appendTo($("#Merchants")); 
+                    $( "<div class='order-top' ><li class='im-g'><a href=''><img src='" + url + "imgUpload/" + data[i]['picture'] + "'class='img-responsive' alt=''></a></li><li class='data'><h4>" +  data[i]['merchantName'] +"</h4>" + recp + "</li><div class='clearfix'></div></div>").appendTo($("#Merchants")); 
                   //  $("<li class='bt-nn'><a class='morebtn hvr-rectangle-in' href='orders.html'>Explore</a></li>").appendTo($("#Merchants")); 
 
                    // $("<p>评分: " +  data[i]['rating'] + "</p>").appendTo($("#Merchants")); 
@@ -160,9 +162,16 @@ $(function() {
 
 
 		var postData = {};
+    if(ReadCookie('isPrice' == "true")){
 		postData['priceLow'] = ReadCookie('priceLow');
 		postData['priceHigh'] = ReadCookie('priceHigh');
+  }
+  if(ReadCookie('isCategory') == "true")
 		postData['tag'] = tag;
+  if(ReadCookie('neighbor') == true){
+       postData['positionX'] = 0;
+       postData['positionY'] = 0;
+  }
         alert("tag:" + postData['tag']);
 		currentPage.SendPost(postData);
 	

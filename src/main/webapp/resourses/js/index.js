@@ -44,7 +44,6 @@ return ""
   price = str;
  	if(str == 'p0_100'){
  		str = "0-100"
-     
         setCookie('priceLow', '0',7);
         setCookie('priceHigh', '100', 7);
         alert(getCookie('priceLow'));
@@ -74,18 +73,23 @@ $(function() {
          setCookie('priceLow', '', 7);
          setCookie('priceHigh','',7);
          setCookie('tag','',7);
+         setCookie("neighbor", false, 7);
+          setCookie("isPrice", false, 7);
+           setCookie("isCategory", false, 7);
         $("#neighbor").bind("click", function() {
         	if(neighbor == false){
         	 	$("#neighbor").css({
             	"background-color":"#8ad833",
             	});
             	neighbor = true;
+             setCookie("neighbor", true, 7);
         	 }
         	else{
         		$("#neighbor").css({
             	"background-color":"#d96b66",
             	});
             	neighbor = false;
+                setCookie("neighbor", false, 7);
 
         	}
           });
@@ -101,12 +105,14 @@ $(function() {
             	"background-color":"#8ad833",
             	});
             	isPrice = true;
+               setCookie("isPrice", true, 7);
         	 }
         	else{
         		$("#price").css({
             	"background-color":"#d96b66",
             	});
             	isPrice = false;
+              setCookie("isPrice", false, 7);
 
         	}
           });
@@ -121,12 +127,14 @@ $(function() {
             	"background-color":"#8ad833",
             	});
             	isCategory = true;
+               setCookie("isCategory", true, 7);
         	 }
         	else{
         		$("#catgory").css({
             	"background-color":"#d96b66",
             	});
             	isCategory = false;
+                 setCookie("isCategory", false, 7);
 
         	}
           });

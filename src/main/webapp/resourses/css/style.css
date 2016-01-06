@@ -629,12 +629,15 @@ a.simpleCart_empty {
   vertical-align: middle;
 }
 li.im-g {
-  float: left;
+  float: none;
   width: 12%;
+  margin:0 0 0 30%;
+
 }
 li.data {
-  float: left;
+  float: right;
   width: 50%;
+
 }
 li.bt-nn {
   float: right;
