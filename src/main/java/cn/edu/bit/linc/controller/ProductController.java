@@ -378,6 +378,7 @@ public class ProductController {
 		IUserOperation iUser = session.getMapper(IUserOperation.class);
 		User res = null;
 		String username = request.getParameter("username");
+		System.out.println("login:" +username);
 		res = iUser.selectUserByUsername(username);
 		System.out.println(res);
 		session.close();
@@ -396,8 +397,7 @@ public class ProductController {
 		
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		String email = request.getParameter("email");
-		
+		String email = request.getParameter("email"); 
 		System.out.println("name: " + username + " pass: " +password+ " email:" + email);
 		User usr = null;
 		usr = iUser.selectUserByUsername(username);

@@ -1090,6 +1090,20 @@ i.sele{
   border: none;
   outline: none;
 }
+.register-but input {
+  background:#5fa022;
+  color: #FFF;
+  font-size: 1em;
+  padding: 0.6em 2em;
+  transition: 0.5s all;
+  -webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;
+  display: inline-block;
+  text-transform: uppercase;
+  border: none;
+  outline: none;
+}
 .register-but input[type="submit"]:hover {
 	background:#D96B66;
 }
@@ -1367,6 +1381,22 @@ a.morebtn {
   font-size: 1em;
   padding: 0.5em;
 }
+
+.login-right input[type="submit2"] {
+  background:#5fa022;
+  color: #FFF;
+  font-size: 1em;
+  padding: 0.7em 1.2em;
+  transition: 0.5s all;
+  -webkit-transition: 0.5s all;
+  -moz-transition: 0.5s all;
+  -o-transition: 0.5s all;
+  display: inline-block;
+  text-transform: uppercase;
+  border:none;
+  outline:none;
+}
+
 .login-right input[type="submit"] {
 	background:#5fa022;
 	color: #FFF;

@@ -22,7 +22,7 @@ currentPage.SendPost  = function(postData)  {
      if( postData['tag'] == "轻工")
          curUrl = url  + "lightProduct";
     else curUrl  = url + "merchant";
-    alert(curUrl);
+
 
        $.ajax({
            //提交数据的类型 POST GET
@@ -38,7 +38,7 @@ currentPage.SendPost  = function(postData)  {
            //成功返回之后调用的函数             
            success:function(data){
                $("#Merchants").empty();
-               alert(data);
+       
 
     
                 
@@ -172,7 +172,6 @@ $(function() {
        postData['positionX'] = 0;
        postData['positionY'] = 0;
   }
-        alert("tag:" + postData['tag']);
 		currentPage.SendPost(postData);
 	
 });

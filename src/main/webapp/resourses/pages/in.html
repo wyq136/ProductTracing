@@ -19,7 +19,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href='http://fonts.useso.com/css?family=Libre+Baskerville:400,700' rel='stylesheet' type='text/css'>
 <script src="js/jquery.min.js"></script>
 <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
-<script src="js/simpleCart.min.js"> </script>		
+<script src="js/simpleCart.min.js"> </script>	
+<script src="js/login.js"> </script>			
 </head>
 <body>
 <!-- header -->
@@ -36,9 +37,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="head-nav">
 					<span class="menu"> </span>
 						<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="/ProductTracing/">Home</a></li>
 							<li><a href=" resturants.html">Resturants</a></li>
-							<li class="active"><a href=" login.html">Sign In</a></li>
+							<li class="active"><a href=" in.html">Sign In</a></li>
 							<li><a href=" contact.html">Contact</a></li>
 								<div class="clearfix"> </div>		
 						</ul>
@@ -79,17 +80,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			   <div class="col-md-6 login-right wow fadeInRight" data-wow-delay="0.4s">
 					<h3>REGISTERED CUSTOMERS</h3>
 					<p>If you have an account with us, please log in.</p>
-					<form>
+					<form  id="loginform" >
 						<div>
-							<span>Email Address<label>*</label></span>
-							<input type="text"> 
+							<span>Username<label>*</label></span>
+							<input type="text" name="username" id="username" value=""/>
+							
 						</div>
 						<div>
 							<span>Password<label>*</label></span>
-							<input type="password"> 
+							 <input type="password" name="password" id="password" value=""/>
 						</div>
-						<a class="forgot" href="#">Forgot Your Password?</a>
-						<input type="submit" value="Login">
+						<input type="submit2" value="Login" id="submit">
 					</form>
 			   </div>	
 				<div class="clearfix"> </div>

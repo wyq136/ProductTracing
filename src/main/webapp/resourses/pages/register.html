@@ -20,6 +20,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="js/jquery.min.js"></script>
 <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
 <script src="js/simpleCart.min.js"> </script>		
+<script src="js/register.js"> </script>
 </head>
 <body>
 <!-- header -->
@@ -36,9 +37,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="head-nav">
 					<span class="menu"> </span>
 						<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="/ProductTracing/">Home</a></li>
 							<li><a href=" resturants.html">Resturants</a></li>
-							<li><a href=" login.html">Sign In</a></li>
+							<li><a href=" in.html">Sign In</a></li>
 							<li><a href=" contact.html">Contact</a></li>
 								<div class="clearfix"> </div>		
 						</ul>
@@ -71,45 +72,28 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="main-1">
 		<div class="container">
 			<div class="register">
-		  	  <form> 
+		  	  <form id = "registform"> 
 				 <div class="register-top-grid">
-					<h3>PERSONAL INFORMATION</h3>
+					<h3>LOGIN INFORMATION</h3>
 					 <div class="wow fadeInLeft" data-wow-delay="0.4s">
-						<span>First Name<label>*</label></span>
-						<input type="text"> 
+						<span>Email Address<label>*</label></span>
+						<input type="text" name="email" id="email"/> 
 					 </div>
 					 <div class="wow fadeInRight" data-wow-delay="0.4s">
-						<span>Last Name<label>*</label></span>
-						<input type="text"> 
+						<span>Username<label>*</label></span>
+						<input type="text" name="username" id="username"/>
 					 </div>
 					 <div class="wow fadeInRight" data-wow-delay="0.4s">
-						 <span>Email Address<label>*</label></span>
-						 <input type="text"> 
+						 <span>Password<label>*</label></span>
+						 <input type="password" name="password" id="password"/>
 					 </div>
-					 <div class="clearfix"> </div>
-					   <a class="news-letter" href="#">
-						 <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i>Sign Up for Newsletter</label>
-					   </a>
+					 <div class="register-but" style="width: 100%">
+					 <input value="submit" id="regist">
 					 </div>
-				     <div class="register-bottom-grid">
-						    <h3>LOGIN INFORMATION</h3>
-							 <div class="wow fadeInLeft" data-wow-delay="0.4s">
-								<span>Password<label>*</label></span>
-								<input type="password">
-							 </div>
-							 <div class="wow fadeInRight" data-wow-delay="0.4s">
-								<span>Confirm Password<label>*</label></span>
-								<input type="password">
-							 </div>
-					 </div>
+				      
 				</form>
 				<div class="clearfix"> </div>
-				<div class="register-but">
-				   <form>
-					   <input type="submit" value="submit">
-					   <div class="clearfix"> </div>
-				   </form>
-				</div>
+			
 		   </div>
 		 </div>
 	</div>
