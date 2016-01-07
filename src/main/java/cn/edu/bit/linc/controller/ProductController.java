@@ -378,7 +378,6 @@ public class ProductController {
 		IUserOperation iUser = session.getMapper(IUserOperation.class);
 		User res = null;
 		String username = request.getParameter("username");
-		System.out.println("login:" +username);
 		res = iUser.selectUserByUsername(username);
 		System.out.println(res);
 		session.close();

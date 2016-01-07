@@ -1,4 +1,4 @@
-var url = "http://localhost:8080/ProductTracing/";
+
 
 
 
@@ -7,7 +7,7 @@ var url = "http://localhost:8080/ProductTracing/";
     $("#submit").bind("click", function() {
                 $.ajax({
                    type: "POST",
-                   url: url+ "login",
+                   url: url+ "login", 
                    data: $("#loginform").serialize(),  
                    success: function(msg){
              

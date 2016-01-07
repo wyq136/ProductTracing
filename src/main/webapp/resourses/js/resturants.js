@@ -4,7 +4,6 @@
 *@param {string} cookieName Cookie名称
 */
 var random = false;
-var url = "http://localhost:8080/ProductTracing/";
 currentPage={};
 
 function ReadCookie(cookieName) {

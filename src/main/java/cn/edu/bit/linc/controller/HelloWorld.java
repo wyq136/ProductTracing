@@ -21,7 +21,7 @@ public class HelloWorld {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/testMybatis")
+	@RequestMapping("/testMybatis") 
 	public List<User> testMybatis(){
 		SqlSession session = DBUtil.openSession();
 //		User user = session.selectOne("cn.edu.bit.linc.dao.IUserOperation.selectUserByUsername", "user01");
