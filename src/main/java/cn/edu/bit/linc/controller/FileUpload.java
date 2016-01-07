@@ -21,7 +21,7 @@ public class FileUpload {
 
     @RequestMapping(value = "fileUpload", method = RequestMethod.POST)  
     public ModelAndView fileUpload(  
-            @RequestParam("fileUpload") CommonsMultipartFile file) {  
+            @RequestParam("fileUpload") CommonsMultipartFile file) {   
 
         System.out.println(file.getContentType());  
         System.out.println(file.getSize());  

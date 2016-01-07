@@ -75,7 +75,7 @@ public class ProductController {
 	@RequestMapping(value="/hktest")
 	public List<ProductAndMerchant> test(HttpServletRequest request) {
 		
-		List<Product> products = new ArrayList<Product>();
+		List<Product> products = new ArrayList<Product>(); 
 		SqlSession sqlsession = DBUtil.openSession();
 		IProduct iproduct = sqlsession.getMapper(IProduct.class);
 		IMerchant imerchant = sqlsession.getMapper(IMerchant.class); 
@@ -377,8 +377,8 @@ public class ProductController {
 		SqlSession session = DBUtil.openSession();
 		IUserOperation iUser = session.getMapper(IUserOperation.class);
 		User res = null;
-		String username = request.getParameter("username");
-		res = iUser.selectUserByUsername(username);
+		String username = request.getParameter("username");       
+		res = iUser.selectUserByUsername(username); 
 		System.out.println(res);
 		session.close();
 		if(res != null)

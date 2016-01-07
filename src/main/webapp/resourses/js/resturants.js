@@ -2,7 +2,7 @@
 /***
 *读取指定的Cookie值
 *@param {string} cookieName Cookie名称
-*/
+*/ 
 var random = false;
 currentPage={};
 

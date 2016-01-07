@@ -17,12 +17,12 @@ public class HelloWorld {
 	@RequestMapping("/hello")
 	public String sayHello(){
 		System.out.println("hello!");
-		return "test";
+		return "test"; 
 	}
 	
 	@ResponseBody
-	@RequestMapping("/testMybatis") 
-	public List<User> testMybatis(){
+	@RequestMapping("/testMybatis")    
+	public List<User> testMybatis(){ 
 		SqlSession session = DBUtil.openSession();
 //		User user = session.selectOne("cn.edu.bit.linc.dao.IUserOperation.selectUserByUsername", "user01");
 //		List<User> users = session.selectList("cn.edu.bit.linc.dao.IUserOperation.selectUser");

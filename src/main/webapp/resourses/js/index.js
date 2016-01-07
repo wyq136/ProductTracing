@@ -7,13 +7,55 @@ var isCategory = false;
 var price;
 var category;
 
+
+var recommendProduct;
+
+var tagscloud ={};
+var postData = {};
+var map = {};
+var components;
+
+
+
+tagscloud.init = function() {
+
+      };
+
+
+
+
+  var dynamicLoading = {
+    css: function(path){
+    if(!path || path.length === 0){
+      throw new Error('argument "path" is required !');
+    }
+    var head = document.getElementsByTagName('head')[0];
+        var link = document.createElement('link');
+        link.href = path;
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        head.appendChild(link);
+    },
+    js: function(path){
+    if(!path || path.length === 0){
+      throw new Error('argument "path" is required !');
+    }
+    var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.src = path;
+        script.type = 'text/javascript';
+        head.appendChild(script);
+    }
+}
+
 /***
 http://www.cnblogs.com/mikelin/archive/2010/02/03/1662479.html
 * @param {string} cookieName Cookie名称
 * @param {string} cookieValue Cookie值
 * @param {number} nDays Cookie过期天数
 */
-function setCookie(c_name,value,expiredays)
+
+function setCookie(c_name,value,expiredays) 
 {
 
 var exdate=new Date()
@@ -69,7 +111,7 @@ return ""
  	setCookie("tag", str, 7);
  	$("#selected_catgory").text("Catgory: " + str)
  };
-$(function() {
+$(function() { 
          setCookie('priceLow', '', 7);
          setCookie('priceHigh','',7);
          setCookie('tag','',7);
@@ -138,4 +180,23 @@ $(function() {
 
         	}
           });
+
+
+      $.get(url +"component", {}, function(data){
+     components = data;
+     var type = 0;
+    
+     for(var i=0; i<data.length; i++){
+      
+
+      $( "<li style='list-style-type:none;'  id = " + "'" + data[i]['componentID'] +  "' >" + data[i]['componentName'] + "</li>" ).appendTo($("#div1")); 
+      map[data[i]['componentID']] = i ;
+     }
+
+     $.getScript("js/tag.js");
+      tagscloud.init();
+    
+  })
  });
+
+

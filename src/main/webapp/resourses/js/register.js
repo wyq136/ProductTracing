@@ -4,7 +4,7 @@
 
    $(function() {
 
-    $("#regist").bind("click", function() {
+    $("#regist").bind("click", function() { 
                 $.ajax({
                    type: "POST",
                    url: url+ "rigister",

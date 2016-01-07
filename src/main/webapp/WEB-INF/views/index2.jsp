@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<!DOCTYPE HTML> 
 <html>
 <head>
 <title>Spicemystery a Hotel and Resturant Category Flat Bootstarp Responsive Website Template | Home :: w3layouts</title>
@@ -15,7 +15,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
 <script src="js/simpleCart.min.js"> </script>		
 <script src="js/index.js"> </script>
-<script src="js/global.js"> </script>	
+<script src="js/global.js"> </script>
+<link rel="stylesheet" href="css/tag.css" type="text/css" media="screen" />	
+
+
 </head>
 <body>
 <!-- header -->
@@ -115,187 +118,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- banner -->	
 <div class="copyrights">Collect from <a href="http://www.cssmoban.com/" >免费网站模板</a></div>
 <!-- latis -->	
-	<div class="latis">
-		<div class="container">
-		<div class="col-md-4 latis-left">
-			<h3>Maecenas ornare enim</h3>
-			<img src="images/4.jpg" class="img-responsive" alt="">
-			<div class="special-info grid_1 simpleCart_shelfItem">
-				<p>Cum sociis natodiculus mus.rhoncus egestas ac sit </p>
-				<div class="cur">
-					<div class="cur-left">
-						<div class="item_add"><span class="item_price"><a class="morebtn hvr-rectangle-in" href="#">Add to cart</a></span></div>
-					</div>
-					<div class="cur-right">
-						<div class="item_add"><span class="item_price"><h6>only $45.00</h6></span></div>
-					</div>
-						<div class="clearfix"> </div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-4 latis-left">
-			<h3>Dis parturient montes</h3>
-			<img src="images/1.jpg" class="img-responsive" alt="">
-			<div class="special-info grid_1 simpleCart_shelfItem">
-				<p>Cum sociis natodiculus mus.rhoncus egestas ac sit </p>
-				<div class="cur">
-					<div class="cur-left">
-						<div class="item_add"><span class="item_price"><a class="morebtn hvr-rectangle-in" href="#">Add to cart</a></span></div>
-					</div>
-					<div class="cur-right">
-						<div class="item_add"><span class="item_price"><h6>only $55.00</h6></span></div>
-					</div>
-						<div class="clearfix"> </div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-4 latis-left">
-			<h3>Curabitur congue blandit</h3>
-			<img src="images/3.jpg" class="img-responsive" alt="">
-			<div class="special-info grid_1 simpleCart_shelfItem">
-				<p>Cum sociis natodiculus mus.rhoncus egestas ac sit </p>
-				<div class="cur">
-					<div class="cur-left">
-						<div class="item_add"><span class="item_price"><a class="morebtn hvr-rectangle-in" href="#">Add to cart</a></span></div>
-					</div>
-					<div class="cur-right">
-						<div class="item_add"><span class="item_price"><h6>only $65.00</h6></span></div>
-					</div>
-						<div class="clearfix"> </div>
-				</div>
-			</div>
-		</div>
-			<div class="clearfix"> </div>
-			
-				
-	</div>
+	<div  id= "div1">
+
+
+	
 	</div>
 <!-- latis -->	
 <!-- feature -->
-<div class="feature">
-		<div class="container">
-			<div class="fle-xsel">
-				<ul id="flexiselDemo3">
-					<li>
-							
-									<img src="images/1p.jpg" class="img-responsive" alt="">		
-								
-					</li>
-					<li>
-							
-									<img src="images/2p.jpg" class="img-responsive" alt="">		
-								
-					</li>			
-					<li>
-							
-									<img src="images/3p.png" class="img-responsive" alt="">		
-								
-					</li>		
-					<li>
-							
-									<img src="images/4p.jpg" class="img-responsive" alt="">		
-								
-									
-					</li>
-					<li>
-							
-									<img src="images/5p.jpg" class="img-responsive" alt="">		
-								
-					</li>
-					<li>
-							
-									<img src="images/6p.jpg" class="img-responsive" alt="">		
-								
-					</li>
-					<li>
-							
-									<img src="images/7p.jpg" class="img-responsive" alt="">		
-								
-					</li>
-					<li>
-							
-									<img src="images/8p.jpg" class="img-responsive" alt="">		
-								
-					</li>
-									
-				</ul>
-							
-							 <script type="text/javascript">
-								$(window).load(function() {
-									
-									$("#flexiselDemo3").flexisel({
-										visibleItems: 8,
-										animationSpeed: 1000,
-										autoPlay: true,
-										autoPlaySpeed: 3000,    		
-										pauseOnHover: true,
-										enableResponsiveBreakpoints: true,
-										responsiveBreakpoints: { 
-											portrait: { 
-												changePoint:480,
-												visibleItems: 2
-											}, 
-											landscape: { 
-												changePoint:640,
-												visibleItems: 3
-											},
-											tablet: { 
-												changePoint:768,
-												visibleItems: 3
-											}
-										}
-									});
-									
-								});
-								</script>
-								<script type="text/javascript" src="js/jquery.flexisel.js"></script>
-					<div class="clearfix"> </div>
-				
-			</div>
-		</div>
-	</div>
-<!-- feature -->
-<!-- magnust -->	
-	<div class="magnust">
-		<div class="container">
-			<h3>Nascetur ridiculus mus</h3>
-		<div class="col-md-4 magnust-top">
-			
-			<div class="magnust-left">
-				<img src="images/9b.jpg" class="img-responsive" alt="">	
-			</div>
-			<div class="magnust-right">
-				<h4><a href="#">Cites of the</a></h4>
-				<p> Lorem Ipsum passage, and going through the cites of the undoubtable source. Lorem sections</p>
-				<a class="see" href="#">See More</a>
-			</div>
-				<div class="clearfix"> </div>
-		</div>
-		<div class="col-md-4 magnust-top">
-			<div class="magnust-left">
-				<img src="images/8b.jpg" class="img-responsive" alt="">	
-			</div>
-			<div class="magnust-right">
-				<h4><a href="#">Lorem Ipsum</a></h4>
-				<p> Lorem Ipsum passage, and going through the cites of the undoubtable source. Lorem sections</p>
-				<a class="see" href="#">See More</a>
-			</div>
-				<div class="clearfix"> </div>
-		</div>
-		<div class="col-md-4 magnust-top">
-			<div class="magnust-left">
-				<img src="images/10b.jpg" class="img-responsive" alt="">	
-			</div>
-			<div class="magnust-right">
-				<h4><a href="#">Will uncove</a></h4>
-				<p> Lorem Ipsum passage, and going through the cites of the undoubtable source. Lorem sections</p>
-				<a class="see" href="#">See More</a>
-			</div>
-				<div class="clearfix"> </div>
-		</div>
-			<div class="clearfix"> </div>
-	</div>
-	</div>
+
+
 <!-- magnust -->	
 <!-- footer-->
 	<div class="footer">
