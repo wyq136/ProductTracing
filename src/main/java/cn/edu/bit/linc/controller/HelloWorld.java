@@ -1,5 +1,4 @@
-package cn.edu.bit.linc.controller;
-
+package cn.edu.bit.linc.controller;  
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -10,10 +9,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.edu.bit.linc.dao.IUserOperation;
 import cn.edu.bit.linc.pojo.User;
 import cn.edu.bit.linc.util.DBUtil;
-
+ 
 @Controller
-public class HelloWorld {
-
+public class HelloWorld { 
 	@RequestMapping("/hello")
 	public String sayHello(){
 		System.out.println("hello!");

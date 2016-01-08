@@ -1,19 +1,25 @@
- 
+    
 currentPage={};
 
 neighbor = false;
 var isPrice = false;
 var isCategory = false;
+var islike = false;
+var isdislike = false;
 var price;
 var category;
-
+var map  = {};
 
 var recommendProduct;
 
 var tagscloud ={};
 var postData = {};
 var map = {};
+var maplike = {};
+var mapdislike = {};
 var components;
+var like = [];
+var dislike = [];
 
 
 
@@ -118,6 +124,68 @@ $(function() {
          setCookie("neighbor", false, 7);
           setCookie("isPrice", false, 7);
            setCookie("isCategory", false, 7);
+
+           setCookie("dishPost", '', 7);
+
+
+
+           $("#go").bind("click", function() {
+            console.log(maplike);
+            console.log(mapdislike);
+            for (var i in maplike) { 
+              if(maplike[i] == true)
+                like.push(components[map[i]]);
+
+          } 
+              for (var i in mapdislike) { 
+              if(mapdislike[i] == true)
+                dislike.push(components[map[i]]);
+
+          } 
+
+              dishPost['like'] = like;
+              dishPost['dislike'] = dislike;
+              setCookie("dishPost", JSON.stringify(dishPost));
+              console.log(JSON.stringify(dishPost));
+
+                    window.location.href='dishes.html';
+
+           
+          });
+
+
+
+
+           $("#like").bind("click", function() {
+            islike = true;
+            isdislike = false;
+              $("#like").css({
+              "background-color":"#8ad833",
+              });
+              $("#dislike").css({
+              "background-color":"#d96b66",
+              });
+          });
+
+
+           $("#dislike").bind("click", function() {
+            islike = false;
+            isdislike = true;
+              $("#dislike").css({
+              "background-color":"#8ad833",
+              });
+              $("#like").css({
+              "background-color":"#d96b66",
+              });
+  
+          });
+
+
+
+
+
+
+
         $("#neighbor").bind("click", function() {
         	if(neighbor == false){
         	 	$("#neighbor").css({
@@ -182,6 +250,11 @@ $(function() {
           });
 
 
+
+
+   
+
+
       $.get(url +"component", {}, function(data){
      components = data;
      var type = 0;
@@ -190,10 +263,46 @@ $(function() {
       
 
       $( "<li style='list-style-type:none;'  id = " + "'" + data[i]['componentID'] +  "' >" + data[i]['componentName'] + "</li>" ).appendTo($("#div1")); 
-      map[data[i]['componentID']] = i ;
-     }
 
+
+      map[data[i]['componentID']] = i ;
+
+
+     }
      $.getScript("js/tag.js");
+      $("li").bind("click", function() {
+              if(islike == true)
+                if(maplike[$(this)[0].id] == true){
+                    maplike[$(this)[0].id] = false;
+                  $(this).css({
+                "color":"#d96b66",
+              });
+                }
+                else{
+                  maplike[$(this)[0].id] = true;
+              $(this).css({
+                "color":"#8ad833",
+              });
+            }
+
+
+            else if(isdislike == true)
+                if(mapdislike[$(this)[0].id] == true){
+                    mapdislike[$(this)[0].id] = false;
+                  $(this).css({
+                "color":"#d96b66",
+              });
+                }
+                else{
+                  mapdislike[$(this)[0].id] = true;
+              $(this).css({
+                "color":"#00868B",
+              });
+            }
+            });
+
+
+
       tagscloud.init();
     
   })

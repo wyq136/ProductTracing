@@ -922,9 +922,29 @@ li.bt-nn h6 {
   text-align: center;
     padding: 0em 0 0 4.3em;
 }
+.like {   
+ margin: 50% auto 0; 
+  width: 33.33%;
+  text-align: center;
+    padding: 0em 0 0 4.3em;
+}
+.dislike {
+  margin: 50% auto 0; 
+  width: 33.33%; 
+  text-align: center;
+  padding: 0em 0 0 4.3em ;
+}
 
 i.sear{
   background: url(../images/search-icon.png) no-repeat 0px 2px;
+  height: 26px;
+  width: 26px;
+  display: inline-block;
+ vertical-align:middle;
+}
+
+i.light{
+  background: url(../images/light.png) no-repeat 0px 2px;
   height: 26px;
   width: 26px;
   display: inline-block;

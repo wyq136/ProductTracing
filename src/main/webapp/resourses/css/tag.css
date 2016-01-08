@@ -1,10 +1,10 @@
-body {background: ##f2f0f1 url(index.png) no-repeat center 230px;}
+body {background: #f2f0f1 url(index.png) no-repeat center 230px;}
  
-#div1 {position:relative; width:450px; height:450px; margin: 20px auto 0; }
+#div1 {position:relative; width:40%; height:450px; margin: 0px auto 0; }
  
 #div1 li {position:absolute; top:0px; left:0px; font-family: Microsoft YaHei; color:#CD5C5C; font-weight:bold; text-decoration:none; padding: 3px 6px;  }
  
-#div1 li:hover {border: 1px solid #eee; background: #8ad833; }
+#div1 li:hover {border: 1px solid #eee; background: #8ad833;  cursor:pointer;   }
  
 #div1 .blue {color:blue;}
  

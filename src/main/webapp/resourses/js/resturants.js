@@ -36,49 +36,32 @@ currentPage.SendPost  = function(postData)  {
      
            //成功返回之后调用的函数             
            success:function(data){
+            var recommendProduct = data;
                $("#Merchants").empty();
        
 
     
                 
                if(('merchant' in data[0])){
-            
 
-                    for(var i=0; i<data.length; i++){ 
-                        $("<li class='im-g'><a href=''><img src='" + data[i]['product']['picture'] + "'class='img-responsive' alt=''></a></li>").appendTo($("#Merchants"));
+                  for(var i=0; i<recommendProduct.length; i++){ 
+                    recp="<p>Components:";
+
+              for(var x =0 ; x < recommendProduct[i]['components'].length; x++)
+                    if(x == 0)
+                 recp += recommendProduct[i]['components'][x]['componentName'];
+             else recp += "," + recommendProduct[i]['components'][x]['componentName'];
 
 
 
 
-                    //  alert("共推荐产品:" + recommendProduct.length);
-                        $( "<p class='mid text-center'>" +  data[i]['product']['productName']  + "</p>").appendTo($("#Merchants")); 
-                        //alert( "<img src='" + url + recommendProduct[i]['picture'] +  "'" + " width:100% >");
-                        $( "<img src='" + url + "imgUpload/" + data[i]['product']['picture'] +  "'" + " width:'100%'  align='middle'/>").css({
-                            "width":"70%",  /* 宽度 */ 
-                            "clear": "both", 
-                            "display":" block", 
-                            "margin":"auto" 
-                           }).appendTo($("#Merchants")); 
-                        $("<p></p>").appendTo($("#Merchants"));
-                        
-                        
-                        
-                        
-                        
-                        var components ="";
-                        for(var x =0 ; x < data[i]['components'].length; x++)
-                            if(x == 0)
-                                components += data[i]['components'][x]['componentName'];
-                            else components += "," + data[i]['components'][x]['componentName'];
-                        $("<p>原料:" +  components + "</p>").appendTo($("#Merchants")); 
-                        $("<p>商家:" +  data[i]['merchant']['merchantName'] + "</p>").appendTo($("#Merchants"));
-                        $("<p>地址:" +  data[i]['merchant']['address'] + "</p>").appendTo($("#Merchants")); 
-                 
-                        //if(recommendProduct[i]['shop'] != 'local')
-                        //$("<p>地址：" +  recommendProduct[i]['shop'] + "</p>").appendTo($("#Items")); 
+                     recp +=  "</p><p>Merchant: " +  recommendProduct[i]['merchant']['merchantName'] + "</p>";
+                        recp +="<p>Address: " +  recommendProduct[i]['merchant']['address'] + "</p>";
+                    $( "<div class='order-top' ><li class='im-g'><a href=''><img src='" + url + "imgUpload/" + data[i]['product']['picture'] + "'class='img-responsive' alt=''></a></li><li class='data'><h4>" +  data[i]['product']['productName'] +"</h4>" + recp + "</li><div class='clearfix'></div></div>").appendTo($("#Merchants")); 
+    //$("<p>地址：" +  recommendProduct[i]['shop'] + "</p>").appendTo($("#Items")); 
 
-                    
-                    }
+  
+  }
                     
                    
                    return;
@@ -161,7 +144,7 @@ $(function() {
 
 
 		var postData = {};
-    if(ReadCookie('isPrice' == "true")){
+    if(ReadCookie('isPrice') == "true"){
 		postData['priceLow'] = ReadCookie('priceLow');
 		postData['priceHigh'] = ReadCookie('priceHigh');
   }

@@ -1,12 +1,12 @@
-var radius = 200;
-var dtr = Math.PI/180;
+var radius = 200; 
+var dtr = Math.PI/180;    
 var d=300;
 var mcList = [];
 var active = false;
 var lasta = 1;
 var lastb = 1;
 var distr = true;
-var tspeed=10;
+var tspeed=1;
 var size=250;
 var mouseX=0;
 var mouseY=0;

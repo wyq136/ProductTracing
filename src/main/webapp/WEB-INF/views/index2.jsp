@@ -38,7 +38,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<li class="active"><a href="/ProductTracing/">Home</a></li>
 							<li><a href=" resturants.html">Resturants</a></li>
 							<li><a href="in.html">Sign In</a></li>
-							<li><a href=" contact.html">Contact</a></li>
+							<li><a href=" dishes.html">Dishes</a></li>
 								<div class="clearfix"> </div>		
 						</ul>
 								<!-- script-for-nav -->
@@ -118,18 +118,54 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- banner -->	
 <div class="copyrights">Collect from <a href="http://www.cssmoban.com/" >免费网站模板</a></div>
 <!-- latis -->	
-	<div  id= "div1">
+<div style="width:100%"   >
+	<div  style= "width:30%;float:left;height:450px; background:#f5f3f4;  text-align: center; " class="delv">
+
+		<div class="like" >
+			<div class="boo-lef" id = "like">
+				<i class="light"></i>
+				<p>Like</p> 
+			</div>
+		</div>
 
 
 	
 	</div>
+	<div  id= "div1" style= "width:40%;background:#f5f3f4;  float: left;" >
+
+
+	
+	</div>
+	<div  style= "width:30%;float:left;height:450px;background:#f5f3f4;" class="delv">
+	
+		<div class="dislike" style= "float:left;" >
+			<div class="boo-lef" id = "dislike">
+				<i class="light"></i>
+				<p>Dislike</p>
+			</div>
+		</div>
+
+
+	
+	</div>
+</div>
+	<div class="latis">
+		<div class="container">
+			 <div class="register-but" style="width: 100%;  margin: 0 55% 0 45%;">
+					 <button id = "go" type="button" class="btn btn-success" style = "width : 10%; text-align:center;">Go</button>
+					 </div>
+				   
+				
+	</div>
+	</div>
+
 <!-- latis -->	
 <!-- feature -->
 
 
 <!-- magnust -->	
 <!-- footer-->
-	<div class="footer">
+	<div class="footer" >
 		<div class="container">
 			<div class="footer-left">
 				<p>Copyrights © 2015 SpiceMystery All rights reserved | More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>

@@ -1,6 +1,6 @@
 
-
  
+   
 
    $(function() {
 
@@ -17,7 +17,7 @@
                        // $.mobile.changePage("content/first.html","slidedown", true, true);
                      }else{
                          alert("fail");
-                       
+                        
                      }
                       
                    }

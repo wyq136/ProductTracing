@@ -1,5 +1,5 @@
-package cn.edu.bit.linc.controller;
-
+package cn.edu.bit.linc.controller; 
+ 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ public class ProductController {
 
 	@RequestMapping("/index")
 	public String index(){
-		return "index";
+		return "index"; 
 	}
 	
 	@ResponseBody
@@ -246,7 +246,7 @@ public class ProductController {
 		IComponent iComponent = session.getMapper(IComponent.class);
 		
 		Product product = new Product();
-		
+		      
 		String name = request.getParameter("product_name");
 		String catalog_id = request.getParameter("catalog_id");
 		String description = request.getParameter("description");

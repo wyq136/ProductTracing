@@ -1,4 +1,4 @@
-/*
+ /*
 * File: jquery.flexisel.js
 * Version: 1.0.0
 * Description: Responsive carousel jQuery plugin
