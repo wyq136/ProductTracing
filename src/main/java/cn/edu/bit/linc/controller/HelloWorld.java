@@ -1,4 +1,4 @@
-package cn.edu.bit.linc.controller;  
+package cn.edu.bit.linc.controller; 
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
