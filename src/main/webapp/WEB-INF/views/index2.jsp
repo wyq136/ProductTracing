@@ -112,7 +112,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- banner -->	
 <div class="copyrights">Collect from <a href="http://www.cssmoban.com/" >免费网站模板</a></div>
 <!-- latis -->	
-<div style="width:100%"   >
+<div style="width:100%"   class="latis" >
 	<div  style= "width:30%;float:left;height:450px; background:#f5f3f4;  text-align: center; " class="delv">
 
 		<div class="like" >
@@ -143,10 +143,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	</div>
 </div>
-	<div class="latis">
-		<div class="container">
-			 <div class="register-but" style="width: 100%;  margin: 0 55% 0 45%;">
-					 <button id = "go" type="button" class="btn btn-success" style = "width : 10%; text-align:center;">Go</button>
+	<div  style="width: 100%;  margin: width: 100%; ">
+		<div >
+			 <div class="register-but" style="width: 100%;  ">
+					 <button id = "go" type="button" class="btn btn-success" style = "width : 10%; text-align:center; margin: 0 55% 0 45%;">Go</button>
 					 </div>
 				   
 				
