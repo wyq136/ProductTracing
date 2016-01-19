@@ -16,6 +16,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="js/simpleCart.min.js"> </script>		
 <script src="js/index.js"> </script>
 <script src="js/global.js"> </script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=4aqCSFZK9Ym5T0gHH2t0acGY"></script>
 <link rel="stylesheet" href="css/tag.css" type="text/css" media="screen" />	
 
 
@@ -176,6 +177,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="clearfix"></div>
 		</div>
 	</div>
+		<div id="allmap"></div>
 <!-- footer-->	
 </body>
 </html>
