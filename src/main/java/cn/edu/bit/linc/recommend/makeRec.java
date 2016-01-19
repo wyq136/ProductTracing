@@ -85,7 +85,7 @@ public class makeRec {
         mr.initData();
         System.out.println("test");
         LinkedHashMap<String,String> recommend = new LinkedHashMap<String, String>();
-        recommend = mr.recommendList("claire","米饭","");
+        recommend = mr.recommendList("claire","rice","");
         Set s = recommend.keySet();
         ArrayList<String> list = new ArrayList<String>();
         list.addAll(s);

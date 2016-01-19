@@ -84,7 +84,7 @@
 	
 	<div class="panel-heading">
 			<h4 class="panel-title">
-				<p data-toggle="modal" data-target="#myModal">评分&nbsp&nbsp
+				<p data-toggle="modal" data-target="#myModal">mark&nbsp&nbsp
 					<a><img src="../imgs/nst.gif" id="star_1"></img></a>
 					<a><img src="../imgs/nst.gif" id="star_2"></img></a>
 					<a><img src="../imgs/nst.gif" id="star_3"></img></a>
@@ -95,9 +95,9 @@
 		</div>
 	
 	
-	<h4> 组成成分：</h4>
+	<h4> components：</h4>
 	
-	<c:if test="${detail==false}"}>
+	<c:if test="${detail==false}">
 		<div class="panel panel-default">
 		<c:forEach var="component" items="${requestScope.components}">
 		<div class="panel-heading" onclick="aclick('a${component.componentID}')">
