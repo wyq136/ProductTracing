@@ -1,5 +1,4 @@
 package cn.edu.bit.linc.controller;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
@@ -15,14 +14,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
-
+ 
 @Controller
 public class FileUpload {
-
     @RequestMapping(value = "fileUpload", method = RequestMethod.POST)  
     public ModelAndView fileUpload(  
-            @RequestParam("fileUpload") CommonsMultipartFile file) {  
-
+            @RequestParam("fileUpload") CommonsMultipartFile file) {   
         System.out.println(file.getContentType());  
         System.out.println(file.getSize());  
         System.out.println(file.getOriginalFilename());  

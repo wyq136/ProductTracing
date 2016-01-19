@@ -1,5 +1,5 @@
-package cn.edu.bit.linc.controller;
-
+package cn.edu.bit.linc.controller; 
+ 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,14 +68,14 @@ public class ProductController {
 
 	@RequestMapping("/index")
 	public String index(){
-		return "index";
+		return "index"; 
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/hktest")
 	public List<ProductAndMerchant> test(HttpServletRequest request) {
 		
-		List<Product> products = new ArrayList<Product>();
+		List<Product> products = new ArrayList<Product>(); 
 		SqlSession sqlsession = DBUtil.openSession();
 		IProduct iproduct = sqlsession.getMapper(IProduct.class);
 		IMerchant imerchant = sqlsession.getMapper(IMerchant.class); 
@@ -110,7 +110,7 @@ public class ProductController {
 	@RequestMapping("/")
 	public String add(Model model){
 		//System.out.println("hello!");
-		return "addProduct";
+		return "index2";
 	}
 	
 	@ResponseBody
@@ -246,7 +246,7 @@ public class ProductController {
 		IComponent iComponent = session.getMapper(IComponent.class);
 		
 		Product product = new Product();
-		
+		      
 		String name = request.getParameter("product_name");
 		String catalog_id = request.getParameter("catalog_id");
 		String description = request.getParameter("description");
@@ -377,8 +377,8 @@ public class ProductController {
 		SqlSession session = DBUtil.openSession();
 		IUserOperation iUser = session.getMapper(IUserOperation.class);
 		User res = null;
-		String username = request.getParameter("username");
-		res = iUser.selectUserByUsername(username);
+		String username = request.getParameter("username");       
+		res = iUser.selectUserByUsername(username); 
 		System.out.println(res);
 		session.close();
 		if(res != null)
@@ -396,8 +396,7 @@ public class ProductController {
 		
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		String email = request.getParameter("email");
-		
+		String email = request.getParameter("email"); 
 		System.out.println("name: " + username + " pass: " +password+ " email:" + email);
 		User usr = null;
 		usr = iUser.selectUserByUsername(username);
