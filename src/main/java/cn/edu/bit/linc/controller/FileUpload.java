@@ -63,7 +63,11 @@ public class FileUpload {
                     System.out.println(path);
   
                     File localFile = new File(path);  
-                    file.transferTo(localFile);  
+                    file.transferTo(localFile);
+                    
+                    //if(fileName.endsWith(".xml")) {
+                    //	
+                    //}
                 }  
   
             }  
