@@ -297,6 +297,7 @@ $(function() {
      var type = 0;
     
      for(var i=0; i<data.length; i++){
+
       
 
       $( "<li style='list-style-type:none;'  id = " + "'" + data[i]['componentID'] +  "' >" + data[i]['componentName'] + "</li>" ).appendTo($("#div1")); 

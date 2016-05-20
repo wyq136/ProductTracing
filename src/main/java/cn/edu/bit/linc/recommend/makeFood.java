@@ -36,7 +36,8 @@ public class makeFood {
 
         config.setTestOnBorrow(false);
 
-        JedisPool jedisPool = new JedisPool(config, "10.4.20.139", 6379);
+//        JedisPool jedisPool = new JedisPool(config, "10.4.20.139", 6379);
+        JedisPool jedisPool = new JedisPool(config, "127.0.0.1", 6379);
         this.jedis = jedisPool.getResource();
 
     }
