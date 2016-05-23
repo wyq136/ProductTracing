@@ -42,8 +42,10 @@ $(function() {
 	};
 	 
       dishPost = getCookie('dishPost');
-      console.log(dishPost);
-      $.postJSON(url + "recommend", JSON.parse(dishPost), function(data){
+     if(dishPost!="")
+    	 dishPost =  JSON.parse(dishPost);
+     else dishPost = null;
+      $.postJSON(url + "recommend", dishPost, function(data){
     
     	recommendProduct = data;
     	//alert("data" + data.length);
