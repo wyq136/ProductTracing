@@ -453,15 +453,6 @@ public class ProductController {
 	@ResponseBody
 	@RequestMapping(value="/recommend")
 	public List<ProductAndMerchant> getRecommend(@RequestBody RequestComponent requestComponent, HttpSession session){
-		System.out.println("session id: " + session.getId());
-		
-		System.out.println(requestComponent);
-		
-		Component[] components = requestComponent.getLike();
-		Component[] dislikeComponents = requestComponent.getDislike();
-		//System.out.println(components.length);
-		//System.out.println(components[0]);
-		//System.out.println(dislikeComponents.length);
 		
 		List<Product> products = new ArrayList<Product>();
 		SqlSession sqlsession = DBUtil.openSession();
@@ -470,14 +461,29 @@ public class ProductController {
 		IComponent icomponent = sqlsession.getMapper(IComponent.class);
 		List<ProductAndMerchant> resList = new ArrayList();
 		
+		System.out.println("session id: " + session.getId());
+		
+		Component[] components;
+		Component[] dislikeComponents;
+		
+		if(requestComponent != null) {
+			components = requestComponent.getLike();
+			dislikeComponents = requestComponent.getDislike();
+		} else {
+			components = new Component[] {};
+			dislikeComponents =  new Component[] {};
+		}
+		//System.out.println(components.length);
+		//System.out.println(components[0]);
+		//System.out.println(dislikeComponents.length);
+		
 		if(components.length == 0){
-			
 			products = iproduct.getProducts();
-			sqlsession.close();
+			
 			
 			List<Product> random = new ArrayList<Product>();
 			int[] ran = RandomUtil.RandomArray(products.size());
-			for(int i=0; i<ran.length && i<3; i++){
+			for(int i=0; i<ran.length && i<10; i++){
 				random.add(products.get(ran[i]));
 			}
 			
@@ -490,7 +496,7 @@ public class ProductController {
 				pam.setMerchant(m);
 				resList.add(pam);
 			}
-			
+			sqlsession.close();
 			return resList;
 		}
 		
