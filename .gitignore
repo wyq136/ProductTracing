@@ -13,3 +13,4 @@ release.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 £
+src/main/webapp/resourses/js/global.js

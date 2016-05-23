@@ -454,6 +454,9 @@ public class ProductController {
 	@RequestMapping(value="/recommend")
 	public List<ProductAndMerchant> getRecommend(@RequestBody RequestComponent requestComponent, HttpSession session){
 		System.out.println("session id: " + session.getId());
+		
+		System.out.println(requestComponent);
+		
 		Component[] components = requestComponent.getLike();
 		Component[] dislikeComponents = requestComponent.getDislike();
 		//System.out.println(components.length);

@@ -48,9 +48,9 @@ $(function() {
     	recommendProduct = data;
     	//alert("data" + data.length);
 
-$("#Merchants").empty();
+    	$("#Merchants").empty();
   
-  for(var i=0; i<recommendProduct.length; i++){ 
+    	for(var i=0; i<recommendProduct.length; i++){ 
                     recp="<p>Components:";
 
               for(var x =0 ; x < recommendProduct[i]['components'].length; x++)
