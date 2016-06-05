@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -58,6 +59,7 @@ import cn.edu.bit.linc.pojo.ProductDetail;
 import cn.edu.bit.linc.pojo.RequestComponent;
 import cn.edu.bit.linc.pojo.Tag;
 import cn.edu.bit.linc.pojo.User;
+import cn.edu.bit.linc.recommend.DataUtil;
 import cn.edu.bit.linc.recommend.makeRec;
 import cn.edu.bit.linc.util.DBUtil;
 import cn.edu.bit.linc.util.RandomUtil;
@@ -69,6 +71,28 @@ public class ProductController {
 	@RequestMapping("/upload")
 	public String index(){
 		return "index"; 
+	}
+	@ResponseBody
+	@RequestMapping("/first")
+	public String init(){
+		try {
+			//DataUtil.getDataFromDB();
+			DataUtil.getZhDataFromDB();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		makeRec mr = new makeRec();
+		mr.initData();
+		System.out.println("test");
+		LinkedHashMap<String,String> recommend = new LinkedHashMap<String, String>();
+		recommend = mr.recommendList("claire","rice","");
+		Set s = recommend.keySet();
+		ArrayList<String> list = new ArrayList<String>();
+		list.addAll(s);
+		for(String str:list){
+			System.out.print(str);
+		}
+		return "init success";
 	}
 	
 	@ResponseBody
