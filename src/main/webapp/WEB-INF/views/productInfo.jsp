@@ -78,13 +78,13 @@
   <div class="container">
   <p></p>
 	<img src="/ProductTracing/imgUpload/${requestScope.product.picture}" width="100%"  style="max-width:500px"/>
-	<h3>${requestScope.product.product_name}</h3>
+	<h3>${requestScope.product.productName}</h3>
 	<p>${requestScope.product.description}</p>
 	<!--  <p>${requestScope.components}</p>-->
 	
 	<div class="panel-heading">
 			<h4 class="panel-title">
-				<p data-toggle="modal" data-target="#myModal">评分&nbsp&nbsp
+				<p data-toggle="modal" data-target="#myModal">mark&nbsp&nbsp
 					<a><img src="../imgs/nst.gif" id="star_1"></img></a>
 					<a><img src="../imgs/nst.gif" id="star_2"></img></a>
 					<a><img src="../imgs/nst.gif" id="star_3"></img></a>
@@ -95,22 +95,36 @@
 		</div>
 	
 	
-	<h4> 组成成分：</h4>
+	<h4> components：</h4>
 	
-	<div class="panel panel-default">
+	<c:if test="${detail==false}">
+		<div class="panel panel-default">
 		<c:forEach var="component" items="${requestScope.components}">
-		<div class="panel-heading" onclick="aclick('a${component.id}')">
+		<div class="panel-heading" onclick="aclick('a${component.componentID}')">
 			<h4 class="panel-title">
-				<a id="a${component.id}" data-toggle="collapse" data-parent="#accordion" href="/demo/bootstrap3-plugin-collapse-method.htm#collapse${component.id}">
-					<c:out value="${component.component_name}" />
+				<a id="a${component.componentID}" data-toggle="collapse" data-parent="#accordion" href="/demo/bootstrap3-plugin-collapse-method.htm#collapse${component.componentID}">
+					<c:out value="${component.componentName}" />
 				</a>
 			</h4>
 		</div>
-		<div id="collapse${component.id}" class="panel-collapse collapse in">
+		</c:forEach>
+		</div>
+	</c:if>
+	<c:if test="${detail==true}">
+	<div class="panel panel-default">
+		<c:forEach var="component" items="${requestScope.components}">
+		<div class="panel-heading" onclick="aclick('a${component.componentID}')">
+			<h4 class="panel-title">
+				<a id="a${component.componentID}" data-toggle="collapse" data-parent="#accordion" href="/demo/bootstrap3-plugin-collapse-method.htm#collapse${component.componentID}">
+					<c:out value="${component.componentName}" />
+				</a>
+			</h4>
+		</div>
+		<div id="collapse${component.componentID}" class="panel-collapse collapse in">
 			<div class="panel-body">
 				<table class="table">
 	    			<c:forEach var="attribute" items="${component.attributes}">
-	    	  			<tr><td width="100px"><c:out value="${attribute.attribute_name}" />:</td><td><c:out value="${attribute.attribute_value}" /></td></tr>
+	    	  			<tr><td width="100px"><c:out value="${attribute.attributeName}" />:</td><td><c:out value="${attribute.attributeValue}" /></td></tr>
 	    			</c:forEach>
 	    		</table>
 			</div>
@@ -118,16 +132,7 @@
 		
 		</c:forEach>
 	</div>
-	<!--
-	<c:forEach var="component" items="${requestScope.components}">
-	    <strong><c:out value="${component.component_name}" /></strong>
-	    <table class="table">
-	    <c:forEach var="attribute" items="${component.attributes}">
-	    	  <tr><td width="100px"><c:out value="${attribute.attribute_name}" />:</td><td><c:out value="${attribute.attribute_value}" /></td></tr>
-	    </c:forEach>
-	    </table>
-	</c:forEach>
-	-->
+	</c:if>
 	
   </div>
   

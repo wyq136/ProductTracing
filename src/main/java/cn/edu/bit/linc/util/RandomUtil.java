@@ -1,6 +1,10 @@
 package cn.edu.bit.linc.util;
 
+import java.util.Random;
+
 public class RandomUtil {
+	
+	private final static Random r = new Random();
 	
 	public static int[] RandomArray(int length){
 		int[] ran = new int[length];
@@ -20,6 +24,10 @@ public class RandomUtil {
 //		}
 		
 		return res;
+	}
+	
+	public static int RandomNum(int up) {
+		return r.nextInt(up+1);
 	}
 
 	public static void main(String[] args) {

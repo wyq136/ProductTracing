@@ -25,14 +25,13 @@ public class DataUtil {
 		
 		Map<Integer, List<String>> res = new HashMap<Integer, List<String>>();
 		for(ProductInfo p : products){
-			if(!res.containsKey(p.getProduct_id())){
-				List<String> list = new ArrayList<String>();
-				list.add("catalog_" + p.getCatalog_id());			
-				list.add("component_" + p.getComponent_id());
-				res.put(p.getProduct_id(), list);
+			if(!res.containsKey(p.getProductID())){
+				List<String> list = new ArrayList<String>();		
+				list.add("component_" + p.getComponentID());
+				res.put(p.getProductID(), list);
 			}
 			else{
-				res.get(p.getProduct_id()).add("component_" + p.getComponent_id());
+				res.get(p.getProductID()).add("component_" + p.getComponentID());
 			}
 		}
 		
@@ -42,11 +41,10 @@ public class DataUtil {
 			String line = "";
 			line += entry.getKey() + ":";
 			List<String> val = entry.getValue();
-			for(int i=1; i<val.size()-1; i++){
+			for(int i=0; i<val.size()-1; i++){
 				line += val.get(i) + ",";
 			}
-			line += val.get(val.size()-1) + ":";
-			line += val.get(0);
+			line += val.get(val.size()-1);
 			bw.write(line);
 			bw.newLine();
 		}
@@ -57,18 +55,18 @@ public class DataUtil {
 		SqlSession session = DBUtil.openSession();
 		IProduct iproduct = session.getMapper(IProduct.class);
 		// local food data
-		List<ProductInfo> products = iproduct.getLocalProductInfos();
+		List<ProductInfo> products = iproduct.getProductInfos();
 		
 		Map<Integer, List<String>> res = new HashMap<Integer, List<String>>();
 		for(ProductInfo p : products){
-			if(!res.containsKey(p.getProduct_id())){
+			if(!res.containsKey(p.getProductID())){
 				List<String> list = new ArrayList<String>();
-				list.add(p.getCatalog_name());			
-				list.add(p.getComponent_name());
-				res.put(p.getProduct_id(), list);
+				//list.add(p.getCatalog_name());
+				list.add(p.getComponentName());
+				res.put(p.getProductID(), list);
 			}
 			else{
-				res.get(p.getProduct_id()).add(p.getComponent_name());
+				res.get(p.getProductID()).add(p.getComponentName());
 			}
 		}
 		
@@ -78,30 +76,29 @@ public class DataUtil {
 			String line = "";
 			line += entry.getKey() + ":";
 			List<String> val = entry.getValue();
-			for(int i=1; i<val.size()-1; i++){
+			for(int i=0; i<val.size()-1; i++){
 				line += val.get(i) + ",";
 			}
-			line += val.get(val.size()-1) + ":";
-			line += val.get(0);
+			line += val.get(val.size()-1);
 			bw.write(line);
 			bw.newLine();
 		}
 		bw.close();
-		
+		/*
 		// remote food data
 		products = iproduct.getRemoteProductInfos();
 		session.close();
 		
 		res = new HashMap<Integer, List<String>>();
 		for(ProductInfo p : products){
-			if(!res.containsKey(p.getProduct_id())){
+			if(!res.containsKey(p.getProductID())){
 				List<String> list = new ArrayList<String>();
-				list.add(p.getCatalog_name());			
-				list.add(p.getComponent_name());
-				res.put(p.getProduct_id(), list);
+				//list.add(p.getCatalog_name());			
+				list.add(p.getComponentName());
+				res.put(p.getProductID(), list);
 			}
 			else{
-				res.get(p.getProduct_id()).add(p.getComponent_name());
+				res.get(p.getProductID()).add(p.getComponentName());
 			}
 		}
 		
@@ -120,6 +117,7 @@ public class DataUtil {
 			bw.newLine();
 		}
 		bw.close();
+		*/
 	}
 	
 	public static void main(String[] args) {

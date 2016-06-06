@@ -29,5 +29,4 @@ public class DBUtil {
 		if(session != null)
 			session.close();
 	}
-	
 }

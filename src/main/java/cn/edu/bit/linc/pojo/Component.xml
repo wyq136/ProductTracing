@@ -3,17 +3,28 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.edu.bit.linc.dao.IComponent">
-    <select id="selectComponents" resultType="cn.edu.bit.linc.pojo.Component">
-        SELECT max(component.id) as id, component.component_name, max(component.description) as description, max(component.picture) as picture, max(component.product_id) as product_id from component, product 
-	WHERE product.shop = 'local' AND product.id = component.product_id GROUP BY component.component_name
+    <select id="getComponents" resultType="cn.edu.bit.linc.pojo.Component">
+        SELECT * from component
     </select>
     
-    <select id="selectComponentByProductId" parameterType="Integer" resultType="cn.edu.bit.linc.pojo.Component">
-         select component.id as id, component_name, description, picture from component, attribute where product_id = #{product_id} and component.id = component_id group by  component.id, component_name, description, picture
+    <select id="getComponentByProductID" parameterType="Integer" resultType="cn.edu.bit.linc.pojo.Component">
+        select component.* from component, productdetail where productdetail.productid = #{productID} and productdetail.componentid = component.componentid
     </select>
     
-    <insert id="insertComponent" parameterType="cn.edu.bit.linc.pojo.Component">
-        insert into component (product_id, component_name, description) values (#{product_id}, #{component_name}, #{description})
+    <select id="getProductDetail" resultType="cn.edu.bit.linc.pojo.ProductDetail">
+        select * from productDetail
+    </select>
+    
+    <select id="getComponentByComponentName" parameterType="String" resultType="cn.edu.bit.linc.pojo.Component">
+        select * from component where componentname = #{componentName}
+    </select>
+    
+    <select id="getComponentByBarcodeID" parameterType="Integer" resultType="cn.edu.bit.linc.pojo.Component">
+        select component.* from component, barcodedetail where barcodedetail.barcodeid = #{barcodeID} and barcodeDetail.componentid = component.componentid
+    </select>
+    
+    <insert id="addComponent" useGeneratedKeys="true" keyProperty="componentID" parameterType="cn.edu.bit.linc.pojo.Component">
+        insert into component (componentName) values (#{componentName})
     </insert>
     
 </mapper>

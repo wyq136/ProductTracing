@@ -28,6 +28,8 @@
     <mvc:resources mapping="/js/**" location="/resourses/js/" />
     <mvc:resources mapping="/css/**" location="/resourses/css/" />
     <mvc:resources mapping="/fonts/**" location="/resourses/fonts/" />
+        <mvc:resources mapping="/images/**" location="/resourses/images/" />
+                <mvc:resources mapping="/**" location="/resourses/pages/" />
     
     <bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

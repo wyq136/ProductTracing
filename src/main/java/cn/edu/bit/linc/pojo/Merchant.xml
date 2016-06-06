@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.bit.linc.dao.IMerchant">
+    <select id="getMerchant" resultType="cn.edu.bit.linc.pojo.Merchant">
+        select * from merchant
+    </select>
+    
+    <select id="getMerchantByTag" parameterType="String" resultType="cn.edu.bit.linc.pojo.Merchant">
+        select merchant.* from merchant, tag where tagname like #{tag} and merchant.merchantid = tag.merchantid
+    </select>
+    
+    <select id="getMerchantByPrice" resultType="cn.edu.bit.linc.pojo.Merchant">
+        select * from merchant where price between #{0} and #{1}
+    </select>
+    
+    <select id="getMerchantByTagAndPrice" resultType="cn.edu.bit.linc.pojo.Merchant">
+    	select merchant.* from merchant, tag where tagname like #{0} and merchant.merchantid = tag.merchantid and price between #{1} and #{2}
+    </select>
+    
+    <select id="getMerchantByMerchantID" parameterType="int" resultType="cn.edu.bit.linc.pojo.Merchant">
+    	select * from merchant where merchantid = #{merchantID}
+	</select>
+    
+    <select id="getMerchantByProductID" parameterType="int" resultType="cn.edu.bit.linc.pojo.Merchant">
+        select merchant.* from merchant, product where product.productid = #{productID} and merchant.merchantid = product.merchantid
+    </select>
+    
+    <insert id="addMerchant" useGeneratedKeys="true" keyProperty="merchantID" parameterType="cn.edu.bit.linc.pojo.Merchant">
+        insert into merchant (merchantname, address, positionx, positiony, price, rating, picture, description) values (#{merchantName}, #{address}, #{positionX}, #{positionY}, #{price}, #{rating}, #{picture}, #{description})
+    </insert>
+    
+</mapper>

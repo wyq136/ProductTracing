@@ -2,30 +2,37 @@ package cn.edu.bit.linc.pojo;
 
 public class Product {
 
-	private int id;
-	private int catalog_id;
-	private String product_name;
+	private int productID;
+	private int merchantID;
+	private String productSKU;
+	private String productName;
 	private String description;
 	private String picture;
-	private String shop;
 	private String rate;
 	
-	public int getId() {
-		return id;
+	public int getProductID() {
+		return productID;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}public int getCatalog_id() {
-		return catalog_id;
+	public void setProductID(int productID) {
+		this.productID = productID;
 	}
-	public void setCatalog_id(int catalog_id) {
-		this.catalog_id = catalog_id;
+	public int getMerchantID() {
+		return merchantID;
 	}
-	public String getProduct_name() {
-		return product_name;
+	public void setMerchantID(int merchantID) {
+		this.merchantID = merchantID;
 	}
-	public void setProduct_name(String product_name) {
-		this.product_name = product_name;
+	public String getProductSKU() {
+		return productSKU;
+	}
+	public void setProductSKU(String productSKU) {
+		this.productSKU = productSKU;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 	public String getDescription() {
 		return description;
@@ -39,21 +46,19 @@ public class Product {
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
-	public String getShop() {
-		return shop;
-	}
-	public void setShop(String shop) {
-		this.shop = shop;
-	}
-	
-	@Override
-	public String toString() {
-		return "Product [id =" + id + "product_name=" + product_name + ", catalog_id=" + catalog_id + ", description=" + description + ", picture=" + picture + ", shop=" + shop + "]";
-	}
 	public String getRate() {
 		return rate;
 	}
 	public void setRate(String rate) {
 		this.rate = rate;
 	}
+	
+	@Override
+	public String toString() {
+		return "Product [productID=" + productID + ", merchantID=" + merchantID
+				+ ", productSKU=" + productSKU + ", productName=" + productName
+				+ ", description=" + description + ", picture=" + picture
+				+ ", rate=" + rate + "]";
+	}
+	
 }

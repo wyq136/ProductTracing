@@ -1,9 +1,191 @@
-1:西瓜:饮料
-2:茶叶,白砂糖:饮料
-3:咖啡豆:饮料
-6:火腿,吐司片,黄油,生菜,番茄,奶酪片:甜品
-8:巧克力,黄油,鸡蛋,面粉,白砂糖,盐:甜品
-10:牛奶,面粉,白砂糖,黄油,鸡蛋,发酵粉,盐,肉桂粉:甜品
-11:黄油,鸡蛋,白砂糖,面粉,盐,杏仁粉,香草精:甜品
-13:橙子:水果
-14:草莓:水果
+256:fish,bean sprouts
+257:swimming crab
+258:shrimp
+259:fish
+260:beef,chili
+261:duck,tea leaf
+262:yuba,green pepper
+263:chicken,pine nut
+264:pork,green pepper
+265:fish
+266:beef,chili
+267:duck,tea leaf
+268:pork,beancurd,peanut,potato
+269:duck blood,yellow bean sprout,eel,pork,beef omasum,daylily,squid
+270:duck,tea leaf
+271:fish,chili
+272:bamboo shoot
+273:pork,chili
+274:fish,chili
+275:pork liver,chili
+276:chicken,yuba
+277:pork
+278:chili,preserved egg
+279:bamboo shoot,beef
+280:pork,cooking wine,monosodium glutamate
+281:fish,chili
+282:celery,garlic
+283:soft-shelled turtle
+284:soft-shelled turtle
+285:bamboo shoot,beef
+286:fish,chili
+287:pork liver,chili
+288:chicken,yuba
+289:chicken wing,shiitake mushroom
+290:tomato,egg
+291:milk,green tea
+292:duck
+293:durian,egg,flour,sugar
+294:fish,shallot
+295:holothurian,shallot
+296:fish,parsley
+297:cheese,flour,pork
+298:flour,milk,butter
+299:rice flour,roast pork,starch
+300:egg,sugar
+301:durian,flour
+302:palmatum
+303:shrimp,flour,pork
+304:cod
+305:hippocampus,tea
+306:shrimp,dumpling
+307:chicken,starch
+308:pork,vermicelli
+309:chicken,mushroom
+310:chicken,mushroom
+311:potato,eggplant,green pepper
+312:pork
+313:flour,shallot,egg
+314:goose
+315:chestnut,donkey
+316:flour,shallot,egg
+317:goose
+318:chestnut,donkey
+319:salmon
+320:sturgeon
+321:chestnut,donkey
+322:grass carp
+323:chicken
+324:chestnut,donkey
+325:tofu,pork
+326:tea leaf,chicken
+327:the grandmother dish,pork,quail egg
+328:shrimp,bean sprout
+329:ribbonfish,egg,flour
+330:the grandmother dish,pork,quail egg
+331:pork,lettuce,green tea
+332:bullfrog,chili sauce
+333:egg,pork,green tea
+334:pork
+335:shrimp,longjing tea
+336:egg,pork,green tea
+337:pork
+338:chicken
+339:egg,pork,green tea
+340:pork
+341:pork
+342:duck
+343:pork,pig skin
+344:pineapple,cantaloupe,mango
+345:yellow peach
+346:dace,tempeh
+347:chicken,pork
+348:yogurt,apple juice
+349:grape
+350:Chinese sorghum,wheat
+351:water,sugar,concentrated orange juice,flavor,citric acid
+352:water,sugar,concentrated pear juice,crystal sugar,concentrated grape juice,stewed pear
+353:water,concentrated peach juice,sugar,salt,citric acid
+354:water,concentrated orange juice,sugar,food additive
+355:water,grape syrup,concentrated peach juice,sugar,salt
+356:cream,flour,pine nut
+357:date cake,flour,sugar
+358:flour,egg,shallot,almond
+359:starch,butter,sugar,egg
+360:starch,butter,sugar,egg
+361:flour,egg,milk
+362:milk,sugar
+172:shrimp,clams,mushroom,tomato
+173:crab,curry
+174:rice,pineapple,egg
+175:shrimp,clams,mushroom,tomato
+176:papaya,salad dressing
+177:shrimp,spinach
+178:shrimp,clams,mushroom,tomato
+179:rice,pineapple,egg
+180:curry,beef,potato
+181:shrimp,clams,mushroom,tomato
+182:rice,pineapple,egg,shrimp
+183:curry,crab
+184:shrimp,clams,mushroom,tomato
+185:papaya
+186:pork
+187:shrimp,clams,mushroom,tomato
+188:shrimp
+189:pork
+190:pumpkin,glutinous rice flour
+191:pork
+192:crab,white spirit
+193:beef
+194:bean sprouts,potato,beef,clams,miso
+195:rice,egg,bean sprouts,beef,pork
+196:red beans,ice
+197:beef,sesame noodles
+198:flour,meat stuffing,egg,pickle
+199:pork
+200:beef,sesame noodles
+201:flour,meat stuffing,egg,pickle
+202:pork
+203:beef,sesame noodles
+204:flour,pork,egg,pickle
+205:beef
+206:beef,sesame noodles
+207:flour,pork,egg,pickle
+208:lamb,okra,onion,tomato
+209:beef
+210:lamb,onion,egg,flour
+211:onion,egg,flour,lamb
+212:papaya,milk,ice cream
+213:chicken,mushroom
+214:lamb,beef
+215:lamb,beef,yogurt
+216:onion,egg,flour
+217:beef,onion,carrot
+218:beef,beetroot
+219:rice,bread,tuna,tomato
+220:beef,onion,carrot
+221:beef,beetroot
+222:matsutake,mushroom
+223:rice,bread,tuna,tomato
+224:fish,mushroom,egg,tomato
+225:mushroom,pork,milk,flour
+226:beef
+227:fish,mushroom,egg,tomato
+228:mushroom,pork,milk,flour
+229:beef,beetroot,tomato,potato,onion
+230:beef
+231:mushroom,pork,milk,flour
+232:beef,beetroot,tomato,potato,onion
+233:beef
+234:beef
+235:milk,cream,egg,sugar,vanilla extract
+236:rice,bread,tuna,tomato
+237:mushroom,pork,milk,flour
+238:beef
+239:potato,cucumber,corn,crab sticks,mango
+240:mushroom,pork,milk,flour
+241:milk,cream,egg,sugar,vanilla extract
+242:salmon,shallot,cheese,flour
+243:cheese,egg,biscuit,sugar,cream,cocoa powder
+244:foie gras
+245:salmon,shallot,cheese,flour
+246:cheese,egg,biscuit,sugar,cream,cocoa powder
+247:tuna
+248:salmon,shallot,cheese,flour
+249:cheese,egg,biscuit,sugar,cream,cocoa powder
+250:foie gras
+251:crab
+252:cheese,egg,biscuit,sugar,cream,cocoa powder
+253:trotters,shallot
+254:bamboo shoot,beef
+255:sausage

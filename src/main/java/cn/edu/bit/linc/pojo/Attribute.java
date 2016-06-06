@@ -2,34 +2,50 @@ package cn.edu.bit.linc.pojo;
 
 public class Attribute {
 
-	private int id;
-	private String component_id;
-	private String attribute_name;
-	private String attribute_value;
+	private int attributeID;
+	private int referenceID;
+	private String referenceTable;
+	private String attributeName;
+	private String attributeValue;
 	
-	public int getId() {
-		return id;
+	public int getAttributeID() {
+		return attributeID;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setAttributeID(int attributeID) {
+		this.attributeID = attributeID;
 	}
-	public String getComponent_id() {
-		return component_id;
+	public int getReferenceID() {
+		return referenceID;
 	}
-	public void setComponent_id(String component_id) {
-		this.component_id = component_id;
+	public void setReferenceID(int referenceID) {
+		this.referenceID = referenceID;
 	}
-	public String getAttribute_name() {
-		return attribute_name;
+	public String getReferenceTable() {
+		return referenceTable;
 	}
-	public void setAttribute_name(String attribute_name) {
-		this.attribute_name = attribute_name;
+	public void setReferenceTable(String referenceTable) {
+		this.referenceTable = referenceTable;
 	}
-	public String getAttribute_value() {
-		return attribute_value;
+	public String getAttributeName() {
+		return attributeName;
 	}
-	public void setAttribute_value(String attribute_value) {
-		this.attribute_value = attribute_value;
+	public void setAttributeName(String attributeName) {
+		this.attributeName = attributeName;
 	}
-
+	public String getAttributeValue() {
+		return attributeValue;
+	}
+	public void setAttributeValue(String attributeValue) {
+		this.attributeValue = attributeValue;
+	}
+	
+	@Override
+	public String toString() {
+		return "Attribute [attributeID=" + attributeID + ", referenceID="
+				+ referenceID + ", referenceTable=" + referenceTable
+				+ ", attributeName=" + attributeName + ", attributeValue="
+				+ attributeValue + "]";
+	}
+	
+	
 }

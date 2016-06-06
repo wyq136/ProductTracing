@@ -3,9 +3,17 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="cn.edu.bit.linc.dao.IAttribute">
-    <select id="selectAttributeByComponentId" parameterType="int" resultType="cn.edu.bit.linc.pojo.Attribute">
-        SELECT * from attribute WHERE component_id = #{id}
+    
+    <select id="getAttributeFromProductByProductIDAndComponentID" parameterType="Integer" resultType="cn.edu.bit.linc.pojo.Attribute">
+        SELECT attribute.* from attribute, productdetail WHERE productid = #{0} and componentID = #{1} and productdetailID = referenceID and referencetable = 'PRODUCTDETAIL'
     </select>
     
+    <select id="getAttributeFromBarcodeByComponentID" parameterType="Integer" resultType="cn.edu.bit.linc.pojo.Attribute">
+        SELECT attribute.* from attribute, barcodedetail WHERE componentID = #{componentID} and productdetailID = referenceID and referencetable = 'BARCODEDETAIL'
+    </select>
+    
+    <insert id="addAttribute" useGeneratedKeys="true" keyProperty="attributeID" parameterType="cn.edu.bit.linc.pojo.Attribute">
+        insert into attribute (Referencetable, referenceid, attributeName, attributevalue) values (#{referenceTable}, #{referenceID}, #{attributeName}, #{attributeValue})
+    </insert>
     
 </mapper>
